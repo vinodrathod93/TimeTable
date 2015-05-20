@@ -7,9 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreData/CoreData.h>
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController<UITableViewDelegate, UITableViewDataSource,NSFetchedResultsControllerDelegate, UISearchBarDelegate>
 
+@property (nonatomic,strong) NSManagedObjectContext* managedObjectContext;
+@property (nonatomic,retain) NSFetchedResultsController *fetchedResultsController;
 
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (weak, nonatomic) IBOutlet UITableView *tableview;
+- (IBAction)closeTapped:(id)sender;
+
+@property (nonatomic, strong) UILabel *noResultsLabel;
 @end
 

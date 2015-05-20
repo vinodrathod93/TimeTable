@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "SubjectDetails.h"
+#import "Days.h"
 
 @interface AppDelegate ()
 
@@ -14,9 +16,30 @@
 
 @implementation AppDelegate
 
+@synthesize managedObjectContext = _managedObjectContext;
+@synthesize managedObjectModel = _managedObjectModel;
+@synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    NSError *error;
+    
+    // Test listing all FailedBankInfos from the store
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"SubjectDetails"
+                                              inManagedObjectContext:self.managedObjectContext];
+    [fetchRequest setEntity:entity];
+    NSArray *fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    for (SubjectDetails *info in fetchedObjects) {
+        NSLog(@"Subject: %@", info.subject);
+        NSLog(@"Teacher: %@", info.teacher);
+        
+        for (Days *day in info.days) {
+            NSLog(@"Days: %@",day.day);
+        }
+    }
+    
     return YES;
 }
 
@@ -46,12 +69,10 @@
 
 #pragma mark - Core Data stack
 
-@synthesize managedObjectContext = _managedObjectContext;
-@synthesize managedObjectModel = _managedObjectModel;
-@synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
-
 - (NSURL *)applicationDocumentsDirectory {
     // The directory the application uses to store the Core Data store file. This code uses a directory named "com.vinodrathod.TimeTable" in the application's documents directory.
+    
+    NSLog(@"%@",[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject]);
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
 
@@ -123,5 +144,7 @@
         }
     }
 }
+
+
 
 @end

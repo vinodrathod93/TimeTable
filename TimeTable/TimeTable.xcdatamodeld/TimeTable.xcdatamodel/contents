@@ -1,4 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="Test1.xcdatamodel" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
-    <elements/>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7549" systemVersion="14A389" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Days" representedClassName="Days" syncable="YES">
+        <attribute name="day" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dayID" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="detail" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SubjectDetails" inverseName="days" inverseEntity="SubjectDetails" syncable="YES"/>
+        <relationship name="time" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="SubjectTime" inverseName="day" inverseEntity="SubjectTime" syncable="YES"/>
+    </entity>
+    <entity name="SubjectDetails" representedClassName="SubjectDetails" syncable="YES">
+        <attribute name="semLength" optional="YES" attributeType="Integer 16" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="subject" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="teacher" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="venue" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="days" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Days" inverseName="detail" inverseEntity="Days" syncable="YES"/>
+    </entity>
+    <entity name="SubjectTime" representedClassName="SubjectTime" syncable="YES">
+        <attribute name="end" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="start" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="day" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Days" inverseName="time" inverseEntity="Days" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Days" positionX="-119" positionY="-27" width="128" height="103"/>
+        <element name="SubjectDetails" positionX="-306" positionY="-162" width="128" height="118"/>
+        <element name="SubjectTime" positionX="70" positionY="90" width="128" height="88"/>
+    </elements>
 </model>
