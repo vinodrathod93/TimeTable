@@ -16,5 +16,9 @@
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
 @property (nonatomic, strong) SubjectTime *time;
+//@property (nonatomic, strong) Days *selectedDay;
+
 -(void)initWithDayTime:(SubjectTime *)time;
+
+//-(void)initWithSelectedDay:(Days *)selectedDayModel;
 @end

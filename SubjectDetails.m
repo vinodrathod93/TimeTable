@@ -2,7 +2,7 @@
 //  SubjectDetails.m
 //  TimeTable
 //
-//  Created by Vinod Rathod on 24/04/15.
+//  Created by Vinod Rathod on 13/06/15.
 //  Copyright (c) 2015 Vinod Rathod. All rights reserved.
 //
 

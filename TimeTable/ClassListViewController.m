@@ -7,6 +7,7 @@
 //
 
 #import "ClassListViewController.h"
+#import "DetailTableViewController.h"
 #import "ListTableViewCell.h"
 #import "NewClassTableViewController.h"
 #import "AppDelegate.h"
@@ -30,13 +31,19 @@
     [self.fetchedResultsController performFetch:nil];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self.tableView reloadData];
 }
+
 - (IBAction)addClassEntries:(id)sender {
     NewClassTableViewController *newClassVC = [self.storyboard instantiateViewControllerWithIdentifier:@"newClass"];
     UINavigationController *navigationViewController = [[UINavigationController alloc]initWithRootViewController:newClassVC];
+    
+    SubjectDetails *subjectDetails = [NSEntityDescription insertNewObjectForEntityForName:@"SubjectDetails" inManagedObjectContext:self.managedObjectContext];
+    newClassVC.subjectDetailsModel = subjectDetails;
+    
     [self presentViewController:navigationViewController animated:YES completion:nil];
 }
 
@@ -59,6 +66,8 @@
     ListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
     
     SubjectDetails *detail = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+    NSLog(@"Array data of the subject details ---->>>>>%@", detail);
     [cell configureCellForEntry:detail];
     
     return cell;
@@ -95,8 +104,9 @@
     [fetchRequest setEntity:entity];
     
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc]
-                                        initWithKey:@"subject"
-                                        ascending:YES];
+                                        initWithKey:@"days"
+                                        ascending:NO];
+    
     NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
     [fetchRequest setSortDescriptors:sortDescriptors];
     
@@ -142,11 +152,34 @@
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     [self.tableView endUpdates];
+   
 }
 
 - (IBAction)searchTapped:(id)sender {
     ViewController *searchVC = [[ViewController alloc]init];
     searchVC.managedObjectContext = self.managedObjectContext;
     [self.navigationController presentViewController:searchVC animated:YES completion:nil];
+}
+
+-(DetailViewModel *)detailViewAtIndexPath:(NSIndexPath *)indexPath {
+    DetailViewModel *viewModel = [[DetailViewModel alloc]initWithModel:[self subjectDetailAtIndexPath:indexPath]];
+    
+    return viewModel;
+}
+
+-(SubjectDetails *)subjectDetailAtIndexPath:(NSIndexPath *)indexPath {
+    
+    NSLog(@"%@", [self.fetchedResultsController objectAtIndexPath:indexPath]);
+    return [self.fetchedResultsController objectAtIndexPath:indexPath];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    if ([segue.identifier isEqualToString:@"showDetail"]) {
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        
+        DetailTableViewController *detailVC = segue.destinationViewController;
+        detailVC.viewModel = [self detailViewAtIndexPath:indexPath];
+    }
 }
 @end

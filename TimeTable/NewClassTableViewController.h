@@ -23,8 +23,9 @@
 //@property (nonatomic,strong) NSManagedObjectContext* managedObjectContext;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
-@property (nonatomic, strong) SubjectDetails *subjectDetails;
-@property (strong, nonatomic) Days *days;
-@property (nonatomic, strong) NSMutableSet *pickedDays;
+@property (nonatomic, strong) SubjectDetails *subjectDetailsModel;
+@property (strong, nonatomic) Days *daysModel;
+
+@property (nonatomic, strong) NSMutableOrderedSet *pickedDays;
 
 @end

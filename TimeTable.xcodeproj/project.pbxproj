@@ -12,7 +12,6 @@
 		671A81C01AE84C7F00196E12 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 671A81BF1AE84C7F00196E12 /* AppDelegate.m */; };
 		671A81C31AE84FE600196E12 /* ClassListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 671A81C21AE84FE600196E12 /* ClassListViewController.m */; };
 		671A81C61AE8506A00196E12 /* ListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 671A81C51AE8506A00196E12 /* ListTableViewCell.m */; };
-		676DEC371AE9A57900E55AEC /* SubjectDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 676DEC361AE9A57900E55AEC /* SubjectDetails.m */; };
 		67AACF631AE38688004B343C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 67AACF621AE38688004B343C /* main.m */; };
 		67AACF691AE38689004B343C /* TimeTable.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 67AACF671AE38689004B343C /* TimeTable.xcdatamodeld */; };
 		67AACF6C1AE38689004B343C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67AACF6B1AE38689004B343C /* ViewController.m */; };
@@ -23,6 +22,10 @@
 		67AF1F8E1AE51494006951E3 /* NewClassTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67AF1F8D1AE51494006951E3 /* NewClassTableViewController.m */; };
 		67AF1F911AE5212A006951E3 /* SelectedDayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67AF1F901AE5212A006951E3 /* SelectedDayCell.m */; };
 		67C085511AE52712009E98EC /* SelectedDayTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67C085501AE52712009E98EC /* SelectedDayTableViewController.m */; };
+		67E59B211B2B28C300B43430 /* DetailOverviewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67E59B201B2B28C300B43430 /* DetailOverviewCell.m */; };
+		67E59B251B2B897000B43430 /* SubjectDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 67E59B241B2B897000B43430 /* SubjectDetails.m */; };
+		67FB564D1B2A2164006BAE2E /* DetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FB564C1B2A2164006BAE2E /* DetailTableViewController.m */; };
+		67FB56501B2A21D2006BAE2E /* DetailViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FB564F1B2A21D2006BAE2E /* DetailViewModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,8 +48,6 @@
 		671A81C21AE84FE600196E12 /* ClassListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassListViewController.m; sourceTree = "<group>"; };
 		671A81C41AE8506A00196E12 /* ListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListTableViewCell.h; sourceTree = "<group>"; };
 		671A81C51AE8506A00196E12 /* ListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListTableViewCell.m; sourceTree = "<group>"; };
-		676DEC351AE9A57900E55AEC /* SubjectDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubjectDetails.h; sourceTree = "<group>"; };
-		676DEC361AE9A57900E55AEC /* SubjectDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubjectDetails.m; sourceTree = "<group>"; };
 		67AACF5D1AE38688004B343C /* TimeTable.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeTable.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		67AACF611AE38688004B343C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		67AACF621AE38688004B343C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -66,6 +67,14 @@
 		67AF1F901AE5212A006951E3 /* SelectedDayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectedDayCell.m; sourceTree = "<group>"; };
 		67C0854F1AE52712009E98EC /* SelectedDayTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectedDayTableViewController.h; sourceTree = "<group>"; };
 		67C085501AE52712009E98EC /* SelectedDayTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectedDayTableViewController.m; sourceTree = "<group>"; };
+		67E59B1F1B2B28C300B43430 /* DetailOverviewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailOverviewCell.h; sourceTree = "<group>"; };
+		67E59B201B2B28C300B43430 /* DetailOverviewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailOverviewCell.m; sourceTree = "<group>"; };
+		67E59B231B2B897000B43430 /* SubjectDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubjectDetails.h; sourceTree = "<group>"; };
+		67E59B241B2B897000B43430 /* SubjectDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubjectDetails.m; sourceTree = "<group>"; };
+		67FB564B1B2A2163006BAE2E /* DetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailTableViewController.h; sourceTree = "<group>"; };
+		67FB564C1B2A2164006BAE2E /* DetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailTableViewController.m; sourceTree = "<group>"; };
+		67FB564E1B2A21D2006BAE2E /* DetailViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewModel.h; sourceTree = "<group>"; };
+		67FB564F1B2A21D2006BAE2E /* DetailViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,11 +95,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		673ABDCF1B28AA2100227B03 /* SelectedDayVC */ = {
+			isa = PBXGroup;
+			children = (
+				67C0854F1AE52712009E98EC /* SelectedDayTableViewController.h */,
+				67C085501AE52712009E98EC /* SelectedDayTableViewController.m */,
+			);
+			name = SelectedDayVC;
+			sourceTree = "<group>";
+		};
+		673ABDD01B28AA3600227B03 /* ClassListVC */ = {
+			isa = PBXGroup;
+			children = (
+				671A81C11AE84FE600196E12 /* ClassListViewController.h */,
+				671A81C21AE84FE600196E12 /* ClassListViewController.m */,
+				671A81C41AE8506A00196E12 /* ListTableViewCell.h */,
+				671A81C51AE8506A00196E12 /* ListTableViewCell.m */,
+			);
+			name = ClassListVC;
+			sourceTree = "<group>";
+		};
 		67AACF541AE38688004B343C = {
 			isa = PBXGroup;
 			children = (
-				676DEC351AE9A57900E55AEC /* SubjectDetails.h */,
-				676DEC361AE9A57900E55AEC /* SubjectDetails.m */,
+				67E59B231B2B897000B43430 /* SubjectDetails.h */,
+				67E59B241B2B897000B43430 /* SubjectDetails.m */,
+				67AACF671AE38689004B343C /* TimeTable.xcdatamodeld */,
 				671A81BC1AE8479700196E12 /* SubjectTime.h */,
 				671A81BD1AE8479700196E12 /* SubjectTime.m */,
 				671A81B31AE8434E00196E12 /* Days.h */,
@@ -113,24 +143,17 @@
 		67AACF5F1AE38688004B343C /* TimeTable */ = {
 			isa = PBXGroup;
 			children = (
-				671A81C11AE84FE600196E12 /* ClassListViewController.h */,
-				671A81C21AE84FE600196E12 /* ClassListViewController.m */,
-				67C0854F1AE52712009E98EC /* SelectedDayTableViewController.h */,
-				67C085501AE52712009E98EC /* SelectedDayTableViewController.m */,
-				67AF1F8A1AE4DFC4006951E3 /* NewClassTableViewController.h */,
-				67AF1F8D1AE51494006951E3 /* NewClassTableViewController.m */,
 				67AACF641AE38688004B343C /* AppDelegate.h */,
 				671A81BF1AE84C7F00196E12 /* AppDelegate.m */,
+				67E59B221B2B58FF00B43430 /* NewClassVC */,
+				673ABDD01B28AA3600227B03 /* ClassListVC */,
+				67FB56511B2A21DC006BAE2E /* DetailDayVC */,
+				673ABDCF1B28AA2100227B03 /* SelectedDayVC */,
 				67AACF6A1AE38689004B343C /* ViewController.h */,
 				67AACF6B1AE38689004B343C /* ViewController.m */,
 				67AACF6D1AE38689004B343C /* Main.storyboard */,
-				67AF1F8F1AE5212A006951E3 /* SelectedDayCell.h */,
-				67AF1F901AE5212A006951E3 /* SelectedDayCell.m */,
-				671A81C41AE8506A00196E12 /* ListTableViewCell.h */,
-				671A81C51AE8506A00196E12 /* ListTableViewCell.m */,
 				67AACF701AE38689004B343C /* Images.xcassets */,
 				67AACF721AE38689004B343C /* LaunchScreen.xib */,
-				67AACF671AE38689004B343C /* TimeTable.xcdatamodeld */,
 				67AACF601AE38688004B343C /* Supporting Files */,
 			);
 			path = TimeTable;
@@ -160,6 +183,30 @@
 				67AACF7E1AE38689004B343C /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		67E59B221B2B58FF00B43430 /* NewClassVC */ = {
+			isa = PBXGroup;
+			children = (
+				67AF1F8A1AE4DFC4006951E3 /* NewClassTableViewController.h */,
+				67AF1F8D1AE51494006951E3 /* NewClassTableViewController.m */,
+				67AF1F8F1AE5212A006951E3 /* SelectedDayCell.h */,
+				67AF1F901AE5212A006951E3 /* SelectedDayCell.m */,
+			);
+			name = NewClassVC;
+			sourceTree = "<group>";
+		};
+		67FB56511B2A21DC006BAE2E /* DetailDayVC */ = {
+			isa = PBXGroup;
+			children = (
+				67FB564B1B2A2163006BAE2E /* DetailTableViewController.h */,
+				67FB564C1B2A2164006BAE2E /* DetailTableViewController.m */,
+				67FB564E1B2A21D2006BAE2E /* DetailViewModel.h */,
+				67FB564F1B2A21D2006BAE2E /* DetailViewModel.m */,
+				67E59B1F1B2B28C300B43430 /* DetailOverviewCell.h */,
+				67E59B201B2B28C300B43430 /* DetailOverviewCell.m */,
+			);
+			name = DetailDayVC;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -264,10 +311,13 @@
 			files = (
 				671A81C31AE84FE600196E12 /* ClassListViewController.m in Sources */,
 				671A81B51AE8434E00196E12 /* Days.m in Sources */,
+				67FB564D1B2A2164006BAE2E /* DetailTableViewController.m in Sources */,
+				67FB56501B2A21D2006BAE2E /* DetailViewModel.m in Sources */,
+				67E59B211B2B28C300B43430 /* DetailOverviewCell.m in Sources */,
+				67E59B251B2B897000B43430 /* SubjectDetails.m in Sources */,
 				671A81BE1AE8479700196E12 /* SubjectTime.m in Sources */,
 				67AF1F8E1AE51494006951E3 /* NewClassTableViewController.m in Sources */,
 				67C085511AE52712009E98EC /* SelectedDayTableViewController.m in Sources */,
-				676DEC371AE9A57900E55AEC /* SubjectDetails.m in Sources */,
 				671A81C01AE84C7F00196E12 /* AppDelegate.m in Sources */,
 				67AACF691AE38689004B343C /* TimeTable.xcdatamodeld in Sources */,
 				67AACF6C1AE38689004B343C /* ViewController.m in Sources */,
@@ -488,7 +538,8 @@
 				67AACF681AE38689004B343C /* TimeTable.xcdatamodel */,
 			);
 			currentVersion = 67AACF681AE38689004B343C /* TimeTable.xcdatamodel */;
-			path = TimeTable.xcdatamodeld;
+			name = TimeTable.xcdatamodeld;
+			path = TimeTable/TimeTable.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

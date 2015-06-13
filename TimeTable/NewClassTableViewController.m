@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import "SubjectTime.h"
 
+#define DEFAULT_TAG 10
 
 NS_ENUM(int16_t, TTClassEntryDay) {
     TTClassEntryDayMonday = 0,
@@ -43,21 +44,23 @@ NS_ENUM(int16_t, TTClassEntryDay) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-//    AppDelegate *appDelegate = [[UIApplication sharedApplication]delegate];
-//    self.managedObjectContext = appDelegate.managedObjectContext;
-    
     self.appDelegate = [UIApplication sharedApplication].delegate;
     
     self.datalistArray = [NSMutableArray array];
+    
+    // All Textfields delegate & keyboard type is set
     self.subjectTextField.delegate = self;
-    self.semesterTextField.delegate = self;
+    self.lecturerTextField.delegate = self;
+    self.classRoomTextField.delegate = self;
+    self.classRoomTextField.keyboardType = UIKeyboardTypeNumberPad;
     
     self.weekdays = @[@"Monday", @"Tuesday", @"Wednesday", @"Thursday", @"Friday", @"Saturday"];
     
-    self.monButton.tag = 10;
+    self.monButton.tag = DEFAULT_TAG;
 
-    self.pickedDays = [[NSMutableSet alloc] init];
+    self.pickedDays = [[NSMutableOrderedSet alloc] init];
     
+    /*
     // Retrieve all tags
     NSError *error;
     if (![self.fetchedResultsController performFetch:&error]) {
@@ -70,7 +73,7 @@ NS_ENUM(int16_t, TTClassEntryDay) {
     }
     
     // Each tag attached to the details is included in the array
-    NSSet *days = self.subjectDetails.days;
+    NSSet *days = self.subjectDetailsModel.days;
     NSLog(@"%@",days);
     
     for (Days *day in days) {
@@ -79,6 +82,7 @@ NS_ENUM(int16_t, TTClassEntryDay) {
         [self.pickedDays addObject:day];
         
     }
+     */
     
 }
 
@@ -91,27 +95,58 @@ NS_ENUM(int16_t, TTClassEntryDay) {
 
 -(void)addAllDays {
     for (int i=0; i<self.weekdays.count; i++) {
-        self.days = [NSEntityDescription insertNewObjectForEntityForName:@"Days" inManagedObjectContext:self
-                     .appDelegate.managedObjectContext];
-        self.days.day = self.weekdays[i];
-        self.days.dayID = [NSString stringWithFormat:@"%d",i];
         
-        SubjectTime *time = [NSEntityDescription insertNewObjectForEntityForName:@"SubjectTime" inManagedObjectContext:self.appDelegate.managedObjectContext];
-//        time.start = [NSDate date];
-//        time.end = [NSDate date];
-        time.day = self.days;
-        self.days.time = time;
+        // Entity of the Days
+        Days *daysModel = [NSEntityDescription insertNewObjectForEntityForName:@"Days" inManagedObjectContext:self
+                     .subjectDetailsModel.managedObjectContext];
+        
+        daysModel.day = self.weekdays[i];
+        daysModel.dayID = [NSString stringWithFormat:@"%d",i];
+        
+        // Entity of the Time
+        SubjectTime *time = [NSEntityDescription insertNewObjectForEntityForName:@"SubjectTime" inManagedObjectContext:self.subjectDetailsModel.managedObjectContext];
+//        time.day = self.daysModel;
+        daysModel.time = time;
         
         
         NSError *error = nil;
-        if (![self.days.managedObjectContext save:&error]) {
-            NSLog(@"Core data error %@, %@", error, [error userInfo]);
-            abort();
-        }
+//        if (![self.daysModel.managedObjectContext save:&error]) {
+//            NSLog(@"Core data error %@, %@", error, [error userInfo]);
+//            abort();
+//        }
         
         [self.fetchedResultsController performFetch:&error];
     }
     
+}
+
+
+-(void)addSelectedDayWithDayValue:(NSInteger)value {
+    Days *dayModel = [NSEntityDescription insertNewObjectForEntityForName:@"Days" inManagedObjectContext:self.subjectDetailsModel.managedObjectContext];
+    dayModel.day = self.weekdays[value];
+    dayModel.dayID = [NSString stringWithFormat:@"%ld",(long)value];
+    
+    NSLog(@"%@",self.subjectDetailsModel.days);
+    
+    NSMutableOrderedSet *pickedDays = [self.subjectDetailsModel.days mutableCopy];
+    [pickedDays addObject:dayModel];
+    
+    self.subjectDetailsModel.days = [pickedDays copy];
+    
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc]
+                                        initWithKey:@"dayID"
+                                        ascending:YES];
+    NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
+    [self.subjectDetailsModel.days sortedArrayUsingDescriptors:sortDescriptors];
+}
+
+-(void)removeSelectedDayAtIndex:(NSInteger)index {
+    NSMutableOrderedSet *pickedDays = [self.subjectDetailsModel.days mutableCopy];
+    if (index < pickedDays.count && index >= 0 ) {
+        [pickedDays removeObjectAtIndex:index];
+        
+        self.subjectDetailsModel.days = [pickedDays copy];
+    }
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -121,18 +156,49 @@ NS_ENUM(int16_t, TTClassEntryDay) {
     return YES;
 }
 
+
+
 - (IBAction)monButtonClicked:(id)sender {
     NSNumber *number = [NSNumber numberWithInt:TTClassEntryDayMonday];
     
     if (self.monButton.tag == TTClassEntryDayMonday) {
         self.monButton.backgroundColor = [UIColor whiteColor];
-        self.monButton.tag = 10;
+        self.monButton.tag = DEFAULT_TAG;
+        
+        NSInteger row = [NSNumber numberWithUnsignedLong:[self.datalistArray indexOfObject:number]].integerValue;
+        [self.datalistArray removeObject:number];
+        
+        [self removeSelectedDayAtIndex:row];
+        
+        NSIndexPath *indexpath = [NSIndexPath indexPathForRow:row inSection:2];
+        [self.tableView deleteRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        
+    } else {
+        self.monButton.layer.cornerRadius = 22.5f;
+        self.monButton.backgroundColor = [self.tableView tintColor];
+        self.monButton.tag = TTClassEntryDayMonday;
+        
+        
+        [self addSelectedDayWithDayValue:TTClassEntryDayMonday];
+        
+        [self.datalistArray addObject:number];
+        NSInteger row = [NSNumber numberWithUnsignedLong:[self.datalistArray indexOfObject:number]].integerValue;
+        NSIndexPath *indexpath = [NSIndexPath indexPathForRow:row inSection:2];
+        [self.tableView insertRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
+    /*
+    NSNumber *number = [NSNumber numberWithInt:TTClassEntryDayMonday];
+    
+    if (self.monButton.tag == TTClassEntryDayMonday) {
+        self.monButton.backgroundColor = [UIColor whiteColor];
+        self.monButton.tag = DEFAULT_TAG;
         NSInteger row = [NSNumber numberWithUnsignedLong:[self.datalistArray indexOfObject:number]].integerValue;
         [self.datalistArray removeObject:number];
         
         Days *day = (Days *)[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:[number intValue] inSection:0]];
         if ([self.pickedDays containsObject:day]) {
             [self.pickedDays removeObject:day];
+            self.subjectDetailsModel.days = [self.pickedDays copy];
         }
         
         NSIndexPath *indexpath = [NSIndexPath indexPathForRow:row inSection:2];
@@ -150,12 +216,14 @@ NS_ENUM(int16_t, TTClassEntryDay) {
         
         Days *day = (Days *)[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:[number intValue] inSection:0]];
         [self.pickedDays addObject:day];
+        self.subjectDetailsModel.days = [self.pickedDays copy];
         
         NSIndexPath *indexpath = [NSIndexPath indexPathForRow:row inSection:2];
         [self.tableView insertRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationAutomatic];
         
         NSLog(@"Row: %ldClicked-Picked Days %@",(long)row,day.day);
     }
+    */
     
 
 }
@@ -165,15 +233,17 @@ NS_ENUM(int16_t, TTClassEntryDay) {
     
     if (self.tueButton.tag == TTClassEntryDayTuesday) {
         self.tueButton.backgroundColor = [UIColor whiteColor];
-        self.tueButton.tag = 10;
+        self.tueButton.tag = DEFAULT_TAG;
         
         NSInteger row = [NSNumber numberWithUnsignedLong:[self.datalistArray indexOfObject:number]].integerValue;
         [self.datalistArray removeObject:number];
         
-        Days *day = (Days *)[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:[number intValue] inSection:0]];
-        if ([self.pickedDays containsObject:day]) {
-            [self.pickedDays removeObject:day];
-        }
+//        Days *day = (Days *)[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:[number intValue] inSection:0]];
+//        if ([self.pickedDays containsObject:day]) {
+//            [self.pickedDays removeObject:day];
+//            self.subjectDetailsModel.days = [self.pickedDays copy];
+//        }
+        [self removeSelectedDayAtIndex:row];
         
         NSIndexPath *indexpath = [NSIndexPath indexPathForRow:row inSection:2];
         [self.tableView deleteRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -188,14 +258,17 @@ NS_ENUM(int16_t, TTClassEntryDay) {
         [self.datalistArray addObject:number];
         NSInteger row = [NSNumber numberWithUnsignedLong:[self.datalistArray indexOfObject:number]].integerValue;
         
-        Days *day = (Days *)[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:[number intValue] inSection:0]];
-        [self.pickedDays addObject:day];
+//        Days *day = (Days *)[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:[number intValue] inSection:0]];
+//        [self.pickedDays addObject:day];
+//        self.subjectDetailsModel.days = [self.pickedDays copy];
+        
+        [self addSelectedDayWithDayValue:TTClassEntryDayTuesday];
         
         NSIndexPath *indexpath = [NSIndexPath indexPathForRow:row inSection:2];
         [self.tableView insertRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationAutomatic];
         
         
-        NSLog(@"Row: %ldClicked-Picked Days %@",(long)row,day.day);
+//        NSLog(@"Row: %ldClicked-Picked Days %@",(long)row,day.day);
         
     }
 
@@ -205,14 +278,16 @@ NS_ENUM(int16_t, TTClassEntryDay) {
     NSNumber *number = [NSNumber numberWithInt:TTClassEntryDayWednesday];
     if (self.wedButton.tag == TTClassEntryDayWednesday) {
         self.wedButton.backgroundColor = [UIColor whiteColor];
-        self.wedButton.tag = 10;
+        self.wedButton.tag = DEFAULT_TAG;
         NSInteger row = [NSNumber numberWithUnsignedLong:[self.datalistArray indexOfObject:number]].integerValue;
         [self.datalistArray removeObject:number];
         
-        Days *day = (Days *)[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:[number intValue] inSection:0]];
-        if ([self.pickedDays containsObject:day]) {
-            [self.pickedDays removeObject:day];
-        }
+//        Days *day = (Days *)[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:[number intValue] inSection:0]];
+//        if ([self.pickedDays containsObject:day]) {
+//            [self.pickedDays removeObject:day];
+//            self.subjectDetailsModel.days = [self.pickedDays copy];
+//        }
+        [self removeSelectedDayAtIndex:row];
         
         NSIndexPath *indexpath = [NSIndexPath indexPathForRow:row inSection:2];
         [self.tableView deleteRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -226,15 +301,18 @@ NS_ENUM(int16_t, TTClassEntryDay) {
         [self.datalistArray addObject:number];
         NSInteger row = [NSNumber numberWithUnsignedLong:[self.datalistArray indexOfObject:number]].integerValue;
         
-        Days *day = (Days *)[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:[number intValue] inSection:0]];
+//        Days *day = (Days *)[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:[number intValue] inSection:0]];
+//        
+//        [self.pickedDays addObject:day];
+//        self.subjectDetailsModel.days = [self.pickedDays copy];
         
-        [self.pickedDays addObject:day];
+        [self addSelectedDayWithDayValue:TTClassEntryDayWednesday];
         
         NSIndexPath *indexpath = [NSIndexPath indexPathForRow:row inSection:2];
         [self.tableView insertRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationAutomatic];
         
         
-        NSLog(@"Row: %ldClicked-Picked Days %@",(long)row,day.day);
+//        NSLog(@"Row: %ldClicked-Picked Days %@",(long)row,day.day);
     }
 
 }
@@ -242,14 +320,16 @@ NS_ENUM(int16_t, TTClassEntryDay) {
     NSNumber *number = [NSNumber numberWithInt:TTClassEntryDayThursday];
     if (self.thuButon.tag == TTClassEntryDayThursday) {
         self.thuButon.backgroundColor = [UIColor whiteColor];
-        self.thuButon.tag = 10;
+        self.thuButon.tag = DEFAULT_TAG;
         NSInteger row = [NSNumber numberWithUnsignedLong:[self.datalistArray indexOfObject:number]].integerValue;
         [self.datalistArray removeObject:number];
         
-        Days *day = (Days *)[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:[number intValue] inSection:0]];
-        if ([self.pickedDays containsObject:day]) {
-            [self.pickedDays removeObject:day];
-        }
+//        Days *day = (Days *)[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:[number intValue] inSection:0]];
+//        if ([self.pickedDays containsObject:day]) {
+//            [self.pickedDays removeObject:day];
+//            self.subjectDetailsModel.days = [self.pickedDays copy];
+//        }
+        [self removeSelectedDayAtIndex:row];
         
         NSIndexPath *indexpath = [NSIndexPath indexPathForRow:row inSection:2];
         [self.tableView deleteRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -263,14 +343,15 @@ NS_ENUM(int16_t, TTClassEntryDay) {
         [self.datalistArray addObject:number];
         NSInteger row = [NSNumber numberWithUnsignedLong:[self.datalistArray indexOfObject:number]].integerValue;
         
-        Days *day = (Days *)[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:[number intValue] inSection:0]];
-        [self.pickedDays addObject:day];
+//        Days *day = (Days *)[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:[number intValue] inSection:0]];
+//        [self.pickedDays addObject:day];
+//        self.subjectDetailsModel.days = [self.pickedDays copy];
+        
+        [self addSelectedDayWithDayValue:TTClassEntryDayThursday];
         
         NSIndexPath *indexpath = [NSIndexPath indexPathForRow:row inSection:2];
         [self.tableView insertRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationAutomatic];
         
-        
-        NSLog(@"Row: %ldClicked-Picked Days %@",(long)row,day.day);
     }
 
 }
@@ -278,14 +359,17 @@ NS_ENUM(int16_t, TTClassEntryDay) {
     NSNumber *number = [NSNumber numberWithInt:TTClassEntryDayFriday];
     if (self.friButton.tag == TTClassEntryDayFriday) {
         self.friButton.backgroundColor = [UIColor whiteColor];
-        self.friButton.tag = 10;
+        self.friButton.tag = DEFAULT_TAG;
         NSInteger row = [NSNumber numberWithUnsignedLong:[self.datalistArray indexOfObject:number]].integerValue;
         [self.datalistArray removeObject:number];
         
-        Days *day = (Days *)[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:[number intValue] inSection:0]];
-        if ([self.pickedDays containsObject:day]) {
-            [self.pickedDays removeObject:day];
-        }
+//        Days *day = (Days *)[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:[number intValue] inSection:0]];
+//        if ([self.pickedDays containsObject:day]) {
+//            [self.pickedDays removeObject:day];
+//            self.subjectDetailsModel.days = [self.pickedDays copy];
+//        }
+        
+        [self removeSelectedDayAtIndex:row];
         
         NSIndexPath *indexpath = [NSIndexPath indexPathForRow:row inSection:2];
         [self.tableView deleteRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -299,14 +383,15 @@ NS_ENUM(int16_t, TTClassEntryDay) {
         [self.datalistArray addObject:number];
         NSInteger row = [NSNumber numberWithUnsignedLong:[self.datalistArray indexOfObject:number]].integerValue;
         
-        Days *day = (Days *)[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:[number intValue] inSection:0]];
-        [self.pickedDays addObject:day];
+//        Days *day = (Days *)[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:[number intValue] inSection:0]];
+//        [self.pickedDays addObject:day];
+//        self.subjectDetailsModel.days = [self.pickedDays copy];
+        
+        [self addSelectedDayWithDayValue:TTClassEntryDayFriday];
         
         NSIndexPath *indexpath = [NSIndexPath indexPathForRow:row inSection:2];
         [self.tableView insertRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationAutomatic];
         
-        
-        NSLog(@"Row: %ldClicked-Picked Days %@",(long)row,day.day);
     }
 
 }
@@ -314,14 +399,17 @@ NS_ENUM(int16_t, TTClassEntryDay) {
     NSNumber *number = [NSNumber numberWithInt:TTClassEntryDaySaturday];
     if (self.satButton.tag == TTClassEntryDaySaturday) {
         self.satButton.backgroundColor = [UIColor whiteColor];
-        self.satButton.tag = 10;
+        self.satButton.tag = DEFAULT_TAG;
         NSInteger row = [NSNumber numberWithUnsignedLong:[self.datalistArray indexOfObject:number]].integerValue;
         [self.datalistArray removeObject:number];
         
-        Days *day = (Days *)[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:[number intValue] inSection:0]];
-        if ([self.pickedDays containsObject:day]) {
-            [self.pickedDays removeObject:day];
-        }
+//        Days *day = (Days *)[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:[number intValue] inSection:0]];
+//        if ([self.pickedDays containsObject:day]) {
+//            [self.pickedDays removeObject:day];
+//            self.subjectDetailsModel.days = [self.pickedDays copy];
+//        }
+        
+        [self removeSelectedDayAtIndex:row];
         
         NSIndexPath *indexpath = [NSIndexPath indexPathForRow:row inSection:2];
         [self.tableView deleteRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -334,61 +422,24 @@ NS_ENUM(int16_t, TTClassEntryDay) {
         [self.datalistArray addObject:number];
         NSInteger row = [NSNumber numberWithUnsignedLong:[self.datalistArray indexOfObject:number]].integerValue;
         
-        Days *day = (Days *)[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:[number intValue] inSection:0]];
+//        Days *day = (Days *)[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:[number intValue] inSection:0]];
+//        
+//        [self.pickedDays addObject:day];
+//        self.subjectDetailsModel.days = [self.pickedDays copy];
         
-        [self.pickedDays addObject:day];
+        [self addSelectedDayWithDayValue:TTClassEntryDaySaturday];
         
         NSIndexPath *indexpath = [NSIndexPath indexPathForRow:row inSection:2];
         [self.tableView insertRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationAutomatic];
         
-        
-        NSLog(@"Row: %ldClicked-Picked Days %@",(long)row,day.day);
     }
 
 }
 
 
 
-#pragma mark - Tableview Datasource & Delegate
+#pragma mark - Tableview Datasource
 
-
--(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return NO;
-}
-
--(BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return NO;
-}
-
--(UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return UITableViewCellEditingStyleNone;
-}
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-//    int section = indexPath.section;
-    
-    // if dynamic section make all rows the same height as row 0
-    if (indexPath.section == 2) {
-        return [super tableView:tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:indexPath.section]];
-    } else {
-        return [super tableView:tableView heightForRowAtIndexPath:indexPath];
-    }
-}
-
-- (NSInteger)tableView:(UITableView *)tableView indentationLevelForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-//    int section = indexPath.section;
-    
-    // if dynamic section make all rows the same indentation level as row 0
-    if (indexPath.section == 2) {
-        return [super tableView:tableView indentationLevelForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:indexPath.section]];
-    } else {
-        return [super tableView:tableView indentationLevelForRowAtIndexPath:indexPath];
-    }
-}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 2) {
@@ -415,10 +466,12 @@ NS_ENUM(int16_t, TTClassEntryDay) {
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"hh:mm a"];
         
-        NSArray *pickedArray = [self.pickedDays allObjects];
+       // NSArray *pickedArray = [self.subjectDetailsModel.days allObjects];
         
-        NSLog(@"Array is %@",pickedArray);
-        Days *pickeday = [pickedArray objectAtIndex:indexPath.row];
+       // NSLog(@"Array is %@",pickedArray);
+        //Days *pickeday = [pickedArray objectAtIndex:indexPath.row];
+        
+        Days *pickeday = [self.subjectDetailsModel.days objectAtIndex:indexPath.row];
         
         // Label of selected time
         cell.timeLabel.text = [NSString stringWithFormat:@"%@ to %@",[dateFormatter stringFromDate:pickeday.time.start],[dateFormatter stringFromDate:pickeday.time.end]];
@@ -433,18 +486,77 @@ NS_ENUM(int16_t, TTClassEntryDay) {
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//    Days *selectedDay = [_fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:0]];
-    NSArray *array = [self.pickedDays allObjects];
-    Days *selectedDay = [array objectAtIndex:indexPath.row];
+    //    Days *selectedDay = [_fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:0]];
     
+    if (indexPath.section == 1) {
+        NSLog(@"Selected cell ");
+    }
     if (indexPath.section == 2) {
+//        NSArray *array = [self.subjectDetailsModel.days allObjects];
+//        Days *selectedDay = [array objectAtIndex:indexPath.row];
+        
+        Days *selectedDay = [self.subjectDetailsModel.days objectAtIndex:indexPath.row];
+        
+        SubjectTime *time = [NSEntityDescription insertNewObjectForEntityForName:@"SubjectTime" inManagedObjectContext:selectedDay.managedObjectContext];
+        selectedDay.time = time;
+        
+        
+        
         SelectedDayTableViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"SelectedDayVC"];
-        [vc initWithDayTime:selectedDay.time];
+        
+        
+        
+        [vc initWithDayTime:time];
+//        [vc initWithSelectedDay:selectedDay];
         
         [self.navigationController pushViewController:vc animated:YES];
     }
 }
 
+
+
+#pragma mark - TableView Delegate
+
+-(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return NO;
+}
+
+-(BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return NO;
+}
+
+-(UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return UITableViewCellEditingStyleNone;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+//    int section = indexPath.section;
+    
+    // if dynamic section make all rows the same height as row 0
+    if (indexPath.section == 2) {
+        return [super tableView:tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:indexPath.section]];
+    } else {
+        return [super tableView:tableView heightForRowAtIndexPath:indexPath];
+    }
+}
+
+- (NSInteger)tableView:(UITableView *)tableView indentationLevelForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+//    int section = indexPath.section;
+    
+    // if dynamic section make all rows the same indentation level as row 0
+    if (indexPath.section == 2) {
+        return [super tableView:tableView indentationLevelForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:indexPath.section]];
+    } else {
+        return [super tableView:tableView indentationLevelForRowAtIndexPath:indexPath];
+    }
+}
+
+/*
 #pragma mark - Result controller
 
 - (NSFetchedResultsController *)fetchedResultsController
@@ -456,7 +568,7 @@ NS_ENUM(int16_t, TTClassEntryDay) {
     
     NSEntityDescription *entity = [NSEntityDescription
                                    entityForName:@"Days"
-                                   inManagedObjectContext:self.appDelegate.managedObjectContext];
+                                   inManagedObjectContext:self.subjectDetailsModel.managedObjectContext];
     [fetchRequest setEntity:entity];
     
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc]
@@ -466,7 +578,7 @@ NS_ENUM(int16_t, TTClassEntryDay) {
     [fetchRequest setSortDescriptors:sortDescriptors];
     
     NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc]  initWithFetchRequest:fetchRequest
-                                                                                                 managedObjectContext:self.appDelegate.managedObjectContext
+                                                                                                 managedObjectContext:self.subjectDetailsModel.managedObjectContext
                                                                                                    sectionNameKeyPath:nil
                                                                                                             cacheName:@"Root"];
     
@@ -480,32 +592,67 @@ NS_ENUM(int16_t, TTClassEntryDay) {
     
     return _fetchedResultsController;
 }
-
+*/
 
 - (IBAction)savePressed:(id)sender {
-    self.subjectDetails = [NSEntityDescription insertNewObjectForEntityForName:@"SubjectDetails" inManagedObjectContext:self.appDelegate.managedObjectContext];
+//    self.subjectDetailsModel = [NSEntityDescription insertNewObjectForEntityForName:@"SubjectDetails" inManagedObjectContext:self.appDelegate.managedObjectContext];
 
     
-    self.subjectDetails.subject = self.subjectTextField.text;
-    self.subjectDetails.teacher = self.lecturerTextField.text;
-    self.subjectDetails.venue = self.classRoomTextField.text;
-    self.subjectDetails.semLength = [self.semesterTextField.text intValue];
+    self.subjectDetailsModel.subject = self.subjectTextField.text;
+    self.subjectDetailsModel.teacher = self.lecturerTextField.text;
+    self.subjectDetailsModel.venue = self.classRoomTextField.text;
+    self.subjectDetailsModel.semLength = [NSNumber numberWithInt:[self.semesterTextField.text intValue]];
     
     
-    self.subjectDetails.days = self.pickedDays;
-    
-    
-    NSError *error;
-    if ([self.appDelegate.managedObjectContext hasChanges] && ![self.appDelegate.managedObjectContext save:&error]) {
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
+//    self.subjectDetailsModel.days = self.pickedDays;
+    for (Days *selectedDay in self.subjectDetailsModel.days) {
+        [self scheduleNotificationForDay:selectedDay];
     }
+    
+    
+    
+    NSError *error = nil;
+    [self.subjectDetailsModel.managedObjectContext save:&error];
     
     [self dismissViewControllerAnimated:YES completion:nil];
     
 }
 
 - (IBAction)cancelPressed:(id)sender {
+    [self.subjectDetailsModel.managedObjectContext deleteObject:self.subjectDetailsModel];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
+// when tableview is scrolled then the keyboard will get dismissed no matter which keyboard.
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [[self view]endEditing:YES];
+}
+
+-(void)scheduleNotificationForDay:(Days *)day {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"hh:mm a"];
+    
+    UILocalNotification *localNotification = [[UILocalNotification alloc]init];
+    localNotification.fireDate = [self fixNotificationDate:day.time.start];
+    NSLog(@"Day is %@ & time is %@",day.day,[dateFormatter stringFromDate:day.time.start]);
+    localNotification.alertBody = @"Hey!!! You have a lecture to attend";
+    localNotification.timeZone = [NSTimeZone defaultTimeZone];
+    [[UIApplication sharedApplication]scheduleLocalNotification:localNotification];
+    
+}
+
+
+-(NSDate *)fixNotificationDate:(NSDate *)dateToFix {
+    NSCalendarUnit unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth |  NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    
+    NSDateComponents *dateComponents = [calendar components:unitFlags fromDate:dateToFix];
+    dateComponents.second = 0;
+    
+    NSDate *fixedDate = [calendar dateFromComponents:dateComponents];
+    
+    return fixedDate;
+
+}
+
 @end

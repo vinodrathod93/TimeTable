@@ -23,21 +23,14 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    NSError *error;
+//    UILocalNotification *app_localNotification = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
+//    
+//    if (app_localNotification) {
+//        [application cancelAllLocalNotifications];
+//    }
     
-    // Test listing all FailedBankInfos from the store
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"SubjectDetails"
-                                              inManagedObjectContext:self.managedObjectContext];
-    [fetchRequest setEntity:entity];
-    NSArray *fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    for (SubjectDetails *info in fetchedObjects) {
-        NSLog(@"Subject: %@", info.subject);
-        NSLog(@"Teacher: %@", info.teacher);
-        
-        for (Days *day in info.days) {
-            NSLog(@"Days: %@",day.day);
-        }
+    if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]) {
+        [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert | UIUserNotificationTypeSound | UIUserNotificationTypeBadge categories:nil]];
     }
     
     return YES;
@@ -65,6 +58,10 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     // Saves changes in the application's managed object context before the application terminates.
     [self saveContext];
+}
+
+-(void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+    NSLog(@"Received Notification %@",notification.alertBody);
 }
 
 #pragma mark - Core Data stack

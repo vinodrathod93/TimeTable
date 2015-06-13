@@ -14,7 +14,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *subjectLabel;
 @property (weak, nonatomic) IBOutlet UILabel *teacherLabel;
 @property (weak, nonatomic) IBOutlet UILabel *classroomLabel;
-@property (weak, nonatomic) IBOutlet UILabel *timing;
+@property (weak, nonatomic) IBOutlet UILabel *daysOfClass;
 
 - (void)configureCellForEntry:(SubjectDetails *)detail;
 

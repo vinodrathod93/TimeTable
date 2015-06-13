@@ -2,7 +2,7 @@
 //  SubjectDetails.h
 //  TimeTable
 //
-//  Created by Vinod Rathod on 24/04/15.
+//  Created by Vinod Rathod on 13/06/15.
 //  Copyright (c) 2015 Vinod Rathod. All rights reserved.
 //
 
@@ -13,18 +13,23 @@
 
 @interface SubjectDetails : NSManagedObject
 
-@property (nonatomic) int16_t semLength;
+@property (nonatomic, retain) NSNumber * semLength;
 @property (nonatomic, retain) NSString * subject;
 @property (nonatomic, retain) NSString * teacher;
 @property (nonatomic, retain) NSString * venue;
-@property (nonatomic, retain) NSSet *days;
+@property (nonatomic, retain) NSOrderedSet *days;
 @end
 
 @interface SubjectDetails (CoreDataGeneratedAccessors)
 
+- (void)insertObject:(Days *)value inDaysAtIndex:(NSUInteger)idx;
+- (void)removeObjectFromDaysAtIndex:(NSUInteger)idx;
+- (void)insertDays:(NSArray *)value atIndexes:(NSIndexSet *)indexes;
+- (void)removeDaysAtIndexes:(NSIndexSet *)indexes;
+- (void)replaceObjectInDaysAtIndex:(NSUInteger)idx withObject:(Days *)value;
+- (void)replaceDaysAtIndexes:(NSIndexSet *)indexes withDays:(NSArray *)values;
 - (void)addDaysObject:(Days *)value;
 - (void)removeDaysObject:(Days *)value;
-- (void)addDays:(NSSet *)values;
-- (void)removeDays:(NSSet *)values;
-
+- (void)addDays:(NSOrderedSet *)values;
+- (void)removeDays:(NSOrderedSet *)values;
 @end

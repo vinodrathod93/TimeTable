@@ -44,10 +44,12 @@
     self.time = time;
 }
 
--(void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-    
-}
+//-(void)initWithSelectedDay:(Days *)selectedDayModel;
+//{
+//    self.selectedDay = selectedDayModel;
+//}
+
+
 - (void)setupTime {
     NSLog(@"Setup Time");
     
@@ -113,6 +115,11 @@
     
     self.startTimePickerIsShowing = YES;
     
+    self.time.start= self.startTimePicker.date;
+//    self.selectedDay.time.start = self.startTimePicker.date;
+    
+    self.startTime.text = [self.dateFormatter stringFromDate:self.startTimePicker.date];
+    
     [self.tableView beginUpdates];
     
     [self.tableView endUpdates];
@@ -151,6 +158,9 @@
 - (void)showEndTimePicker {
     
     self.endTimePickerIsShowing = YES;
+    
+    // End time on EndTimePicker starts with the time selected by the user on startTimePicker
+    self.endTimePicker.date = self.startTimePicker.date;
     
     [self.tableView beginUpdates];
     
@@ -191,28 +201,33 @@
 - (IBAction)startTimeChanged:(UIDatePicker *)sender {
     self.startTime.text = [self.dateFormatter stringFromDate:sender.date];
     self.selectedStartTime = sender.date;
-    self.time.start = sender.date;
     
-    NSError *error = nil;
-    if (![self.time.managedObjectContext save:&error]) {
-        NSLog(@"Core data error %@, %@", error, [error userInfo]);
-        abort();
-    }
+    self.time.start = sender.date;
+//    self.selectedDay.time.start = sender.date;
+    
+//    NSError *error = nil;
+//    if (![self.time.managedObjectContext save:&error]) {
+//        NSLog(@"Core data error %@, %@", error, [error userInfo]);
+//        abort();
+//    }
     
 }
 - (IBAction)endTimeChanged:(UIDatePicker *)sender {
     self.endTime.text = [self.dateFormatter stringFromDate:sender.date];
     self.selectedEndTime = sender.date;
-    self.time.end = sender.date;
     
-    NSError *error = nil;
-    if (![self.time.managedObjectContext save:&error]) {
-        NSLog(@"Core data error %@, %@", error, [error userInfo]);
-        abort();
-    }
+    self.time.end = sender.date;
+//    self.selectedDay.time.end = sender.date;
+    
+//    NSError *error = nil;
+//    if (![self.time.managedObjectContext save:&error]) {
+//        NSLog(@"Core data error %@, %@", error, [error userInfo]);
+//        abort();
+//    }
 }
 
 
+/*
 #pragma mark - Result controller
 
 - (NSFetchedResultsController *)fetchedResultsController
@@ -224,7 +239,7 @@
     
     NSEntityDescription *entity = [NSEntityDescription
                                    entityForName:@"SubjectTime"
-                                   inManagedObjectContext:self.time.managedObjectContext];
+                                   inManagedObjectContext:self.selectedDay.managedObjectContext];
     [fetchRequest setEntity:entity];
     
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc]
@@ -234,7 +249,7 @@
     [fetchRequest setSortDescriptors:sortDescriptors];
     
     NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc]  initWithFetchRequest:fetchRequest
-                                                                                                 managedObjectContext:self.time.managedObjectContext
+                                                                                                 managedObjectContext:self.selectedDay.managedObjectContext
                                                                                                    sectionNameKeyPath:nil
                                                                                                             cacheName:nil];
     
@@ -248,6 +263,6 @@
     
     return _fetchedResultsController;
 }
-
+*/
 
 @end
