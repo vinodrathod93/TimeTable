@@ -1,16 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7549" systemVersion="14A389" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Attendance" representedClassName="Attendance" syncable="YES">
+        <attribute name="attended" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="canbeMissed" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="missed" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="totalLecture" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="dayInAttendance" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Days" inverseName="attendanceToDay" inverseEntity="Days" syncable="YES"/>
+        <relationship name="subjectAttendance" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SubjectDetails" inverseName="attendance" inverseEntity="SubjectDetails" syncable="YES"/>
+    </entity>
     <entity name="Days" representedClassName="Days" syncable="YES">
         <attribute name="day" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="dayID" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="attendanceToDay" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Attendance" inverseName="dayInAttendance" inverseEntity="Attendance" syncable="YES"/>
         <relationship name="detail" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SubjectDetails" inverseName="days" inverseEntity="SubjectDetails" syncable="YES"/>
         <relationship name="time" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="SubjectTime" inverseName="day" inverseEntity="SubjectTime" syncable="YES"/>
     </entity>
     <entity name="SubjectDetails" representedClassName="SubjectDetails" syncable="YES">
-        <attribute name="semLength" optional="YES" attributeType="Integer 16" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="semLength" optional="YES" attributeType="Integer 32" defaultValueString="0.0" syncable="YES"/>
         <attribute name="subject" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="teacher" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="venue" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="attendance" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Attendance" inverseName="subjectAttendance" inverseEntity="Attendance" syncable="YES"/>
         <relationship name="days" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Days" inverseName="detail" inverseEntity="Days" syncable="YES"/>
     </entity>
     <entity name="SubjectTime" representedClassName="SubjectTime" syncable="YES">
@@ -19,8 +29,9 @@
         <relationship name="day" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Days" inverseName="time" inverseEntity="Days" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Days" positionX="-119" positionY="-27" width="128" height="103"/>
-        <element name="SubjectDetails" positionX="-306" positionY="-162" width="128" height="120"/>
+        <element name="Attendance" positionX="-117" positionY="-9" width="128" height="135"/>
+        <element name="Days" positionX="-119" positionY="-27" width="128" height="120"/>
+        <element name="SubjectDetails" positionX="-306" positionY="-162" width="128" height="135"/>
         <element name="SubjectTime" positionX="70" positionY="90" width="128" height="88"/>
     </elements>
 </model>

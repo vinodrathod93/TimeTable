@@ -8,15 +8,18 @@
 
 #import "ClassListViewController.h"
 #import "DetailTableViewController.h"
+#import "UserDashboardViewController.h"
 #import "ListTableViewCell.h"
 #import "NewClassTableViewController.h"
+#import "MainDashBoardPageController.h"
 #import "AppDelegate.h"
-#import "ViewController.h"
 
 @interface ClassListViewController ()<NSFetchedResultsControllerDelegate>
 
 @property (nonatomic, strong)NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, strong)NSManagedObjectContext *managedObjectContext;
+
+@property (nonatomic, strong)NSArray *subjectDetailResults;
 
 @end
 
@@ -25,10 +28,41 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+//    for (NSString *family in [UIFont familyNames]) {
+//        NSLog(@"   ----%@----",family);
+//        
+//        for (NSString *font in [UIFont fontNamesForFamilyName:family]) {
+//            NSLog(@"        %@",font);
+//        }
+//    }
+    
+    
+    
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@""
+                                                                             style:UIBarButtonItemStylePlain
+                                                                            target:nil
+                                                                            action:nil];
+    
+    self.view.backgroundColor = [UIColor colorWithRed:236/255.0f green:240/255.0f blue:241/255.0f alpha:1.0f];
+    
     AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
     self.managedObjectContext = appDelegate.managedObjectContext;
     
     [self.fetchedResultsController performFetch:nil];
+    
+    
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(handleAttending:) name:@"studentAttending" object:nil];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(handleNotAttending:) name:@"studentNotAttending" object:nil];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(handleHoliday:) name:@"studentHaveHoliday" object:nil];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(handleExtraCurricular:) name:@"studentHaveExtraCurricular" object:nil];
+    
+    
+//    self.tableView.estimatedRowHeight = 100;
+//    self.tableView.rowHeight = UITableViewAutomaticDimension;
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -41,8 +75,8 @@
     NewClassTableViewController *newClassVC = [self.storyboard instantiateViewControllerWithIdentifier:@"newClass"];
     UINavigationController *navigationViewController = [[UINavigationController alloc]initWithRootViewController:newClassVC];
     
-    SubjectDetails *subjectDetails = [NSEntityDescription insertNewObjectForEntityForName:@"SubjectDetails" inManagedObjectContext:self.managedObjectContext];
-    newClassVC.subjectDetailsModel = subjectDetails;
+    self.subjectDetailsModel = [NSEntityDescription insertNewObjectForEntityForName:@"SubjectDetails" inManagedObjectContext:self.managedObjectContext];
+    newClassVC.subjectDetailsModel = self.subjectDetailsModel;
     
     [self presentViewController:navigationViewController animated:YES completion:nil];
 }
@@ -67,14 +101,22 @@
     
     SubjectDetails *detail = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
-    NSLog(@"Array data of the subject details ---->>>>>%@", detail);
+    NSLog(@"Attended ----> %@",detail.attendance.attended);
+    
+    NSLog(@"subject details ---->>>>>%@", detail.subject);
     [cell configureCellForEntry:detail];
     
     return cell;
     
 }
 
-
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section ==0) {
+        return 83.0f;
+    }
+    
+    return 0;
+}
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
     return UITableViewCellEditingStyleDelete;
@@ -83,8 +125,33 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     SubjectDetails *details = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
+    Attendance *attendance = details.attendance;
+    [self.managedObjectContext deleteObject:attendance];
+    
+    for (SubjectTime *time in details.days) {
+        [self.managedObjectContext deleteObject:time];
+    }
+    
+    for (Days *day in details.days) {
+        [self.managedObjectContext deleteObject:day];
+    }
+    
+    
+    
+    NSArray *allNotifications = [[UIApplication sharedApplication]scheduledLocalNotifications];
+    
+    for (UILocalNotification *notification in allNotifications) {
+        NSDictionary *currentUserInfo = notification.userInfo;
+        NSString *uidString = [currentUserInfo objectForKey:@"uid"];
+        
+        if ([uidString isEqualToString:details.subject]) {
+            [[UIApplication sharedApplication]cancelLocalNotification:notification];
+        }
+    }
     
     [self.managedObjectContext deleteObject:details];
+    
+    
     
     NSError *error = nil;
     if (![self.managedObjectContext save:&error]) {
@@ -104,11 +171,13 @@
     [fetchRequest setEntity:entity];
     
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc]
-                                        initWithKey:@"days"
+                                        initWithKey:@"venue"
                                         ascending:NO];
     
     NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
     [fetchRequest setSortDescriptors:sortDescriptors];
+    
+    
     
     _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
     _fetchedResultsController.delegate = self;
@@ -155,11 +224,7 @@
    
 }
 
-- (IBAction)searchTapped:(id)sender {
-    ViewController *searchVC = [[ViewController alloc]init];
-    searchVC.managedObjectContext = self.managedObjectContext;
-    [self.navigationController presentViewController:searchVC animated:YES completion:nil];
-}
+
 
 -(DetailViewModel *)detailViewAtIndexPath:(NSIndexPath *)indexPath {
     DetailViewModel *viewModel = [[DetailViewModel alloc]initWithModel:[self subjectDetailAtIndexPath:indexPath]];
@@ -181,5 +246,120 @@
         DetailTableViewController *detailVC = segue.destinationViewController;
         detailVC.viewModel = [self detailViewAtIndexPath:indexPath];
     }
+    
 }
+- (IBAction)pressedOnDashboard:(id)sender {
+    
+//    UserDashboardViewController *dashboardVC = [[UserDashboardViewController alloc]initWithNibName:@"UserDashboardViewController" bundle:nil];
+    
+    
+    MainDashBoardPageController *dashVC = [[MainDashBoardPageController alloc]init];
+    UINavigationController *navVC = [[UINavigationController alloc]initWithRootViewController:dashVC];
+    [self presentViewController:navVC animated:YES completion:nil];
+    
+}
+
+#pragma mark - Handle Notification Action
+
+-(void)handleAttending:(NSNotification *)notification {
+    
+    __block NSUInteger value;
+    __block NSError *error = nil;
+    
+    NSLog(@"fetched Results %@",self.subjectDetailResults);
+    [self.fetchedResultsController.fetchedObjects enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        
+        SubjectDetails *details = obj;
+        
+        NSString *receivedSubject = [notification.userInfo objectForKey:@"uid"];
+        
+        if ([receivedSubject isEqual:details.subject]) {
+            value =  [details.attendance.attended intValue];
+            NSLog(@"Value is %lu",(unsigned long)value);
+            
+            value++;
+            
+            details.attendance.attended = [NSNumber numberWithInteger:value];
+            NSLog(@"Attendance is %@",details.attendance);
+            
+            if (![self.managedObjectContext save:&error]) {
+                NSLog(@"Saving changes failed %@",error);
+            }
+            
+        }
+    }];
+    
+    
+    
+
+}
+
+-(void)handleNotAttending:(NSNotification *)notification {
+    
+    NSLog(@"Not Attending");
+    
+    __block int value;
+    __block NSError *error = nil;
+    
+    [self.fetchedResultsController.fetchedObjects enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        SubjectDetails *details = obj;
+        
+        NSString *receivedSubject = [notification.userInfo objectForKey:@"uid"];
+        
+        if ([receivedSubject isEqual:details.subject]) {
+            value =  [details.attendance.missed intValue];
+            NSLog(@"Value is %lu",(unsigned long)value);
+            
+            value++;
+            
+            details.attendance.missed = [NSNumber numberWithInteger:value];
+            NSLog(@"Attendance is %@",details.attendance);
+            
+            if (![self.managedObjectContext save:&error]) {
+                NSLog(@"Saving changes failed %@",error);
+            }
+            
+        }
+    }];
+    
+}
+
+-(void)handleHoliday:(NSNotification *)notification {
+    
+    NSLog(@"Holiday");
+    
+    __block int value;
+    __block NSError *error = nil;
+    
+    [self.fetchedResultsController.fetchedObjects enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        SubjectDetails *details = obj;
+        
+        NSString *receivedSubject = [notification.userInfo objectForKey:@"uid"];
+        
+        if ([receivedSubject isEqual:details.subject]) {
+            value =  [details.attendance.totalLecture intValue];
+            NSLog(@"Value is %lu",(unsigned long)value);
+            
+            value--;
+            
+            details.attendance.totalLecture = [NSNumber numberWithInteger:value];
+            NSLog(@"Attendance is %@",details.attendance);
+            
+            if (![self.managedObjectContext save:&error]) {
+                NSLog(@"Saving changes failed %@",error);
+            }
+            
+        }
+    }];
+    
+    
+}
+
+-(void)handleExtraCurricular:(NSNotification *)notification {
+    [self handleAttending:notification];
+    
+}
+
+
+
 @end

@@ -7,9 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Attendance.h"
+#import "SubjectDetails.h"
 
 @interface ClassListViewController : UITableViewController
 
 
-- (IBAction)searchTapped:(id)sender;
+@property(nonatomic, strong) Attendance *attendance;
+@property(nonatomic, strong) SubjectDetails *subjectDetailsModel;
+
 @end

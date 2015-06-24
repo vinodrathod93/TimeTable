@@ -23,15 +23,59 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-//    UILocalNotification *app_localNotification = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
-//    
-//    if (app_localNotification) {
-//        [application cancelAllLocalNotifications];
-//    }
     
-    if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]) {
-        [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert | UIUserNotificationTypeSound | UIUserNotificationTypeBadge categories:nil]];
-    }
+    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:22/255.0f green:160/255.0f blue:133/255.0f alpha:1.0f]];
+    [[UINavigationBar appearance] setTintColor:[UIColor colorWithRed:236/255.0f green:240/255.0f blue:241/255.0f alpha:1.0f]];
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor colorWithRed:236/255.0f green:240/255.0f blue:241/255.0f alpha:1.0f],
+        NSFontAttributeName:[UIFont fontWithName:@"AvenirNext-Medium" size:21]}];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    
+    
+    UIMutableUserNotificationAction *attendingAction = [[UIMutableUserNotificationAction alloc]init];
+    [attendingAction setActivationMode:UIUserNotificationActivationModeBackground];
+    [attendingAction setTitle:@"Attending"];
+    [attendingAction setIdentifier:@"ACTION_ATTENDING"];
+    [attendingAction setDestructive:NO];
+    [attendingAction setAuthenticationRequired:YES];
+    
+    UIMutableUserNotificationAction *notAttendingAction = [[UIMutableUserNotificationAction alloc]init];
+    [notAttendingAction setActivationMode:UIUserNotificationActivationModeBackground];
+    [notAttendingAction setTitle:@"Not Attending"];
+    [notAttendingAction setIdentifier:@"ACTION_NOT_ATTENDING"];
+    [notAttendingAction setDestructive:NO];
+    [notAttendingAction setAuthenticationRequired:YES];
+    
+    UIMutableUserNotificationAction *holidayAction = [[UIMutableUserNotificationAction alloc]init];
+    [holidayAction setActivationMode:UIUserNotificationActivationModeBackground];
+    [holidayAction setTitle:@"Holiday"];
+    [holidayAction setIdentifier:@"ACTION_HOLIDAY"];
+    [holidayAction setDestructive:NO];
+    [holidayAction setAuthenticationRequired:YES];
+    
+    UIMutableUserNotificationAction *extraCurricularAction = [[UIMutableUserNotificationAction alloc]init];
+    [extraCurricularAction setActivationMode:UIUserNotificationActivationModeBackground];
+    [extraCurricularAction setTitle:@"Extra Curricular"];
+    [extraCurricularAction setIdentifier:@"EXTRA_CURRICULAR"];
+    [extraCurricularAction setDestructive:NO];
+    [extraCurricularAction setAuthenticationRequired:YES];
+    
+    // specify the category related to the above actions
+    
+    UIMutableUserNotificationCategory *category = [[UIMutableUserNotificationCategory alloc]init];
+    [category setIdentifier:@"CATEGORY"];
+    [category setActions:@[attendingAction, notAttendingAction, holidayAction, extraCurricularAction] forContext:UIUserNotificationActionContextDefault];
+    [category setActions:@[attendingAction, notAttendingAction] forContext:UIUserNotificationActionContextMinimal];
+    
+    // specify the settings for the above category
+    
+    NSSet *categoriesForSettings = [NSSet setWithObject:category];
+    
+    UIUserNotificationType types = UIUserNotificationTypeAlert|
+                                    UIUserNotificationTypeSound|
+                                    UIUserNotificationTypeBadge;
+    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:types categories:categoriesForSettings];
+    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+    
     
     return YES;
 }
@@ -60,9 +104,6 @@
     [self saveContext];
 }
 
--(void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
-    NSLog(@"Received Notification %@",notification.alertBody);
-}
 
 #pragma mark - Core Data stack
 
@@ -140,6 +181,41 @@
             abort();
         }
     }
+}
+
+#pragma mark - Notifications Methods 
+
+-(void)setupNotificationSettings {
+    
+    
+}
+
+-(void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+    NSLog(@"Received Notification %@",notification.alertBody);
+}
+
+-(void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forLocalNotification:(UILocalNotification *)notification completionHandler:(void (^)())completionHandler {
+    
+    NSDictionary *infoInNotification = notification.userInfo;
+    
+    if ([identifier isEqualToString:@"ACTION_ATTENDING"]) {
+        NSLog(@"attending");
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"studentAttending" object:nil userInfo:infoInNotification];
+    }
+    else if ([identifier isEqualToString:@"ACTION_NOT_ATTENDING"]) {
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"studentNotAttending" object:nil userInfo:infoInNotification];
+    }
+    else if ([identifier isEqualToString:@"ACTION_HOLIDAY"]) {
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"studentHaveHoliday" object:nil userInfo:infoInNotification];
+    }
+    else if ([identifier isEqualToString:@"EXTRA_CURRICULAR"]) {
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"studentHaveExtraCurricular" object:nil userInfo:infoInNotification];
+    }
+    
+    completionHandler();
 }
 
 

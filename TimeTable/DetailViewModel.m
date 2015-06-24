@@ -9,6 +9,7 @@
 #import "DetailViewModel.h"
 #import "Days.h"
 #import "SubjectTime.h"
+#import "Attendance.h"
 
 @interface DetailViewModel()
 
@@ -45,6 +46,7 @@
 // Private Method
 -(Days *)dayAtIndex:(NSInteger)index {
     
+    NSLog(@"Index %ld for model %@",(long)index, self.model.days);
     return [self.model.days objectAtIndex:index];
 }
 
@@ -74,6 +76,17 @@
 }
 -(NSString *)nameOfVenue {
     return [self.model venue];
+}
+
+-(NSString *)attendedValueInAttendance {
+    Attendance *tempAttendance = self.model.attendance;
+    NSLog(@"%@",tempAttendance);
+    return [NSString stringWithFormat:@"%@",[tempAttendance attended]];
+}
+
+-(NSString *)missedValueInAttendance {
+    Attendance *tempAttendance = self.model.attendance;
+    return [NSString stringWithFormat:@"%@",[tempAttendance missed]];
 }
 
 

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "SubjectDetails.h"
 #import "Days.h"
+#import "Attendance.h"
 #import "SelectedDayTableViewController.h"
 
 
@@ -18,13 +19,16 @@
 @property (weak, nonatomic) IBOutlet UITextField *semesterTextField;
 @property (weak, nonatomic) IBOutlet UITextField *lecturerTextField;
 @property (weak, nonatomic) IBOutlet UITextField *classRoomTextField;
-
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
-//@property (nonatomic,strong) NSManagedObjectContext* managedObjectContext;
+
+@property (nonatomic,assign) BOOL isEditing;
+@property (nonatomic,assign) BOOL loadForEditing;
+
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
 @property (nonatomic, strong) SubjectDetails *subjectDetailsModel;
 @property (strong, nonatomic) Days *daysModel;
+@property (strong, nonatomic) Attendance *attendance;
 
 @property (nonatomic, strong) NSMutableOrderedSet *pickedDays;
 

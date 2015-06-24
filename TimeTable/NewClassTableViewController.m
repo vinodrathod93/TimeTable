@@ -7,11 +7,13 @@
 //
 
 #import "NewClassTableViewController.h"
+#import "DetailTableViewController.h"
 #import "SelectedDayCell.h"
 #import "AppDelegate.h"
 #import "SubjectTime.h"
 
 #define DEFAULT_TAG 10
+#define DAY_SECTION 2
 
 NS_ENUM(int16_t, TTClassEntryDay) {
     TTClassEntryDayMonday = 0,
@@ -34,6 +36,7 @@ NS_ENUM(int16_t, TTClassEntryDay) {
 @property (nonatomic,strong) AppDelegate *appDelegate;
 @property (nonatomic) NSMutableArray *datalistArray;
 @property (nonatomic) NSArray *weekdays;
+@property (nonatomic, assign) BOOL insertingWhileEdit;
 
 @end
 
@@ -44,6 +47,16 @@ NS_ENUM(int16_t, TTClassEntryDay) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    NSLog(@"viewDidLoad");
+    
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@""
+                                                                             style:UIBarButtonItemStylePlain
+                                                                            target:nil
+                                                                            action:nil];
+    
+    
+    self.view.backgroundColor = [UIColor colorWithRed:236/255.0f green:240/255.0f blue:241/255.0f alpha:1.0f];
+    
     self.appDelegate = [UIApplication sharedApplication].delegate;
     
     self.datalistArray = [NSMutableArray array];
@@ -52,7 +65,6 @@ NS_ENUM(int16_t, TTClassEntryDay) {
     self.subjectTextField.delegate = self;
     self.lecturerTextField.delegate = self;
     self.classRoomTextField.delegate = self;
-    self.classRoomTextField.keyboardType = UIKeyboardTypeNumberPad;
     
     self.weekdays = @[@"Monday", @"Tuesday", @"Wednesday", @"Thursday", @"Friday", @"Saturday"];
     
@@ -60,68 +72,78 @@ NS_ENUM(int16_t, TTClassEntryDay) {
 
     self.pickedDays = [[NSMutableOrderedSet alloc] init];
     
-    /*
-    // Retrieve all tags
-    NSError *error;
-    if (![self.fetchedResultsController performFetch:&error]) {
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
-    }
-    
-    if (self.fetchedResultsController.fetchedObjects.count == 0) {
-        [self addAllDays];
-    }
-    
-    // Each tag attached to the details is included in the array
-    NSSet *days = self.subjectDetailsModel.days;
-    NSLog(@"%@",days);
-    
-    for (Days *day in days) {
+    if (self.isEditing) {
         
-        NSLog(@"ViewDidLoad-Picked days: %@",day.day);
-        [self.pickedDays addObject:day];
+        self.title = @"Edit Class";
+        self.subjectTextField.text = self.subjectDetailsModel.subject;
+        self.lecturerTextField.text = self.subjectDetailsModel.teacher;
+        self.classRoomTextField.text = self.subjectDetailsModel.venue;
         
+        
+        self.loadForEditing = YES;
+        
+        [self.subjectDetailsModel.days enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            
+            Days *editDay = obj;
+            int16_t dayNumber = [editDay.dayID intValue];
+            
+            switch (dayNumber) {
+                case 0:
+                    [self buttonPressed:self.monButton andTagValue:dayNumber];
+                    
+                    break;
+                    
+                case 1:
+                    [self buttonPressed:self.tueButton andTagValue:dayNumber];
+                    
+                    break;
+                    
+                case 2:
+                    [self buttonPressed:self.wedButton andTagValue:dayNumber];
+                    
+                    break;
+                    
+                case 3:
+                    [self buttonPressed:self.thuButon andTagValue:dayNumber];
+                    
+                    break;
+                    
+                case 4:
+                    [self buttonPressed:self.friButton andTagValue:dayNumber];
+                    
+                    break;
+                    
+                case 5:
+                    [self buttonPressed:self.satButton andTagValue:dayNumber];
+                    
+                    break;
+                    
+                default:
+                    break;
+            }
+            
+        }];
+        
+        self.loadForEditing = NO;
+        [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
     }
-     */
+    
+    
     
 }
 
 
 -(void)viewWillAppear:(BOOL)animated {
+    
+    NSLog(@"viewwillAppear");
     [super viewWillAppear:animated];
     [self.tableView reloadData];
 }
 
 
--(void)addAllDays {
-    for (int i=0; i<self.weekdays.count; i++) {
-        
-        // Entity of the Days
-        Days *daysModel = [NSEntityDescription insertNewObjectForEntityForName:@"Days" inManagedObjectContext:self
-                     .subjectDetailsModel.managedObjectContext];
-        
-        daysModel.day = self.weekdays[i];
-        daysModel.dayID = [NSString stringWithFormat:@"%d",i];
-        
-        // Entity of the Time
-        SubjectTime *time = [NSEntityDescription insertNewObjectForEntityForName:@"SubjectTime" inManagedObjectContext:self.subjectDetailsModel.managedObjectContext];
-//        time.day = self.daysModel;
-        daysModel.time = time;
-        
-        
-        NSError *error = nil;
-//        if (![self.daysModel.managedObjectContext save:&error]) {
-//            NSLog(@"Core data error %@, %@", error, [error userInfo]);
-//            abort();
-//        }
-        
-        [self.fetchedResultsController performFetch:&error];
-    }
-    
-}
-
-
 -(void)addSelectedDayWithDayValue:(NSInteger)value {
+    NSLog(@"addSelectedDayWithDayValue");
+    
     Days *dayModel = [NSEntityDescription insertNewObjectForEntityForName:@"Days" inManagedObjectContext:self.subjectDetailsModel.managedObjectContext];
     dayModel.day = self.weekdays[value];
     dayModel.dayID = [NSString stringWithFormat:@"%ld",(long)value];
@@ -133,18 +155,21 @@ NS_ENUM(int16_t, TTClassEntryDay) {
     
     self.subjectDetailsModel.days = [pickedDays copy];
     
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc]
-                                        initWithKey:@"dayID"
-                                        ascending:YES];
-    NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
-    [self.subjectDetailsModel.days sortedArrayUsingDescriptors:sortDescriptors];
 }
 
 -(void)removeSelectedDayAtIndex:(NSInteger)index {
     NSMutableOrderedSet *pickedDays = [self.subjectDetailsModel.days mutableCopy];
-    if (index < pickedDays.count && index >= 0 ) {
+    if (index < pickedDays.count && index >= 0) {
         [pickedDays removeObjectAtIndex:index];
         
+        Days *object = [self.subjectDetailsModel.days objectAtIndex:index];
+        
+        if ([self.subjectDetailsModel.days containsObject:object]) {
+            [self.subjectDetailsModel.managedObjectContext deleteObject:object];
+        }
+        
+    
+        NSLog(@"%@",self.subjectDetailsModel.days);
         self.subjectDetailsModel.days = [pickedDays copy];
     }
 }
@@ -152,286 +177,144 @@ NS_ENUM(int16_t, TTClassEntryDay) {
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
-    
     return YES;
 }
 
+-(void)buttonPressed:(UIButton *)button andTagValue:(int16_t)tagValue {
+    NSNumber *number = [NSNumber numberWithInt:tagValue];
+    
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    button.layer.cornerRadius = 22.5f;
+    button.backgroundColor = [self.tableView tintColor];
+    button.tag = tagValue;
+    
+    if (!self.loadForEditing) {
+        [self addSelectedDayWithDayValue:tagValue];
+    }
+    
+    [self.datalistArray addObject:number];
+    
+    NSInteger row = [NSNumber numberWithUnsignedLong:[self.datalistArray indexOfObject:number]].integerValue;
+    
+    NSIndexPath *indexpath = [NSIndexPath indexPathForRow:row inSection:DAY_SECTION];
+    [self.tableView insertRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
 
+-(void)buttonUnPressed:(UIButton *)button andTagValue:(int16_t)tagValue {
+    NSNumber *number = [NSNumber numberWithInt:tagValue];
+    
+    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    button.tag = DEFAULT_TAG;
+    button.backgroundColor = [UIColor whiteColor];
+    
+    NSInteger row = [NSNumber numberWithUnsignedLong:[self.datalistArray indexOfObject:number]].integerValue;
+    [self.datalistArray removeObject:number];
+    
+    [self removeSelectedDayAtIndex:row];
+    
+    NSInteger rowInSection = [self.tableView numberOfRowsInSection:DAY_SECTION];
+    
+    if (rowInSection > 0) {
+        NSIndexPath *indexpath = [NSIndexPath indexPathForRow:row inSection:DAY_SECTION];
+        [self.tableView deleteRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
+    
+}
+
+-(void)scrollTableViewDownToLastCell {
+    if (self.datalistArray.count > 0) {
+        NSInteger row = self.datalistArray.count-1;
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:DAY_SECTION] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    }
+}
 
 - (IBAction)monButtonClicked:(id)sender {
-    NSNumber *number = [NSNumber numberWithInt:TTClassEntryDayMonday];
+    if (self.isEditing) {
+        self.insertingWhileEdit = YES;
+    }
     
     if (self.monButton.tag == TTClassEntryDayMonday) {
-        self.monButton.backgroundColor = [UIColor whiteColor];
-        self.monButton.tag = DEFAULT_TAG;
-        
-        NSInteger row = [NSNumber numberWithUnsignedLong:[self.datalistArray indexOfObject:number]].integerValue;
-        [self.datalistArray removeObject:number];
-        
-        [self removeSelectedDayAtIndex:row];
-        
-        NSIndexPath *indexpath = [NSIndexPath indexPathForRow:row inSection:2];
-        [self.tableView deleteRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self buttonUnPressed:self.monButton andTagValue:TTClassEntryDayMonday];
         
     } else {
-        self.monButton.layer.cornerRadius = 22.5f;
-        self.monButton.backgroundColor = [self.tableView tintColor];
-        self.monButton.tag = TTClassEntryDayMonday;
+        [self buttonPressed:self.monButton andTagValue:TTClassEntryDayMonday];
+        [self scrollTableViewDownToLastCell];
         
         
-        [self addSelectedDayWithDayValue:TTClassEntryDayMonday];
-        
-        [self.datalistArray addObject:number];
-        NSInteger row = [NSNumber numberWithUnsignedLong:[self.datalistArray indexOfObject:number]].integerValue;
-        NSIndexPath *indexpath = [NSIndexPath indexPathForRow:row inSection:2];
-        [self.tableView insertRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationAutomatic];
     }
-    /*
-    NSNumber *number = [NSNumber numberWithInt:TTClassEntryDayMonday];
-    
-    if (self.monButton.tag == TTClassEntryDayMonday) {
-        self.monButton.backgroundColor = [UIColor whiteColor];
-        self.monButton.tag = DEFAULT_TAG;
-        NSInteger row = [NSNumber numberWithUnsignedLong:[self.datalistArray indexOfObject:number]].integerValue;
-        [self.datalistArray removeObject:number];
-        
-        Days *day = (Days *)[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:[number intValue] inSection:0]];
-        if ([self.pickedDays containsObject:day]) {
-            [self.pickedDays removeObject:day];
-            self.subjectDetailsModel.days = [self.pickedDays copy];
-        }
-        
-        NSIndexPath *indexpath = [NSIndexPath indexPathForRow:row inSection:2];
-        [self.tableView deleteRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        
-        
-
-    }
-    else {
-        self.monButton.layer.cornerRadius = 22.5f;
-        self.monButton.backgroundColor = [self.tableView tintColor];
-        self.monButton.tag = TTClassEntryDayMonday;
-        [self.datalistArray addObject:number];
-        NSInteger row = [NSNumber numberWithUnsignedLong:[self.datalistArray indexOfObject:number]].integerValue;
-        
-        Days *day = (Days *)[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:[number intValue] inSection:0]];
-        [self.pickedDays addObject:day];
-        self.subjectDetailsModel.days = [self.pickedDays copy];
-        
-        NSIndexPath *indexpath = [NSIndexPath indexPathForRow:row inSection:2];
-        [self.tableView insertRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        
-        NSLog(@"Row: %ldClicked-Picked Days %@",(long)row,day.day);
-    }
-    */
-    
 
 }
 - (IBAction)tueButtonClicked:(id)sender {
-    NSNumber *number = [NSNumber numberWithInt:TTClassEntryDayTuesday];
-    
+    if (self.isEditing) {
+        self.insertingWhileEdit = YES;
+    }
     
     if (self.tueButton.tag == TTClassEntryDayTuesday) {
-        self.tueButton.backgroundColor = [UIColor whiteColor];
-        self.tueButton.tag = DEFAULT_TAG;
-        
-        NSInteger row = [NSNumber numberWithUnsignedLong:[self.datalistArray indexOfObject:number]].integerValue;
-        [self.datalistArray removeObject:number];
-        
-//        Days *day = (Days *)[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:[number intValue] inSection:0]];
-//        if ([self.pickedDays containsObject:day]) {
-//            [self.pickedDays removeObject:day];
-//            self.subjectDetailsModel.days = [self.pickedDays copy];
-//        }
-        [self removeSelectedDayAtIndex:row];
-        
-        NSIndexPath *indexpath = [NSIndexPath indexPathForRow:row inSection:2];
-        [self.tableView deleteRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        
+        [self buttonUnPressed:self.tueButton andTagValue:TTClassEntryDayTuesday];
         
     }
     else {
-        self.tueButton.layer.cornerRadius = 22.5f;
-        self.tueButton.backgroundColor = [self.tableView tintColor];
-        self.tueButton.tag = TTClassEntryDayTuesday;
-        
-        [self.datalistArray addObject:number];
-        NSInteger row = [NSNumber numberWithUnsignedLong:[self.datalistArray indexOfObject:number]].integerValue;
-        
-//        Days *day = (Days *)[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:[number intValue] inSection:0]];
-//        [self.pickedDays addObject:day];
-//        self.subjectDetailsModel.days = [self.pickedDays copy];
-        
-        [self addSelectedDayWithDayValue:TTClassEntryDayTuesday];
-        
-        NSIndexPath *indexpath = [NSIndexPath indexPathForRow:row inSection:2];
-        [self.tableView insertRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        
-        
-//        NSLog(@"Row: %ldClicked-Picked Days %@",(long)row,day.day);
-        
+        [self buttonPressed:self.tueButton andTagValue:TTClassEntryDayTuesday];
+        [self scrollTableViewDownToLastCell];
     }
 
     
 }
 - (IBAction)wedButtonClicked:(id)sender {
-    NSNumber *number = [NSNumber numberWithInt:TTClassEntryDayWednesday];
+    if (self.isEditing) {
+        self.insertingWhileEdit = YES;
+    }
+    
     if (self.wedButton.tag == TTClassEntryDayWednesday) {
-        self.wedButton.backgroundColor = [UIColor whiteColor];
-        self.wedButton.tag = DEFAULT_TAG;
-        NSInteger row = [NSNumber numberWithUnsignedLong:[self.datalistArray indexOfObject:number]].integerValue;
-        [self.datalistArray removeObject:number];
-        
-//        Days *day = (Days *)[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:[number intValue] inSection:0]];
-//        if ([self.pickedDays containsObject:day]) {
-//            [self.pickedDays removeObject:day];
-//            self.subjectDetailsModel.days = [self.pickedDays copy];
-//        }
-        [self removeSelectedDayAtIndex:row];
-        
-        NSIndexPath *indexpath = [NSIndexPath indexPathForRow:row inSection:2];
-        [self.tableView deleteRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        
+        [self buttonUnPressed:self.wedButton andTagValue:TTClassEntryDayWednesday];
         
     }
     else {
-        self.wedButton.layer.cornerRadius = 22.5f;
-        self.wedButton.backgroundColor = [self.tableView tintColor];
-        self.wedButton.tag = TTClassEntryDayWednesday;
-        [self.datalistArray addObject:number];
-        NSInteger row = [NSNumber numberWithUnsignedLong:[self.datalistArray indexOfObject:number]].integerValue;
-        
-//        Days *day = (Days *)[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:[number intValue] inSection:0]];
-//        
-//        [self.pickedDays addObject:day];
-//        self.subjectDetailsModel.days = [self.pickedDays copy];
-        
-        [self addSelectedDayWithDayValue:TTClassEntryDayWednesday];
-        
-        NSIndexPath *indexpath = [NSIndexPath indexPathForRow:row inSection:2];
-        [self.tableView insertRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        
-        
-//        NSLog(@"Row: %ldClicked-Picked Days %@",(long)row,day.day);
+        [self buttonPressed:self.wedButton andTagValue:TTClassEntryDayWednesday];
+        [self scrollTableViewDownToLastCell];
     }
 
 }
 - (IBAction)thuButtonClicked:(id)sender {
-    NSNumber *number = [NSNumber numberWithInt:TTClassEntryDayThursday];
+    if (self.isEditing) {
+        self.insertingWhileEdit = YES;
+    }
+    
     if (self.thuButon.tag == TTClassEntryDayThursday) {
-        self.thuButon.backgroundColor = [UIColor whiteColor];
-        self.thuButon.tag = DEFAULT_TAG;
-        NSInteger row = [NSNumber numberWithUnsignedLong:[self.datalistArray indexOfObject:number]].integerValue;
-        [self.datalistArray removeObject:number];
-        
-//        Days *day = (Days *)[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:[number intValue] inSection:0]];
-//        if ([self.pickedDays containsObject:day]) {
-//            [self.pickedDays removeObject:day];
-//            self.subjectDetailsModel.days = [self.pickedDays copy];
-//        }
-        [self removeSelectedDayAtIndex:row];
-        
-        NSIndexPath *indexpath = [NSIndexPath indexPathForRow:row inSection:2];
-        [self.tableView deleteRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        
-        
+        [self buttonUnPressed:self.thuButon andTagValue:TTClassEntryDayThursday];
     }
     else {
-        self.thuButon.layer.cornerRadius = 22.5f;
-        self.thuButon.backgroundColor = [self.tableView tintColor];
-        self.thuButon.tag = TTClassEntryDayThursday;
-        [self.datalistArray addObject:number];
-        NSInteger row = [NSNumber numberWithUnsignedLong:[self.datalistArray indexOfObject:number]].integerValue;
-        
-//        Days *day = (Days *)[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:[number intValue] inSection:0]];
-//        [self.pickedDays addObject:day];
-//        self.subjectDetailsModel.days = [self.pickedDays copy];
-        
-        [self addSelectedDayWithDayValue:TTClassEntryDayThursday];
-        
-        NSIndexPath *indexpath = [NSIndexPath indexPathForRow:row inSection:2];
-        [self.tableView insertRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        
+        [self buttonPressed:self.thuButon andTagValue:TTClassEntryDayThursday];
+        [self scrollTableViewDownToLastCell];
     }
 
 }
 - (IBAction)friButtonClicked:(id)sender {
-    NSNumber *number = [NSNumber numberWithInt:TTClassEntryDayFriday];
+    if (self.isEditing) {
+        self.insertingWhileEdit = YES;
+    }
+    
     if (self.friButton.tag == TTClassEntryDayFriday) {
-        self.friButton.backgroundColor = [UIColor whiteColor];
-        self.friButton.tag = DEFAULT_TAG;
-        NSInteger row = [NSNumber numberWithUnsignedLong:[self.datalistArray indexOfObject:number]].integerValue;
-        [self.datalistArray removeObject:number];
-        
-//        Days *day = (Days *)[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:[number intValue] inSection:0]];
-//        if ([self.pickedDays containsObject:day]) {
-//            [self.pickedDays removeObject:day];
-//            self.subjectDetailsModel.days = [self.pickedDays copy];
-//        }
-        
-        [self removeSelectedDayAtIndex:row];
-        
-        NSIndexPath *indexpath = [NSIndexPath indexPathForRow:row inSection:2];
-        [self.tableView deleteRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        
+        [self buttonUnPressed:self.friButton andTagValue:TTClassEntryDayFriday];
         
     }
     else {
-        self.friButton.layer.cornerRadius = 22.5f;
-        self.friButton.backgroundColor = [self.tableView tintColor];
-        self.friButton.tag = TTClassEntryDayFriday;
-        [self.datalistArray addObject:number];
-        NSInteger row = [NSNumber numberWithUnsignedLong:[self.datalistArray indexOfObject:number]].integerValue;
-        
-//        Days *day = (Days *)[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:[number intValue] inSection:0]];
-//        [self.pickedDays addObject:day];
-//        self.subjectDetailsModel.days = [self.pickedDays copy];
-        
-        [self addSelectedDayWithDayValue:TTClassEntryDayFriday];
-        
-        NSIndexPath *indexpath = [NSIndexPath indexPathForRow:row inSection:2];
-        [self.tableView insertRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        
+        [self buttonPressed:self.friButton andTagValue:TTClassEntryDayFriday];
+        [self scrollTableViewDownToLastCell];
     }
 
 }
 - (IBAction)satButtonClicked:(id)sender {
-    NSNumber *number = [NSNumber numberWithInt:TTClassEntryDaySaturday];
+    if (self.isEditing) {
+        self.insertingWhileEdit = YES;
+    }
+    
     if (self.satButton.tag == TTClassEntryDaySaturday) {
-        self.satButton.backgroundColor = [UIColor whiteColor];
-        self.satButton.tag = DEFAULT_TAG;
-        NSInteger row = [NSNumber numberWithUnsignedLong:[self.datalistArray indexOfObject:number]].integerValue;
-        [self.datalistArray removeObject:number];
-        
-//        Days *day = (Days *)[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:[number intValue] inSection:0]];
-//        if ([self.pickedDays containsObject:day]) {
-//            [self.pickedDays removeObject:day];
-//            self.subjectDetailsModel.days = [self.pickedDays copy];
-//        }
-        
-        [self removeSelectedDayAtIndex:row];
-        
-        NSIndexPath *indexpath = [NSIndexPath indexPathForRow:row inSection:2];
-        [self.tableView deleteRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        
+        [self buttonUnPressed:self.satButton andTagValue:TTClassEntryDaySaturday];
     }
     else {
-        self.satButton.layer.cornerRadius = 22.5f;
-        self.satButton.backgroundColor = [self.tableView tintColor];
-        self.satButton.tag = TTClassEntryDaySaturday;
-        [self.datalistArray addObject:number];
-        NSInteger row = [NSNumber numberWithUnsignedLong:[self.datalistArray indexOfObject:number]].integerValue;
-        
-//        Days *day = (Days *)[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:[number intValue] inSection:0]];
-//        
-//        [self.pickedDays addObject:day];
-//        self.subjectDetailsModel.days = [self.pickedDays copy];
-        
-        [self addSelectedDayWithDayValue:TTClassEntryDaySaturday];
-        
-        NSIndexPath *indexpath = [NSIndexPath indexPathForRow:row inSection:2];
-        [self.tableView insertRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        
+        [self buttonPressed:self.satButton andTagValue:TTClassEntryDaySaturday];
+        [self scrollTableViewDownToLastCell];
     }
 
 }
@@ -442,6 +325,7 @@ NS_ENUM(int16_t, TTClassEntryDay) {
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    NSLog(@"numberOfRowsInSection");
     if (section == 2) {
         return [self.datalistArray count];
     } else {
@@ -451,68 +335,102 @@ NS_ENUM(int16_t, TTClassEntryDay) {
 
 -(UITableViewCell*)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath*)indexPath
 {
+    NSLog(@"cellForRowAtIndexPath");
+
     
     if (indexPath.section == 2) {
         // make dynamic row's cell
-        static NSString *CellIdentifier = @"Dynamic Cell";
+        static NSString *CellIdentifier = @"selectedCell";
         SelectedDayCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         
         if (!cell) {
             cell = [[SelectedDayCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
         
-        cell.dayLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:17];
+        
         int day = [(NSNumber *)[self.datalistArray objectAtIndex:indexPath.row] intValue];
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"hh:mm a"];
         
-       // NSArray *pickedArray = [self.subjectDetailsModel.days allObjects];
-        
-       // NSLog(@"Array is %@",pickedArray);
-        //Days *pickeday = [pickedArray objectAtIndex:indexPath.row];
         
         Days *pickeday = [self.subjectDetailsModel.days objectAtIndex:indexPath.row];
         
         // Label of selected time
-        cell.timeLabel.text = [NSString stringWithFormat:@"%@ to %@",[dateFormatter stringFromDate:pickeday.time.start],[dateFormatter stringFromDate:pickeday.time.end]];
+        
+        NSLog(@"%@",pickeday.time);
+        if (pickeday.time == nil) {
+            cell.timeLabel.text = @"Tap to Select Time";
+            cell.timeLabel.textColor = [UIColor lightGrayColor];
+        } else {
+            cell.timeLabel.textColor = [UIColor colorWithRed:22/255.0f green:160/255.0f blue:133/255.0f alpha:1.0f];
+            cell.timeLabel.text = [NSString stringWithFormat:@"%@ to %@",[dateFormatter stringFromDate:pickeday.time.start],[dateFormatter stringFromDate:pickeday.time.end]];
+        }
+        
         
         // Label of WeekDay
         cell.dayLabel.text = [self.weekdays objectAtIndex:day];
         
         return cell;
-    } else {
+    }
+    else {
         return [super tableView:tableView cellForRowAtIndexPath:indexPath];
     }
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //    Days *selectedDay = [_fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:0]];
-    
     if (indexPath.section == 1) {
         NSLog(@"Selected cell ");
     }
     if (indexPath.section == 2) {
-//        NSArray *array = [self.subjectDetailsModel.days allObjects];
-//        Days *selectedDay = [array objectAtIndex:indexPath.row];
         
         Days *selectedDay = [self.subjectDetailsModel.days objectAtIndex:indexPath.row];
         
-        SubjectTime *time = [NSEntityDescription insertNewObjectForEntityForName:@"SubjectTime" inManagedObjectContext:selectedDay.managedObjectContext];
-        selectedDay.time = time;
-        
-        
-        
+        SubjectTime *time;
         SelectedDayTableViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"SelectedDayVC"];
         
         
+        if (!self.isEditing || self.insertingWhileEdit) {
+            time = [NSEntityDescription insertNewObjectForEntityForName:@"SubjectTime" inManagedObjectContext:selectedDay.managedObjectContext];
+            selectedDay.time = time;
+        } else {
+            time = selectedDay.time;
+            vc.cameForEditing = YES;
+        }
         
+        NSLog(@"%@",time);
         [vc initWithDayTime:time];
-//        [vc initWithSelectedDay:selectedDay];
         
         [self.navigationController pushViewController:vc animated:YES];
     }
 }
 
+-(BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    NSLog(@"%d",(indexPath.section == DAY_SECTION));
+    return indexPath.section == DAY_SECTION;
+}
+
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    switch (section) {
+        case 0:
+            return @"Add Subject Details";
+            break;
+            
+        case 1:
+            return @"Select Days of Class";
+            break;
+            
+        case 2:
+            return @"Selected Days";
+            break;
+            
+        default:
+            break;
+    }
+    
+    return @"";
+}
 
 
 #pragma mark - TableView Delegate
@@ -556,60 +474,44 @@ NS_ENUM(int16_t, TTClassEntryDay) {
     }
 }
 
-/*
-#pragma mark - Result controller
 
-- (NSFetchedResultsController *)fetchedResultsController
-{
-    if (_fetchedResultsController != nil) {
-        return _fetchedResultsController;
+- (IBAction)savePressed:(id)sender {
+
+//    if (self.subjectTextField.text == nil) {
+//        NSLog(@"Subject Fields remaining");
+//    } else {
+//        UIAlertView *errorMessage = [[UIAlertView alloc]initWithTitle:@"Error" message:@"You have missed something to enter" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+//        [errorMessage show];
+//    }
+    
+    self.subjectDetailsModel.subject = [self.subjectTextField.text capitalizedString];
+    self.subjectDetailsModel.teacher = [self.lecturerTextField.text capitalizedString];
+    self.subjectDetailsModel.venue = [self.classRoomTextField.text capitalizedString];
+    self.subjectDetailsModel.semLength = [NSNumber numberWithInt:[self.semesterTextField.text intValue]];
+    
+    if (!self.isEditing) {
+        // Attendance
+        self.attendance = [NSEntityDescription insertNewObjectForEntityForName:@"Attendance" inManagedObjectContext:self.subjectDetailsModel.managedObjectContext];
+        self.subjectDetailsModel.attendance = self.attendance;
     }
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     
-    NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:@"Days"
-                                   inManagedObjectContext:self.subjectDetailsModel.managedObjectContext];
-    [fetchRequest setEntity:entity];
     
+    
+    // Sorted all the selected day according to the weekdays and copied back to the managedObjectContext.
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc]
                                         initWithKey:@"dayID"
                                         ascending:YES];
-    NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
-    [fetchRequest setSortDescriptors:sortDescriptors];
+    NSArray *sortDescriptors = @[sortDescriptor];
+    NSArray *sortedDays = [self.subjectDetailsModel.days sortedArrayUsingDescriptors:sortDescriptors];
     
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc]  initWithFetchRequest:fetchRequest
-                                                                                                 managedObjectContext:self.subjectDetailsModel.managedObjectContext
-                                                                                                   sectionNameKeyPath:nil
-                                                                                                            cacheName:@"Root"];
+    self.subjectDetailsModel.days = [[NSOrderedSet orderedSetWithArray:sortedDays] copy];
     
-    self.fetchedResultsController = aFetchedResultsController;
     
-    NSError *error = nil;
-    if (![self.fetchedResultsController performFetch:&error]) {
-        NSLog(@"Core data error %@, %@", error, [error userInfo]);
-        abort();
+    for (Days *selectedDay in sortedDays) {
+        NSLog(@"Day Selected for notification issue -> %@",selectedDay);
+        [self scheduleNotificationForDay:selectedDay andForSubject:self.subjectDetailsModel];
+        self.subjectDetailsModel.attendance.dayInAttendance = selectedDay;
     }
-    
-    return _fetchedResultsController;
-}
-*/
-
-- (IBAction)savePressed:(id)sender {
-//    self.subjectDetailsModel = [NSEntityDescription insertNewObjectForEntityForName:@"SubjectDetails" inManagedObjectContext:self.appDelegate.managedObjectContext];
-
-    
-    self.subjectDetailsModel.subject = self.subjectTextField.text;
-    self.subjectDetailsModel.teacher = self.lecturerTextField.text;
-    self.subjectDetailsModel.venue = self.classRoomTextField.text;
-    self.subjectDetailsModel.semLength = [NSNumber numberWithInt:[self.semesterTextField.text intValue]];
-    
-    
-//    self.subjectDetailsModel.days = self.pickedDays;
-    for (Days *selectedDay in self.subjectDetailsModel.days) {
-        [self scheduleNotificationForDay:selectedDay];
-    }
-    
-    
     
     NSError *error = nil;
     [self.subjectDetailsModel.managedObjectContext save:&error];
@@ -619,7 +521,17 @@ NS_ENUM(int16_t, TTClassEntryDay) {
 }
 
 - (IBAction)cancelPressed:(id)sender {
-    [self.subjectDetailsModel.managedObjectContext deleteObject:self.subjectDetailsModel];
+    
+    if (!self.isEditing) {
+        [self.subjectDetailsModel.managedObjectContext deleteObject:self.subjectDetailsModel];
+    } else if (self.isEditing) {
+        NSLog(@"Cancel Pressed");
+        
+        if ([self.subjectDetailsModel.managedObjectContext hasChanges]) {
+            [self.subjectDetailsModel.managedObjectContext rollback];
+        }
+    }
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -628,31 +540,56 @@ NS_ENUM(int16_t, TTClassEntryDay) {
     [[self view]endEditing:YES];
 }
 
--(void)scheduleNotificationForDay:(Days *)day {
+-(void)scheduleNotificationForDay:(Days *)day andForSubject:(SubjectDetails *)subjectDetail {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"hh:mm a"];
     
+    
+    NSString *startTime = [dateFormatter stringFromDate:day.time.start];
+    
+    NSDate *tenMinEarlierTime = [day.time.start dateByAddingTimeInterval:-60*10];
+    
+    //    NSData *archivedData = [NSKeyedArchiver archivedDataWithRootObject:subjectDetail];
+
+    NSDictionary *infoDict = [NSDictionary dictionaryWithObjectsAndKeys:subjectDetail.subject, @"uid", nil];
+    
+    
     UILocalNotification *localNotification = [[UILocalNotification alloc]init];
-    localNotification.fireDate = [self fixNotificationDate:day.time.start];
-    NSLog(@"Day is %@ & time is %@",day.day,[dateFormatter stringFromDate:day.time.start]);
-    localNotification.alertBody = @"Hey!!! You have a lecture to attend";
+    localNotification.fireDate = [self fixNotificationDate:tenMinEarlierTime ofDay:day];
+    localNotification.alertBody = [NSString stringWithFormat:@"You have a %@ lecture in Classroom no. %@ at %@",subjectDetail.subject, subjectDetail.venue, startTime];
     localNotification.timeZone = [NSTimeZone defaultTimeZone];
+    localNotification.repeatInterval = NSCalendarUnitWeekOfYear;
+    localNotification.hasAction = YES;
+    localNotification.category = @"CATEGORY";
+    localNotification.userInfo = infoDict;
+    
     [[UIApplication sharedApplication]scheduleLocalNotification:localNotification];
     
 }
 
 
--(NSDate *)fixNotificationDate:(NSDate *)dateToFix {
-    NSCalendarUnit unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth |  NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
-    NSCalendar *calendar = [NSCalendar currentCalendar];
+-(NSDate *)fixNotificationDate:(NSDate *)dateToFix ofDay:(Days *)day {
+    NSCalendarUnit unitFlags = NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond | NSCalendarUnitWeekOfYear;
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    
     
     NSDateComponents *dateComponents = [calendar components:unitFlags fromDate:dateToFix];
+    
+    NSNumber *value = [NSNumber numberWithInt:(day.dayID.intValue +2)];
+    NSLog(@"week day is %ld",(long)value.integerValue);
+    dateComponents.weekday = [value integerValue];
     dateComponents.second = 0;
+    
     
     NSDate *fixedDate = [calendar dateFromComponents:dateComponents];
     
     return fixedDate;
 
 }
+
+
+
+
+
 
 @end

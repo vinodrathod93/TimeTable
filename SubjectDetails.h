@@ -2,14 +2,14 @@
 //  SubjectDetails.h
 //  TimeTable
 //
-//  Created by Vinod Rathod on 13/06/15.
+//  Created by Vinod Rathod on 22/06/15.
 //  Copyright (c) 2015 Vinod Rathod. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Days;
+@class Attendance, Days;
 
 @interface SubjectDetails : NSManagedObject
 
@@ -17,6 +17,7 @@
 @property (nonatomic, retain) NSString * subject;
 @property (nonatomic, retain) NSString * teacher;
 @property (nonatomic, retain) NSString * venue;
+@property (nonatomic, retain) Attendance *attendance;
 @property (nonatomic, retain) NSOrderedSet *days;
 @end
 

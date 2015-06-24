@@ -7,25 +7,36 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		671A81B51AE8434E00196E12 /* Days.m in Sources */ = {isa = PBXBuildFile; fileRef = 671A81B41AE8434E00196E12 /* Days.m */; };
-		671A81BE1AE8479700196E12 /* SubjectTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 671A81BD1AE8479700196E12 /* SubjectTime.m */; };
+		6710C4C71B3411AD00439772 /* AttendanceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6710C4C61B3411AD00439772 /* AttendanceCell.m */; };
 		671A81C01AE84C7F00196E12 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 671A81BF1AE84C7F00196E12 /* AppDelegate.m */; };
 		671A81C31AE84FE600196E12 /* ClassListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 671A81C21AE84FE600196E12 /* ClassListViewController.m */; };
 		671A81C61AE8506A00196E12 /* ListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 671A81C51AE8506A00196E12 /* ListTableViewCell.m */; };
+		671A94BE1B38DB4C00A5D14C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 671A94BD1B38DB4C00A5D14C /* CoreGraphics.framework */; };
+		671A94C01B38DB6500A5D14C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 671A94BF1B38DB6500A5D14C /* Foundation.framework */; };
+		671A94C21B38DB6D00A5D14C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 671A94C11B38DB6D00A5D14C /* UIKit.framework */; };
+		671A94C71B38DBC800A5D14C /* GKBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 671A94C41B38DBC800A5D14C /* GKBar.m */; };
+		671A94C81B38DBC800A5D14C /* GKBarGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 671A94C61B38DBC800A5D14C /* GKBarGraph.m */; };
+		671A94CC1B38DBD900A5D14C /* UIColor+GraphKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 671A94CB1B38DBD900A5D14C /* UIColor+GraphKit.m */; };
+		671A94D11B38E83E00A5D14C /* UserDashboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 671A94CF1B38E83E00A5D14C /* UserDashboardViewController.m */; };
+		671A94D21B38E83E00A5D14C /* UserDashboardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 671A94D01B38E83E00A5D14C /* UserDashboardViewController.xib */; };
+		671E25EF1B3B54B400E91B43 /* MainDashBoardPageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 671E25EE1B3B54B400E91B43 /* MainDashBoardPageController.m */; };
 		67AACF631AE38688004B343C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 67AACF621AE38688004B343C /* main.m */; };
 		67AACF691AE38689004B343C /* TimeTable.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 67AACF671AE38689004B343C /* TimeTable.xcdatamodeld */; };
-		67AACF6C1AE38689004B343C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67AACF6B1AE38689004B343C /* ViewController.m */; };
 		67AACF6F1AE38689004B343C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 67AACF6D1AE38689004B343C /* Main.storyboard */; };
 		67AACF711AE38689004B343C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 67AACF701AE38689004B343C /* Images.xcassets */; };
 		67AACF741AE38689004B343C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67AACF721AE38689004B343C /* LaunchScreen.xib */; };
 		67AACF801AE38689004B343C /* TimeTableTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 67AACF7F1AE38689004B343C /* TimeTableTests.m */; };
 		67AF1F8E1AE51494006951E3 /* NewClassTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67AF1F8D1AE51494006951E3 /* NewClassTableViewController.m */; };
 		67AF1F911AE5212A006951E3 /* SelectedDayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67AF1F901AE5212A006951E3 /* SelectedDayCell.m */; };
+		67B21E2F1B387A23000BA086 /* SubjectTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B21E2E1B387A23000BA086 /* SubjectTime.m */; };
+		67B21E321B387A25000BA086 /* Days.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B21E311B387A25000BA086 /* Days.m */; };
+		67B21E351B387A25000BA086 /* Attendance.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B21E341B387A25000BA086 /* Attendance.m */; };
+		67B21E381B387A26000BA086 /* SubjectDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B21E371B387A26000BA086 /* SubjectDetails.m */; };
 		67C085511AE52712009E98EC /* SelectedDayTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67C085501AE52712009E98EC /* SelectedDayTableViewController.m */; };
 		67E59B211B2B28C300B43430 /* DetailOverviewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67E59B201B2B28C300B43430 /* DetailOverviewCell.m */; };
-		67E59B251B2B897000B43430 /* SubjectDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 67E59B241B2B897000B43430 /* SubjectDetails.m */; };
 		67FB564D1B2A2164006BAE2E /* DetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FB564C1B2A2164006BAE2E /* DetailTableViewController.m */; };
 		67FB56501B2A21D2006BAE2E /* DetailViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FB564F1B2A21D2006BAE2E /* DetailViewModel.m */; };
+		A18EB7F25D62A963917C1573 /* libPods-TimeTable.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CF0869D0369752218EE962E /* libPods-TimeTable.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,22 +50,34 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		671A81B31AE8434E00196E12 /* Days.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Days.h; sourceTree = "<group>"; };
-		671A81B41AE8434E00196E12 /* Days.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Days.m; sourceTree = "<group>"; };
-		671A81BC1AE8479700196E12 /* SubjectTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubjectTime.h; sourceTree = "<group>"; };
-		671A81BD1AE8479700196E12 /* SubjectTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubjectTime.m; sourceTree = "<group>"; };
+		2CF0869D0369752218EE962E /* libPods-TimeTable.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TimeTable.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6710C4C51B3411AD00439772 /* AttendanceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttendanceCell.h; sourceTree = "<group>"; };
+		6710C4C61B3411AD00439772 /* AttendanceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttendanceCell.m; sourceTree = "<group>"; };
 		671A81BF1AE84C7F00196E12 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		671A81C11AE84FE600196E12 /* ClassListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassListViewController.h; sourceTree = "<group>"; };
 		671A81C21AE84FE600196E12 /* ClassListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassListViewController.m; sourceTree = "<group>"; };
 		671A81C41AE8506A00196E12 /* ListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListTableViewCell.h; sourceTree = "<group>"; };
 		671A81C51AE8506A00196E12 /* ListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListTableViewCell.m; sourceTree = "<group>"; };
+		671A94BD1B38DB4C00A5D14C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		671A94BF1B38DB6500A5D14C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		671A94C11B38DB6D00A5D14C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		671A94C31B38DBC800A5D14C /* GKBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKBar.h; sourceTree = "<group>"; };
+		671A94C41B38DBC800A5D14C /* GKBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKBar.m; sourceTree = "<group>"; };
+		671A94C51B38DBC800A5D14C /* GKBarGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKBarGraph.h; sourceTree = "<group>"; };
+		671A94C61B38DBC800A5D14C /* GKBarGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKBarGraph.m; sourceTree = "<group>"; };
+		671A94C91B38DBD900A5D14C /* GraphKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphKit.h; sourceTree = "<group>"; };
+		671A94CA1B38DBD900A5D14C /* UIColor+GraphKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+GraphKit.h"; sourceTree = "<group>"; };
+		671A94CB1B38DBD900A5D14C /* UIColor+GraphKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+GraphKit.m"; sourceTree = "<group>"; };
+		671A94CE1B38E83E00A5D14C /* UserDashboardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDashboardViewController.h; sourceTree = "<group>"; };
+		671A94CF1B38E83E00A5D14C /* UserDashboardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserDashboardViewController.m; sourceTree = "<group>"; };
+		671A94D01B38E83E00A5D14C /* UserDashboardViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserDashboardViewController.xib; sourceTree = "<group>"; };
+		671E25ED1B3B54B400E91B43 /* MainDashBoardPageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainDashBoardPageController.h; sourceTree = "<group>"; };
+		671E25EE1B3B54B400E91B43 /* MainDashBoardPageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainDashBoardPageController.m; sourceTree = "<group>"; };
 		67AACF5D1AE38688004B343C /* TimeTable.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeTable.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		67AACF611AE38688004B343C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		67AACF621AE38688004B343C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		67AACF641AE38688004B343C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		67AACF681AE38689004B343C /* TimeTable.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TimeTable.xcdatamodel; sourceTree = "<group>"; };
-		67AACF6A1AE38689004B343C /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		67AACF6B1AE38689004B343C /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		67AACF6E1AE38689004B343C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		67AACF701AE38689004B343C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		67AACF731AE38689004B343C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -65,16 +88,24 @@
 		67AF1F8D1AE51494006951E3 /* NewClassTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewClassTableViewController.m; sourceTree = "<group>"; };
 		67AF1F8F1AE5212A006951E3 /* SelectedDayCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectedDayCell.h; sourceTree = "<group>"; };
 		67AF1F901AE5212A006951E3 /* SelectedDayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectedDayCell.m; sourceTree = "<group>"; };
+		67B21E2D1B387A23000BA086 /* SubjectTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubjectTime.h; sourceTree = "<group>"; };
+		67B21E2E1B387A23000BA086 /* SubjectTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubjectTime.m; sourceTree = "<group>"; };
+		67B21E301B387A25000BA086 /* Days.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Days.h; sourceTree = "<group>"; };
+		67B21E311B387A25000BA086 /* Days.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Days.m; sourceTree = "<group>"; };
+		67B21E331B387A25000BA086 /* Attendance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Attendance.h; sourceTree = "<group>"; };
+		67B21E341B387A25000BA086 /* Attendance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Attendance.m; sourceTree = "<group>"; };
+		67B21E361B387A26000BA086 /* SubjectDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubjectDetails.h; sourceTree = "<group>"; };
+		67B21E371B387A26000BA086 /* SubjectDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubjectDetails.m; sourceTree = "<group>"; };
 		67C0854F1AE52712009E98EC /* SelectedDayTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectedDayTableViewController.h; sourceTree = "<group>"; };
 		67C085501AE52712009E98EC /* SelectedDayTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectedDayTableViewController.m; sourceTree = "<group>"; };
 		67E59B1F1B2B28C300B43430 /* DetailOverviewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailOverviewCell.h; sourceTree = "<group>"; };
 		67E59B201B2B28C300B43430 /* DetailOverviewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailOverviewCell.m; sourceTree = "<group>"; };
-		67E59B231B2B897000B43430 /* SubjectDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubjectDetails.h; sourceTree = "<group>"; };
-		67E59B241B2B897000B43430 /* SubjectDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubjectDetails.m; sourceTree = "<group>"; };
 		67FB564B1B2A2163006BAE2E /* DetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailTableViewController.h; sourceTree = "<group>"; };
 		67FB564C1B2A2164006BAE2E /* DetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailTableViewController.m; sourceTree = "<group>"; };
 		67FB564E1B2A21D2006BAE2E /* DetailViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewModel.h; sourceTree = "<group>"; };
 		67FB564F1B2A21D2006BAE2E /* DetailViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewModel.m; sourceTree = "<group>"; };
+		781D2A93277C322098E46862 /* Pods-TimeTable.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TimeTable.release.xcconfig"; path = "Pods/Target Support Files/Pods-TimeTable/Pods-TimeTable.release.xcconfig"; sourceTree = "<group>"; };
+		BC897741656B319F2E5BF79A /* Pods-TimeTable.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TimeTable.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TimeTable/Pods-TimeTable.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +113,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				671A94C21B38DB6D00A5D14C /* UIKit.framework in Frameworks */,
+				671A94C01B38DB6500A5D14C /* Foundation.framework in Frameworks */,
+				671A94BE1B38DB4C00A5D14C /* CoreGraphics.framework in Frameworks */,
+				A18EB7F25D62A963917C1573 /* libPods-TimeTable.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,13 +130,43 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		673ABDCF1B28AA2100227B03 /* SelectedDayVC */ = {
+		661DE7CB49F357B2EB593EA7 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				67C0854F1AE52712009E98EC /* SelectedDayTableViewController.h */,
-				67C085501AE52712009E98EC /* SelectedDayTableViewController.m */,
+				BC897741656B319F2E5BF79A /* Pods-TimeTable.debug.xcconfig */,
+				781D2A93277C322098E46862 /* Pods-TimeTable.release.xcconfig */,
 			);
-			name = SelectedDayVC;
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		671A94CD1B38DBE000A5D14C /* GraphKit */ = {
+			isa = PBXGroup;
+			children = (
+				671A94C91B38DBD900A5D14C /* GraphKit.h */,
+				671A94CA1B38DBD900A5D14C /* UIColor+GraphKit.h */,
+				671A94CB1B38DBD900A5D14C /* UIColor+GraphKit.m */,
+				671A94C31B38DBC800A5D14C /* GKBar.h */,
+				671A94C41B38DBC800A5D14C /* GKBar.m */,
+				671A94C51B38DBC800A5D14C /* GKBarGraph.h */,
+				671A94C61B38DBC800A5D14C /* GKBarGraph.m */,
+			);
+			name = GraphKit;
+			sourceTree = "<group>";
+		};
+		671E25EC1B3B511400E91B43 /* Core Data & Entities */ = {
+			isa = PBXGroup;
+			children = (
+				67B21E361B387A26000BA086 /* SubjectDetails.h */,
+				67B21E371B387A26000BA086 /* SubjectDetails.m */,
+				67B21E331B387A25000BA086 /* Attendance.h */,
+				67B21E341B387A25000BA086 /* Attendance.m */,
+				67B21E301B387A25000BA086 /* Days.h */,
+				67B21E311B387A25000BA086 /* Days.m */,
+				67B21E2D1B387A23000BA086 /* SubjectTime.h */,
+				67B21E2E1B387A23000BA086 /* SubjectTime.m */,
+				67AACF671AE38689004B343C /* TimeTable.xcdatamodeld */,
+			);
+			name = "Core Data & Entities";
 			sourceTree = "<group>";
 		};
 		673ABDD01B28AA3600227B03 /* ClassListVC */ = {
@@ -118,16 +183,13 @@
 		67AACF541AE38688004B343C = {
 			isa = PBXGroup;
 			children = (
-				67E59B231B2B897000B43430 /* SubjectDetails.h */,
-				67E59B241B2B897000B43430 /* SubjectDetails.m */,
-				67AACF671AE38689004B343C /* TimeTable.xcdatamodeld */,
-				671A81BC1AE8479700196E12 /* SubjectTime.h */,
-				671A81BD1AE8479700196E12 /* SubjectTime.m */,
-				671A81B31AE8434E00196E12 /* Days.h */,
-				671A81B41AE8434E00196E12 /* Days.m */,
+				671A94CD1B38DBE000A5D14C /* GraphKit */,
+				671E25EC1B3B511400E91B43 /* Core Data & Entities */,
 				67AACF5F1AE38688004B343C /* TimeTable */,
 				67AACF7C1AE38689004B343C /* TimeTableTests */,
 				67AACF5E1AE38688004B343C /* Products */,
+				661DE7CB49F357B2EB593EA7 /* Pods */,
+				812994D4DB34DA9EF19045DD /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -145,13 +207,11 @@
 			children = (
 				67AACF641AE38688004B343C /* AppDelegate.h */,
 				671A81BF1AE84C7F00196E12 /* AppDelegate.m */,
+				67AACF6D1AE38689004B343C /* Main.storyboard */,
 				67E59B221B2B58FF00B43430 /* NewClassVC */,
 				673ABDD01B28AA3600227B03 /* ClassListVC */,
 				67FB56511B2A21DC006BAE2E /* DetailDayVC */,
-				673ABDCF1B28AA2100227B03 /* SelectedDayVC */,
-				67AACF6A1AE38689004B343C /* ViewController.h */,
-				67AACF6B1AE38689004B343C /* ViewController.m */,
-				67AACF6D1AE38689004B343C /* Main.storyboard */,
+				67B21E431B38BDE4000BA086 /* DashBoardVC */,
 				67AACF701AE38689004B343C /* Images.xcassets */,
 				67AACF721AE38689004B343C /* LaunchScreen.xib */,
 				67AACF601AE38688004B343C /* Supporting Files */,
@@ -185,6 +245,18 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		67B21E431B38BDE4000BA086 /* DashBoardVC */ = {
+			isa = PBXGroup;
+			children = (
+				671E25ED1B3B54B400E91B43 /* MainDashBoardPageController.h */,
+				671E25EE1B3B54B400E91B43 /* MainDashBoardPageController.m */,
+				671A94CE1B38E83E00A5D14C /* UserDashboardViewController.h */,
+				671A94CF1B38E83E00A5D14C /* UserDashboardViewController.m */,
+				671A94D01B38E83E00A5D14C /* UserDashboardViewController.xib */,
+			);
+			name = DashBoardVC;
+			sourceTree = "<group>";
+		};
 		67E59B221B2B58FF00B43430 /* NewClassVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -192,6 +264,8 @@
 				67AF1F8D1AE51494006951E3 /* NewClassTableViewController.m */,
 				67AF1F8F1AE5212A006951E3 /* SelectedDayCell.h */,
 				67AF1F901AE5212A006951E3 /* SelectedDayCell.m */,
+				67C0854F1AE52712009E98EC /* SelectedDayTableViewController.h */,
+				67C085501AE52712009E98EC /* SelectedDayTableViewController.m */,
 			);
 			name = NewClassVC;
 			sourceTree = "<group>";
@@ -205,8 +279,21 @@
 				67FB564F1B2A21D2006BAE2E /* DetailViewModel.m */,
 				67E59B1F1B2B28C300B43430 /* DetailOverviewCell.h */,
 				67E59B201B2B28C300B43430 /* DetailOverviewCell.m */,
+				6710C4C51B3411AD00439772 /* AttendanceCell.h */,
+				6710C4C61B3411AD00439772 /* AttendanceCell.m */,
 			);
 			name = DetailDayVC;
+			sourceTree = "<group>";
+		};
+		812994D4DB34DA9EF19045DD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				671A94C11B38DB6D00A5D14C /* UIKit.framework */,
+				671A94BF1B38DB6500A5D14C /* Foundation.framework */,
+				671A94BD1B38DB4C00A5D14C /* CoreGraphics.framework */,
+				2CF0869D0369752218EE962E /* libPods-TimeTable.a */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -216,9 +303,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 67AACF831AE38689004B343C /* Build configuration list for PBXNativeTarget "TimeTable" */;
 			buildPhases = (
+				75953977755585EAC31930B6 /* Check Pods Manifest.lock */,
 				67AACF591AE38688004B343C /* Sources */,
 				67AACF5A1AE38688004B343C /* Frameworks */,
 				67AACF5B1AE38688004B343C /* Resources */,
+				CBA93684482B93A4AD41B4E2 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -291,6 +380,7 @@
 			files = (
 				67AACF6F1AE38689004B343C /* Main.storyboard in Resources */,
 				67AACF741AE38689004B343C /* LaunchScreen.xib in Resources */,
+				671A94D21B38E83E00A5D14C /* UserDashboardViewController.xib in Resources */,
 				67AACF711AE38689004B343C /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -304,24 +394,63 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		75953977755585EAC31930B6 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		CBA93684482B93A4AD41B4E2 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TimeTable/Pods-TimeTable-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		67AACF591AE38688004B343C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				671A94C71B38DBC800A5D14C /* GKBar.m in Sources */,
+				6710C4C71B3411AD00439772 /* AttendanceCell.m in Sources */,
+				67B21E2F1B387A23000BA086 /* SubjectTime.m in Sources */,
+				67B21E321B387A25000BA086 /* Days.m in Sources */,
+				67B21E351B387A25000BA086 /* Attendance.m in Sources */,
 				671A81C31AE84FE600196E12 /* ClassListViewController.m in Sources */,
-				671A81B51AE8434E00196E12 /* Days.m in Sources */,
+				671A94CC1B38DBD900A5D14C /* UIColor+GraphKit.m in Sources */,
 				67FB564D1B2A2164006BAE2E /* DetailTableViewController.m in Sources */,
 				67FB56501B2A21D2006BAE2E /* DetailViewModel.m in Sources */,
 				67E59B211B2B28C300B43430 /* DetailOverviewCell.m in Sources */,
-				67E59B251B2B897000B43430 /* SubjectDetails.m in Sources */,
-				671A81BE1AE8479700196E12 /* SubjectTime.m in Sources */,
+				671A94D11B38E83E00A5D14C /* UserDashboardViewController.m in Sources */,
 				67AF1F8E1AE51494006951E3 /* NewClassTableViewController.m in Sources */,
 				67C085511AE52712009E98EC /* SelectedDayTableViewController.m in Sources */,
 				671A81C01AE84C7F00196E12 /* AppDelegate.m in Sources */,
+				67B21E381B387A26000BA086 /* SubjectDetails.m in Sources */,
 				67AACF691AE38689004B343C /* TimeTable.xcdatamodeld in Sources */,
-				67AACF6C1AE38689004B343C /* ViewController.m in Sources */,
 				671A81C61AE8506A00196E12 /* ListTableViewCell.m in Sources */,
+				671A94C81B38DBC800A5D14C /* GKBarGraph.m in Sources */,
+				671E25EF1B3B54B400E91B43 /* MainDashBoardPageController.m in Sources */,
 				67AF1F911AE5212A006951E3 /* SelectedDayCell.m in Sources */,
 				67AACF631AE38688004B343C /* main.m in Sources */,
 			);
@@ -447,6 +576,7 @@
 		};
 		67AACF841AE38689004B343C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BC897741656B319F2E5BF79A /* Pods-TimeTable.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = TimeTable/Info.plist;
@@ -457,6 +587,7 @@
 		};
 		67AACF851AE38689004B343C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 781D2A93277C322098E46862 /* Pods-TimeTable.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = TimeTable/Info.plist;

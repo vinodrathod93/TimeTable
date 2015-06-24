@@ -12,5 +12,8 @@
 @interface DetailTableViewController : UITableViewController
 
 @property (strong, nonatomic) DetailViewModel *viewModel;
+@property (assign, nonatomic) BOOL editingDone;
+
+- (IBAction)editButtonPressed:(id)sender;
 
 @end

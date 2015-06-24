@@ -24,30 +24,23 @@
 
 - (void)configureCellForEntry:(SubjectDetails *)detail {
     
-//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-//    [dateFormatter setDateFormat:@"hh:mm a"];
-    
     self.subjectLabel.text = detail.subject;
     self.teacherLabel.text = detail.teacher;
     
-//    NSArray *array = [detail.days allObjects];
-//    NSLog(@"All Days %@",array);
-    Days *singleDay;
     
     if (detail.days.count == 0) {
         NSLog(@"Array nil");
+    } else if (detail.days.count == 1) {
+        self.daysOfClass.text = [NSString stringWithFormat:@"%lu Day",(unsigned long)detail.days.count];
     } else {
-        NSLog(@"ARRAY IS ---->>>>%@",[detail.days objectAtIndex:0]);
-        
-//#warning - when the day is nil, this line will throw an error objectAtIndex:0 for nil array.
-        singleDay = [detail.days objectAtIndex:0];
+        self.daysOfClass.text = [NSString stringWithFormat:@"%lu Days",(unsigned long)detail.days.count];
     }
     
     
 //    self.timing.text = [NSString stringWithFormat:@"%@ to %@",[dateFormatter stringFromDate:singleDay.time.start],[dateFormatter stringFromDate:singleDay.time.end]];
     
 
-    self.daysOfClass.text = [NSString stringWithFormat:@"%@",singleDay.day];
+    
 }
 
 @end

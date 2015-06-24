@@ -36,6 +36,15 @@
     [super viewDidLoad];
     
     NSLog(@"viewDidLoad");
+    
+    if (self.cameForEditing) {
+        self.title = @"Edit Time";
+    } else {
+        self.title = @"Select Time";
+    }
+    
+    self.view.backgroundColor = [UIColor colorWithRed:236/255.0f green:240/255.0f blue:241/255.0f alpha:1.0f];
+    
     [self setupTime];
     
 }
@@ -43,11 +52,6 @@
 -(void)initWithDayTime:(SubjectTime *)time {
     self.time = time;
 }
-
-//-(void)initWithSelectedDay:(Days *)selectedDayModel;
-//{
-//    self.selectedDay = selectedDayModel;
-//}
 
 
 - (void)setupTime {
@@ -57,8 +61,17 @@
     [self.dateFormatter setDateFormat:@"hh:mm a"];
     
     NSDate *defaultDate = [NSDate date];
+    NSLog(@"%@",self.time);
     
-//    self.startTime.text = [self.dateFormatter stringFromDate:defaultDate];
+    if (self.time.start != nil && self.time.end != nil) {
+        self.startTime.text = [self.dateFormatter stringFromDate:self.time.start];
+        self.startTimePicker.date = self.time.start;
+        
+        self.endTime.text = [self.dateFormatter stringFromDate:self.time.end];
+        self.endTimePicker.date = self.time.end;
+    }
+    
+    
     self.startTime.textColor = [self.tableView tintColor];
     
     self.endTime.textColor = [self.tableView tintColor];
@@ -102,7 +115,7 @@
             [self hideEndTimePicker];
             
         }else {
-            
+            [self hideStartTimePicker];
             [self showEndTimePicker];
         }
     }
@@ -111,12 +124,30 @@
 }
 
 
+#pragma mark - Picker Value Changed
+
+- (IBAction)startTimeChanged:(UIDatePicker *)sender {
+    self.startTime.text = [self.dateFormatter stringFromDate:sender.date];
+    self.selectedStartTime = sender.date;
+    
+    self.time.start = sender.date;
+    
+}
+- (IBAction)endTimeChanged:(UIDatePicker *)sender {
+    self.endTime.text = [self.dateFormatter stringFromDate:sender.date];
+    self.selectedEndTime = sender.date;
+    
+    self.time.end = sender.date;
+}
+
+
+#pragma mark - Show/Hide Start Time
+
 - (void)showStartTimePicker {
     
     self.startTimePickerIsShowing = YES;
     
     self.time.start= self.startTimePicker.date;
-//    self.selectedDay.time.start = self.startTimePicker.date;
     
     self.startTime.text = [self.dateFormatter stringFromDate:self.startTimePicker.date];
     
@@ -153,14 +184,17 @@
 
 
 
-#pragma mark - End Time
+#pragma mark - Show/Hide End Time
 
 - (void)showEndTimePicker {
     
     self.endTimePickerIsShowing = YES;
     
     // End time on EndTimePicker starts with the time selected by the user on startTimePicker
-    self.endTimePicker.date = self.startTimePicker.date;
+    if (!self.cameForEditing) {
+        self.endTimePicker.date = self.startTimePicker.date;
+    }
+    
     
     [self.tableView beginUpdates];
     
@@ -193,76 +227,5 @@
                      }];
 }
 
-
-
-
-#pragma mark - Picker Value Changed
-
-- (IBAction)startTimeChanged:(UIDatePicker *)sender {
-    self.startTime.text = [self.dateFormatter stringFromDate:sender.date];
-    self.selectedStartTime = sender.date;
-    
-    self.time.start = sender.date;
-//    self.selectedDay.time.start = sender.date;
-    
-//    NSError *error = nil;
-//    if (![self.time.managedObjectContext save:&error]) {
-//        NSLog(@"Core data error %@, %@", error, [error userInfo]);
-//        abort();
-//    }
-    
-}
-- (IBAction)endTimeChanged:(UIDatePicker *)sender {
-    self.endTime.text = [self.dateFormatter stringFromDate:sender.date];
-    self.selectedEndTime = sender.date;
-    
-    self.time.end = sender.date;
-//    self.selectedDay.time.end = sender.date;
-    
-//    NSError *error = nil;
-//    if (![self.time.managedObjectContext save:&error]) {
-//        NSLog(@"Core data error %@, %@", error, [error userInfo]);
-//        abort();
-//    }
-}
-
-
-/*
-#pragma mark - Result controller
-
-- (NSFetchedResultsController *)fetchedResultsController
-{
-    if (_fetchedResultsController != nil) {
-        return _fetchedResultsController;
-    }
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    
-    NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:@"SubjectTime"
-                                   inManagedObjectContext:self.selectedDay.managedObjectContext];
-    [fetchRequest setEntity:entity];
-    
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc]
-                                        initWithKey:@"day"
-                                        ascending:NO];
-    NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
-    [fetchRequest setSortDescriptors:sortDescriptors];
-    
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc]  initWithFetchRequest:fetchRequest
-                                                                                                 managedObjectContext:self.selectedDay.managedObjectContext
-                                                                                                   sectionNameKeyPath:nil
-                                                                                                            cacheName:nil];
-    
-    self.fetchedResultsController = aFetchedResultsController;
-    
-    NSError *error = nil;
-    if (![self.fetchedResultsController performFetch:&error]) {
-        NSLog(@"Core data error %@, %@", error, [error userInfo]);
-        abort();
-    }
-    
-    return _fetchedResultsController;
-}
-*/
 
 @end

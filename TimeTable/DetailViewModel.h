@@ -12,12 +12,6 @@
 
 @interface DetailViewModel : NSObject
 
-//@property (nonatomic, readonly) NSString *subjectName;
-//@property (nonatomic, readonly) NSString *subjectLecturer;
-//@property (nonatomic, readonly) NSString *subjectVenue;
-//@property (nonatomic, readonly) NSString *subjectStartTime;
-//@property (nonatomic, readonly) NSString *subjectEndTime;
-
 @property (nonatomic, assign) NSInteger numberOfDays;
 @property (nonatomic, strong) SubjectDetails *model;
 
@@ -28,6 +22,10 @@
 -(NSString *)titleOfSubject;
 -(NSString *)nameOfLecturer;
 -(NSString *)nameOfVenue;
+
+-(NSString *)missedValueInAttendance;
+-(NSString *)attendedValueInAttendance;
+
 -(id)initWithModel:(SubjectDetails *)model;
 
 @end

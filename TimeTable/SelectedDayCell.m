@@ -29,12 +29,11 @@
     
     // configure up some interesting display properties inside the cell
     _dayLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 19, 117, 21)];
-    _dayLabel.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:17];
+    _dayLabel.font = [UIFont fontWithName:@"AvenirNext-Medium" size:17];
     _dayLabel.textColor = [UIColor colorWithWhite:0.2 alpha:1];
     
     _timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(165, 19, 147, 21)];
-    _timeLabel.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:14];
-    _timeLabel.textColor = [UIColor lightGrayColor];
+    _timeLabel.font = [UIFont fontWithName:@"AvenirNext-Medium" size:14];
 
     [self.contentView addSubview:_dayLabel];
     [self.contentView addSubview:_timeLabel];

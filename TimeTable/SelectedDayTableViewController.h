@@ -16,9 +16,9 @@
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
 @property (nonatomic, strong) SubjectTime *time;
-//@property (nonatomic, strong) Days *selectedDay;
+@property (nonatomic, assign) BOOL cameForEditing;
+
 
 -(void)initWithDayTime:(SubjectTime *)time;
 
-//-(void)initWithSelectedDay:(Days *)selectedDayModel;
 @end
