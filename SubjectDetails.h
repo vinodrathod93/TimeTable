@@ -1,9 +1,9 @@
 //
 //  SubjectDetails.h
-//  TimeTable
+//  
 //
-//  Created by Vinod Rathod on 22/06/15.
-//  Copyright (c) 2015 Vinod Rathod. All rights reserved.
+//  Created by Vinod Rathod on 02/07/15.
+//
 //
 
 #import <Foundation/Foundation.h>
@@ -13,7 +13,6 @@
 
 @interface SubjectDetails : NSManagedObject
 
-@property (nonatomic, retain) NSNumber * semLength;
 @property (nonatomic, retain) NSString * subject;
 @property (nonatomic, retain) NSString * teacher;
 @property (nonatomic, retain) NSString * venue;

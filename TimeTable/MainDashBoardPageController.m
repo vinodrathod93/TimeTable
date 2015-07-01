@@ -52,7 +52,7 @@
     NSInteger index = [(UserDashboardViewController *)viewController index];
     
     index++;
-    if (index == 3) {
+    if (index == 2) {
         return nil;
     }
     
@@ -74,14 +74,14 @@
 
 -(UserDashboardViewController *)viewControllerAtIndex:(NSUInteger)index {
     UserDashboardViewController *childVC = [[UserDashboardViewController alloc]initWithNibName:@"UserDashboardViewController" bundle:nil];
-    
+    [childVC.graphView reset];
     childVC.index = index;
     
     return childVC;
 }
 
 -(NSInteger)presentationCountForPageViewController:(UIPageViewController *)pageViewController {
-    return 3;
+    return 2;
 }
 
 -(NSInteger)presentationIndexForPageViewController:(UIPageViewController *)pageViewController {

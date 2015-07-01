@@ -105,6 +105,7 @@ NSString *CellIdentifier;
     cell.subjectLabel.text = [self.viewModel titleOfSubject];
     cell.lecturerLabel.text = [self.viewModel nameOfLecturer];
     cell.venueLabel.text = [self.viewModel nameOfVenue];
+    cell.minAttendanceLabel.text = [self.viewModel valueOfMinAttendance];
 }
 
 -(void)configureCell:(UITableViewCell *)cell forIndexPath:(NSIndexPath *)indexPath {
@@ -120,7 +121,7 @@ NSString *CellIdentifier;
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
-            return 166.0f;
+            return 206.0f;
         }
     } else if (indexPath.section == 2)
         return 85.0f;
@@ -153,6 +154,7 @@ NSString *CellIdentifier;
     NewClassTableViewController *editClassVC = [self.storyboard instantiateViewControllerWithIdentifier:@"newClass"];
     editClassVC.subjectDetailsModel = self.viewModel.model;
     editClassVC.isEditing = YES;
+    editClassVC.semLength = self.semLength;
     
     UINavigationController *navigationViewController = [[UINavigationController alloc]initWithRootViewController:editClassVC];
     [self presentViewController:navigationViewController animated:YES completion:^{

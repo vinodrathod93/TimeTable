@@ -22,6 +22,7 @@
 -(NSString *)titleOfSubject;
 -(NSString *)nameOfLecturer;
 -(NSString *)nameOfVenue;
+-(NSString *)valueOfMinAttendance;
 
 -(NSString *)missedValueInAttendance;
 -(NSString *)attendedValueInAttendance;

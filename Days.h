@@ -1,9 +1,9 @@
 //
 //  Days.h
-//  TimeTable
+//  
 //
-//  Created by Vinod Rathod on 22/06/15.
-//  Copyright (c) 2015 Vinod Rathod. All rights reserved.
+//  Created by Vinod Rathod on 02/07/15.
+//
 //
 
 #import <Foundation/Foundation.h>
@@ -15,8 +15,8 @@
 
 @property (nonatomic, retain) NSString * day;
 @property (nonatomic, retain) NSString * dayID;
+@property (nonatomic, retain) Attendance *attendanceToDay;
 @property (nonatomic, retain) SubjectDetails *detail;
 @property (nonatomic, retain) SubjectTime *time;
-@property (nonatomic, retain) Attendance *attendanceToDay;
 
 @end

@@ -14,6 +14,7 @@
 
 #define DEFAULT_TAG 10
 #define DAY_SECTION 2
+#define WEEKDAY_VALUE_CORRECTION 2
 
 NS_ENUM(int16_t, TTClassEntryDay) {
     TTClassEntryDayMonday = 0,
@@ -148,7 +149,7 @@ NS_ENUM(int16_t, TTClassEntryDay) {
     dayModel.day = self.weekdays[value];
     dayModel.dayID = [NSString stringWithFormat:@"%ld",(long)value];
     
-    NSLog(@"%@",self.subjectDetailsModel.days);
+//    NSLog(@"%@",self.subjectDetailsModel.days);
     
     NSMutableOrderedSet *pickedDays = [self.subjectDetailsModel.days mutableCopy];
     [pickedDays addObject:dayModel];
@@ -169,7 +170,7 @@ NS_ENUM(int16_t, TTClassEntryDay) {
         }
         
     
-        NSLog(@"%@",self.subjectDetailsModel.days);
+//        NSLog(@"%@",self.subjectDetailsModel.days);
         self.subjectDetailsModel.days = [pickedDays copy];
     }
 }
@@ -326,7 +327,7 @@ NS_ENUM(int16_t, TTClassEntryDay) {
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSLog(@"numberOfRowsInSection");
-    if (section == 2) {
+    if (section == DAY_SECTION) {
         return [self.datalistArray count];
     } else {
         return [super tableView:tableView numberOfRowsInSection:section];
@@ -338,13 +339,13 @@ NS_ENUM(int16_t, TTClassEntryDay) {
     NSLog(@"cellForRowAtIndexPath");
 
     
-    if (indexPath.section == 2) {
+    if (indexPath.section == DAY_SECTION) {
         // make dynamic row's cell
         static NSString *CellIdentifier = @"selectedCell";
-        SelectedDayCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         
         if (!cell) {
-            cell = [[SelectedDayCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
         }
         
         
@@ -357,18 +358,21 @@ NS_ENUM(int16_t, TTClassEntryDay) {
         
         // Label of selected time
         
-        NSLog(@"%@",pickeday.time);
+//        NSLog(@"%@",pickeday.time);
         if (pickeday.time == nil) {
-            cell.timeLabel.text = @"Tap to Select Time";
-            cell.timeLabel.textColor = [UIColor lightGrayColor];
+            cell.detailTextLabel.text = @"Tap to Select Time";
+            cell.detailTextLabel.textColor = [UIColor lightGrayColor];
+            cell.detailTextLabel.font = [UIFont fontWithName:@"AvenirNext-Medium" size:14];
         } else {
-            cell.timeLabel.textColor = [UIColor colorWithRed:22/255.0f green:160/255.0f blue:133/255.0f alpha:1.0f];
-            cell.timeLabel.text = [NSString stringWithFormat:@"%@ to %@",[dateFormatter stringFromDate:pickeday.time.start],[dateFormatter stringFromDate:pickeday.time.end]];
+            cell.detailTextLabel.textColor = [UIColor colorWithRed:22/255.0f green:160/255.0f blue:133/255.0f alpha:1.0f];
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ to %@",[dateFormatter stringFromDate:pickeday.time.start],[dateFormatter stringFromDate:pickeday.time.end]];
+            cell.detailTextLabel.font = [UIFont fontWithName:@"AvenirNext-Medium" size:14];
         }
         
         
         // Label of WeekDay
-        cell.dayLabel.text = [self.weekdays objectAtIndex:day];
+        cell.textLabel.text = [self.weekdays objectAtIndex:day];
+        cell.textLabel.font = [UIFont fontWithName:@"AvenirNext-Medium" size:17];
         
         return cell;
     }
@@ -382,7 +386,7 @@ NS_ENUM(int16_t, TTClassEntryDay) {
     if (indexPath.section == 1) {
         NSLog(@"Selected cell ");
     }
-    if (indexPath.section == 2) {
+    if (indexPath.section == DAY_SECTION) {
         
         Days *selectedDay = [self.subjectDetailsModel.days objectAtIndex:indexPath.row];
         
@@ -398,7 +402,7 @@ NS_ENUM(int16_t, TTClassEntryDay) {
             vc.cameForEditing = YES;
         }
         
-        NSLog(@"%@",time);
+//        NSLog(@"%@",time);
         [vc initWithDayTime:time];
         
         [self.navigationController pushViewController:vc animated:YES];
@@ -455,7 +459,7 @@ NS_ENUM(int16_t, TTClassEntryDay) {
 //    int section = indexPath.section;
     
     // if dynamic section make all rows the same height as row 0
-    if (indexPath.section == 2) {
+    if (indexPath.section == DAY_SECTION) {
         return [super tableView:tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:indexPath.section]];
     } else {
         return [super tableView:tableView heightForRowAtIndexPath:indexPath];
@@ -467,7 +471,7 @@ NS_ENUM(int16_t, TTClassEntryDay) {
 //    int section = indexPath.section;
     
     // if dynamic section make all rows the same indentation level as row 0
-    if (indexPath.section == 2) {
+    if (indexPath.section == DAY_SECTION) {
         return [super tableView:tableView indentationLevelForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:indexPath.section]];
     } else {
         return [super tableView:tableView indentationLevelForRowAtIndexPath:indexPath];
@@ -487,11 +491,13 @@ NS_ENUM(int16_t, TTClassEntryDay) {
     self.subjectDetailsModel.subject = [self.subjectTextField.text capitalizedString];
     self.subjectDetailsModel.teacher = [self.lecturerTextField.text capitalizedString];
     self.subjectDetailsModel.venue = [self.classRoomTextField.text capitalizedString];
-    self.subjectDetailsModel.semLength = [NSNumber numberWithInt:[self.semesterTextField.text intValue]];
+    
+    
     
     if (!self.isEditing) {
         // Attendance
         self.attendance = [NSEntityDescription insertNewObjectForEntityForName:@"Attendance" inManagedObjectContext:self.subjectDetailsModel.managedObjectContext];
+        
         self.subjectDetailsModel.attendance = self.attendance;
     }
     
@@ -506,13 +512,45 @@ NS_ENUM(int16_t, TTClassEntryDay) {
     
     self.subjectDetailsModel.days = [[NSOrderedSet orderedSetWithArray:sortedDays] copy];
     
+    NSInteger totalLectures = 0;
     
+    
+    // Enumerate through all the days selected.
     for (Days *selectedDay in sortedDays) {
-        NSLog(@"Day Selected for notification issue -> %@",selectedDay);
+        
+        
+        // Schedule notification for each day of the selected time
         [self scheduleNotificationForDay:selectedDay andForSubject:self.subjectDetailsModel];
+        
+        
+        // calculate days from start date to end date selected at the launch of app.
+        NSInteger value = [self countDays:(selectedDay.dayID.intValue + WEEKDAY_VALUE_CORRECTION) startDate:self.semLength.semStartDate endDate:self.semLength.semEndDate];
+        
+        totalLectures = totalLectures + value;
+        NSLog(@"%ld",(long)totalLectures);
+        
         self.subjectDetailsModel.attendance.dayInAttendance = selectedDay;
     }
     
+    
+    // assign the total lectures & calculated lecture for further processing - like when lecture missed then total lectures should be managed to get the % of that subject attended, missed.
+    NSLog(@"Total %ld",(long)totalLectures);
+    self.subjectDetailsModel.attendance.totalLecture = [NSNumber numberWithInteger:totalLectures];
+    
+    if (![self.subjectDetailsModel.attendance.calculatedLectures isEqualToNumber:self.subjectDetailsModel.attendance.totalLecture]) {
+        self.subjectDetailsModel.attendance.calculatedLectures = [NSNumber numberWithInteger:totalLectures];
+    }
+    
+    
+    // Assign the minimum attendance to the Attendance managed object.
+    if (self.minAttendTextField.text.intValue <= 100) {
+        self.subjectDetailsModel.attendance.minAttendance = [NSNumber numberWithInt:self.minAttendTextField.text.intValue];
+    } else {
+        self.subjectDetailsModel.attendance.minAttendance = @75;
+    }
+    
+    
+    // Save all the edit's or new changes
     NSError *error = nil;
     [self.subjectDetailsModel.managedObjectContext save:&error];
     
@@ -540,6 +578,7 @@ NS_ENUM(int16_t, TTClassEntryDay) {
     [[self view]endEditing:YES];
 }
 
+
 -(void)scheduleNotificationForDay:(Days *)day andForSubject:(SubjectDetails *)subjectDetail {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"hh:mm a"];
@@ -549,7 +588,6 @@ NS_ENUM(int16_t, TTClassEntryDay) {
     
     NSDate *tenMinEarlierTime = [day.time.start dateByAddingTimeInterval:-60*10];
     
-    //    NSData *archivedData = [NSKeyedArchiver archivedDataWithRootObject:subjectDetail];
 
     NSDictionary *infoDict = [NSDictionary dictionaryWithObjectsAndKeys:subjectDetail.subject, @"uid", nil];
     
@@ -575,7 +613,8 @@ NS_ENUM(int16_t, TTClassEntryDay) {
     
     NSDateComponents *dateComponents = [calendar components:unitFlags fromDate:dateToFix];
     
-    NSNumber *value = [NSNumber numberWithInt:(day.dayID.intValue +2)];
+    NSNumber *value = [NSNumber numberWithInt:(day.dayID.intValue + WEEKDAY_VALUE_CORRECTION)];
+    
     NSLog(@"week day is %ld",(long)value.integerValue);
     dateComponents.weekday = [value integerValue];
     dateComponents.second = 0;
@@ -588,7 +627,44 @@ NS_ENUM(int16_t, TTClassEntryDay) {
 }
 
 
-
+-(NSInteger)countDays:(int)dayCode startDate:(NSDate *)stDate endDate:(NSDate *)endDate
+{
+    
+    // day code is Sunday = 1 ,Monday = 2,Tuesday = 3,Wednesday = 4,Thursday = 5,Friday = 6,Saturday = 7
+    NSLog(@"%d & startdate %@",dayCode,stDate);
+    
+    NSInteger count = 0;
+    
+    // Set the incremental interval for each interaction.
+    NSDateComponents *oneDay = [[NSDateComponents alloc] init];
+    [oneDay setDay:1];
+    
+    // Using a Gregorian calendar.
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    
+    NSDate *currentDate = stDate;
+    
+    // Iterate from fromDate until toDate
+    while ([currentDate compare:endDate] == NSOrderedAscending) {
+        
+        NSDateComponents *dateComponents = [calendar components:NSCalendarUnitWeekday fromDate:currentDate];
+        
+        if (dateComponents.weekday == dayCode) {
+            count++;
+        }
+        
+        // "Increment" currentDate by one day.
+        currentDate = [calendar dateByAddingComponents:oneDay
+                                                toDate:currentDate
+                                               options:0];
+    }
+    NSDateComponents* component = [calendar components:NSCalendarUnitWeekday fromDate:endDate];
+    NSInteger weekDay = [component weekday];
+    if (weekDay == dayCode) { // Condition if end date contain your day then count should be increase
+        count ++ ;
+    }
+    return count; // Return your day count
+}
 
 
 

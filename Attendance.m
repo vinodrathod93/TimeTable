@@ -1,9 +1,9 @@
 //
 //  Attendance.m
-//  TimeTable
+//  
 //
-//  Created by Vinod Rathod on 22/06/15.
-//  Copyright (c) 2015 Vinod Rathod. All rights reserved.
+//  Created by Vinod Rathod on 02/07/15.
+//
 //
 
 #import "Attendance.h"
@@ -14,10 +14,12 @@
 @implementation Attendance
 
 @dynamic attended;
+@dynamic calculatedLectures;
 @dynamic canbeMissed;
 @dynamic missed;
 @dynamic totalLecture;
-@dynamic subjectAttendance;
+@dynamic minAttendance;
 @dynamic dayInAttendance;
+@dynamic subjectAttendance;
 
 @end

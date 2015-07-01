@@ -47,6 +47,7 @@
     
     [self setupTime];
     
+    
 }
 
 -(void)initWithDayTime:(SubjectTime *)time {
@@ -61,7 +62,7 @@
     [self.dateFormatter setDateFormat:@"hh:mm a"];
     
     NSDate *defaultDate = [NSDate date];
-    NSLog(@"%@",self.time);
+//    NSLog(@"%@",self.time);
     
     if (self.time.start != nil && self.time.end != nil) {
         self.startTime.text = [self.dateFormatter stringFromDate:self.time.start];

@@ -12,13 +12,20 @@
 #import "ListTableViewCell.h"
 #import "NewClassTableViewController.h"
 #import "MainDashBoardPageController.h"
+#import "CCMPopupTransitioning.h"
+#import "CCMPopupSegue.h"
+#import "SemPopupViewController.h"
+
 #import "AppDelegate.h"
 
 @interface ClassListViewController ()<NSFetchedResultsControllerDelegate>
 
 @property (nonatomic, strong)NSFetchedResultsController *fetchedResultsController;
-@property (nonatomic, strong)NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, strong)NSFetchedResultsController *semFetchedResultsController;
 
+
+@property (nonatomic, strong)NSManagedObjectContext *managedObjectContext;
+@property (weak) UIViewController *popupController;
 @property (nonatomic, strong)NSArray *subjectDetailResults;
 
 @end
@@ -37,7 +44,6 @@
 //    }
     
     
-    
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@""
                                                                              style:UIBarButtonItemStylePlain
                                                                             target:nil
@@ -49,6 +55,7 @@
     self.managedObjectContext = appDelegate.managedObjectContext;
     
     [self.fetchedResultsController performFetch:nil];
+    [self.semFetchedResultsController performFetch:nil];
     
     
     
@@ -60,9 +67,6 @@
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(handleExtraCurricular:) name:@"studentHaveExtraCurricular" object:nil];
     
-    
-//    self.tableView.estimatedRowHeight = 100;
-//    self.tableView.rowHeight = UITableViewAutomaticDimension;
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -71,12 +75,56 @@
     [self.tableView reloadData];
 }
 
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self.semFetchedResultsController performFetch:nil];
+    
+    if (_semFetchedResultsController.fetchedObjects.count == 0) {
+        SemPopupViewController *presentingController = [self.storyboard instantiateViewControllerWithIdentifier:@"popupController"];
+        CCMPopupTransitioning *popup = [CCMPopupTransitioning sharedInstance];
+        if (self.view.bounds.size.height < 420) {
+            popup.destinationBounds = CGRectMake(0, 0, ([UIScreen mainScreen].bounds.size.height-20) * .75, [UIScreen mainScreen].bounds.size.height-20);
+        } else {
+            popup.destinationBounds = CGRectMake(0, 0, 300, 415);
+        }
+        popup.presentedController = presentingController;
+        popup.presentingController = self;
+        self.popupController = presentingController;
+        
+        
+        // Saving the entity of semlength in coredata.
+        self.semLength = [NSEntityDescription insertNewObjectForEntityForName:@"SemLength" inManagedObjectContext:self.managedObjectContext];
+        presentingController.semLengthModel = self.semLength;
+        
+        [self presentViewController:presentingController animated:YES completion:nil];
+    }
+    
+}
+
+
+-(void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator{
+    [self.view layoutIfNeeded];
+    if (size.height < 420) {
+        [UIView animateWithDuration:[coordinator transitionDuration] animations:^{
+            self.popupController.view.bounds = CGRectMake(0, 0, (size.height-20) * .75, size.height-20);
+            [self.view layoutIfNeeded];
+        }];
+    } else {
+        [UIView animateWithDuration:[coordinator transitionDuration] animations:^{
+            self.popupController.view.bounds = CGRectMake(0, 0, 300, 400);
+            [self.view layoutIfNeeded];
+        }];
+    }
+}
+
+
 - (IBAction)addClassEntries:(id)sender {
     NewClassTableViewController *newClassVC = [self.storyboard instantiateViewControllerWithIdentifier:@"newClass"];
     UINavigationController *navigationViewController = [[UINavigationController alloc]initWithRootViewController:newClassVC];
     
     self.subjectDetailsModel = [NSEntityDescription insertNewObjectForEntityForName:@"SubjectDetails" inManagedObjectContext:self.managedObjectContext];
     newClassVC.subjectDetailsModel = self.subjectDetailsModel;
+    newClassVC.semLength = self.semFetchedResultsController.fetchedObjects[0];
     
     [self presentViewController:navigationViewController animated:YES completion:nil];
 }
@@ -160,6 +208,38 @@
     }
 }
 
+
+#pragma mark - Fetched Results Controller
+#pragma mark - 
+
+-(NSFetchedResultsController *)semFetchedResultsController {
+    if (_semFetchedResultsController !=nil) {
+        return _semFetchedResultsController;
+    }
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc]init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"SemLength" inManagedObjectContext:self.managedObjectContext];
+    [fetchRequest setEntity:entity];
+    
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc]
+                                        initWithKey:@"semStartDate"
+                                        ascending:NO];
+    
+    NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
+    [fetchRequest setSortDescriptors:sortDescriptors];
+    
+    _semFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
+    _semFetchedResultsController.delegate = self;
+    
+    NSError *error = nil;
+    if (![self.semFetchedResultsController performFetch:&error]) {
+        NSLog(@"Core data error %@, %@", error, [error userInfo]);
+        abort();
+    }
+    
+    return _semFetchedResultsController;
+}
+
 - (NSFetchedResultsController *)fetchedResultsController {
     if (_fetchedResultsController != nil) {
         return _fetchedResultsController;
@@ -198,13 +278,16 @@
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
     switch (type) {
         case NSFetchedResultsChangeInsert:
-            [self.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+                [self.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            
             break;
         case NSFetchedResultsChangeDelete:
-            [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+                [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            
             break;
         case NSFetchedResultsChangeUpdate:
-            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            
             break;
     }
 }
@@ -245,16 +328,17 @@
         
         DetailTableViewController *detailVC = segue.destinationViewController;
         detailVC.viewModel = [self detailViewAtIndexPath:indexPath];
+        detailVC.semLength = self.semFetchedResultsController.fetchedObjects[0];
     }
     
 }
 - (IBAction)pressedOnDashboard:(id)sender {
     
-//    UserDashboardViewController *dashboardVC = [[UserDashboardViewController alloc]initWithNibName:@"UserDashboardViewController" bundle:nil];
+    UserDashboardViewController *dashboardVC = [[UserDashboardViewController alloc]initWithNibName:@"UserDashboardViewController" bundle:nil];
     
     
-    MainDashBoardPageController *dashVC = [[MainDashBoardPageController alloc]init];
-    UINavigationController *navVC = [[UINavigationController alloc]initWithRootViewController:dashVC];
+//    MainDashBoardPageController *dashVC = [[MainDashBoardPageController alloc]init];
+    UINavigationController *navVC = [[UINavigationController alloc]initWithRootViewController:dashboardVC];
     [self presentViewController:navVC animated:YES completion:nil];
     
 }
@@ -298,7 +382,7 @@
     
     NSLog(@"Not Attending");
     
-    __block int value;
+    __block int missedValue;
     __block NSError *error = nil;
     
     [self.fetchedResultsController.fetchedObjects enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -307,13 +391,19 @@
         NSString *receivedSubject = [notification.userInfo objectForKey:@"uid"];
         
         if ([receivedSubject isEqual:details.subject]) {
-            value =  [details.attendance.missed intValue];
-            NSLog(@"Value is %lu",(unsigned long)value);
+            missedValue =  [details.attendance.missed intValue];
+            NSLog(@"Value is %lu",(unsigned long)missedValue);
             
-            value++;
+            missedValue++;
             
-            details.attendance.missed = [NSNumber numberWithInteger:value];
+            details.attendance.missed = [NSNumber numberWithInteger:missedValue];
             NSLog(@"Attendance is %@",details.attendance);
+            
+            if (details.attendance.calculatedLectures.intValue != 0) {
+                int calculatedValue = details.attendance.totalLecture.intValue - 1;
+                
+                details.attendance.calculatedLectures = [NSNumber numberWithInt:calculatedValue];
+            }
             
             if (![self.managedObjectContext save:&error]) {
                 NSLog(@"Saving changes failed %@",error);
@@ -337,12 +427,12 @@
         NSString *receivedSubject = [notification.userInfo objectForKey:@"uid"];
         
         if ([receivedSubject isEqual:details.subject]) {
-            value =  [details.attendance.totalLecture intValue];
+            value =  [details.attendance.calculatedLectures intValue];
             NSLog(@"Value is %lu",(unsigned long)value);
             
             value--;
             
-            details.attendance.totalLecture = [NSNumber numberWithInteger:value];
+            details.attendance.calculatedLectures = [NSNumber numberWithInteger:value];
             NSLog(@"Attendance is %@",details.attendance);
             
             if (![self.managedObjectContext save:&error]) {

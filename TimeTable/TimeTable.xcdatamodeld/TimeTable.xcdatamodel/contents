@@ -2,7 +2,9 @@
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7549" systemVersion="14A389" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Attendance" representedClassName="Attendance" syncable="YES">
         <attribute name="attended" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="calculatedLectures" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="canbeMissed" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="minAttendance" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="missed" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="totalLecture" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <relationship name="dayInAttendance" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Days" inverseName="attendanceToDay" inverseEntity="Days" syncable="YES"/>
@@ -15,8 +17,11 @@
         <relationship name="detail" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SubjectDetails" inverseName="days" inverseEntity="SubjectDetails" syncable="YES"/>
         <relationship name="time" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="SubjectTime" inverseName="day" inverseEntity="SubjectTime" syncable="YES"/>
     </entity>
+    <entity name="SemLength" representedClassName="SemLength" syncable="YES">
+        <attribute name="semEndDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="semStartDate" optional="YES" attributeType="Date" syncable="YES"/>
+    </entity>
     <entity name="SubjectDetails" representedClassName="SubjectDetails" syncable="YES">
-        <attribute name="semLength" optional="YES" attributeType="Integer 32" defaultValueString="0.0" syncable="YES"/>
         <attribute name="subject" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="teacher" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="venue" optional="YES" attributeType="String" syncable="YES"/>
@@ -29,9 +34,10 @@
         <relationship name="day" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Days" inverseName="time" inverseEntity="Days" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Attendance" positionX="-117" positionY="-9" width="128" height="135"/>
+        <element name="Attendance" positionX="-117" positionY="-9" width="128" height="165"/>
         <element name="Days" positionX="-119" positionY="-27" width="128" height="120"/>
-        <element name="SubjectDetails" positionX="-306" positionY="-162" width="128" height="135"/>
+        <element name="SemLength" positionX="-108" positionY="0" width="128" height="75"/>
+        <element name="SubjectDetails" positionX="-306" positionY="-162" width="128" height="120"/>
         <element name="SubjectTime" positionX="70" positionY="90" width="128" height="88"/>
     </elements>
 </model>

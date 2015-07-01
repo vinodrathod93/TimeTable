@@ -92,6 +92,8 @@ static CFTimeInterval kDefaultAnimationDuration = 1.0;
     if (self.animationInProgress) return;
     
     [self _progressBarTo:percentage];
+    [self _limitLineOnBar];
+    
     _percentage = percentage;
 }
 
@@ -111,7 +113,15 @@ static CFTimeInterval kDefaultAnimationDuration = 1.0;
     }
 }
 
+-(void)_limitLineOnBar {
+    UIBezierPath *path = [self _bezierPathForLimitLine];
+    CAShapeLayer *layer = [self _lineLayerWithPath:path];
+    
+    [self.layer addSublayer:layer];
+}
+
 - (UIBezierPath *)_bezierPathWith:(CGFloat)value {
+    NSLog(@"value is %f and percentage is %f",value, _percentage);
     UIBezierPath *path = [UIBezierPath bezierPath];
     CGFloat startX = (self.frame.size.width / 2);
     CGFloat startY = (self.frame.size.height * (1 - (_percentage / 100)));
@@ -120,6 +130,7 @@ static CFTimeInterval kDefaultAnimationDuration = 1.0;
 	[path addLineToPoint:CGPointMake(startX, endY)];
     return path;
 }
+
 
 - (CAShapeLayer *)_layerWithPath:(UIBezierPath *)path {
     CAShapeLayer *item = [CAShapeLayer layer];
@@ -130,6 +141,31 @@ static CFTimeInterval kDefaultAnimationDuration = 1.0;
     item.strokeColor = [self.foregroundColor CGColor];
     item.strokeEnd = 1.0;
     return item;
+}
+
+#pragma mark - For Limit Line.
+
+-(UIBezierPath *)_bezierPathForLimitLine {
+    UIBezierPath *path = [UIBezierPath bezierPath];
+    CGFloat startX = (self.frame.size.width / 2);
+    CGFloat startY = (self.frame.size.height * (1 - 0.74));
+    CGFloat endY = (self.frame.size.height * (1- 0.75));
+    
+    [path moveToPoint:CGPointMake(startX, startY)];
+    [path addLineToPoint:CGPointMake(startX, endY)];
+    
+    return path;
+}
+
+-(CAShapeLayer *)_lineLayerWithPath:(UIBezierPath *)linePath {
+    CAShapeLayer *limitLine = [CAShapeLayer layer];
+    limitLine.path = linePath.CGPath;
+    limitLine.fillColor = nil;
+    limitLine.opacity = 1.0f;
+    limitLine.lineWidth = self.frame.size.width;
+    limitLine.strokeColor = [[UIColor redColor]CGColor];
+    
+    return limitLine;
 }
 
 - (CABasicAnimation *)_animationWithKeyPath:(NSString *)keyPath {
@@ -157,6 +193,12 @@ static CFTimeInterval kDefaultAnimationDuration = 1.0;
     CGFloat temp = _percentage;
     [self setPercentage:0 animated:NO];
     [self setPercentage:temp animated:NO];
+}
+
+-(void)setMinimumAttendance:(NSInteger)minimumAttendance {
+    _minimumAttendance = minimumAttendance;
+    
+    NSLog(@"%ld",(long)_minimumAttendance);
 }
 
 - (void)reset {

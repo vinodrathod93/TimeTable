@@ -8,11 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "DetailViewModel.h"
+#import "SemLength.h"
 
 @interface DetailTableViewController : UITableViewController
 
 @property (strong, nonatomic) DetailViewModel *viewModel;
 @property (assign, nonatomic) BOOL editingDone;
+@property (strong, nonatomic) SemLength *semLength;
 
 - (IBAction)editButtonPressed:(id)sender;
 

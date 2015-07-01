@@ -1,9 +1,9 @@
 //
 //  Attendance.h
-//  TimeTable
+//  
 //
-//  Created by Vinod Rathod on 22/06/15.
-//  Copyright (c) 2015 Vinod Rathod. All rights reserved.
+//  Created by Vinod Rathod on 02/07/15.
+//
 //
 
 #import <Foundation/Foundation.h>
@@ -14,10 +14,12 @@
 @interface Attendance : NSManagedObject
 
 @property (nonatomic, retain) NSNumber * attended;
+@property (nonatomic, retain) NSNumber * calculatedLectures;
 @property (nonatomic, retain) NSNumber * canbeMissed;
 @property (nonatomic, retain) NSNumber * missed;
 @property (nonatomic, retain) NSNumber * totalLecture;
-@property (nonatomic, retain) SubjectDetails *subjectAttendance;
+@property (nonatomic, retain) NSNumber * minAttendance;
 @property (nonatomic, retain) Days *dayInAttendance;
+@property (nonatomic, retain) SubjectDetails *subjectAttendance;
 
 @end

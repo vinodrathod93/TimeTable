@@ -20,6 +20,16 @@
 		671A94D11B38E83E00A5D14C /* UserDashboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 671A94CF1B38E83E00A5D14C /* UserDashboardViewController.m */; };
 		671A94D21B38E83E00A5D14C /* UserDashboardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 671A94D01B38E83E00A5D14C /* UserDashboardViewController.xib */; };
 		671E25EF1B3B54B400E91B43 /* MainDashBoardPageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 671E25EE1B3B54B400E91B43 /* MainDashBoardPageController.m */; };
+		677604961B3DA0F9005B147C /* CCMCustomAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6776048F1B3DA0F9005B147C /* CCMCustomAnimation.m */; };
+		677604971B3DA0F9005B147C /* CCMPopupAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 677604911B3DA0F9005B147C /* CCMPopupAnimation.m */; };
+		677604981B3DA0F9005B147C /* CCMPopupSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 677604931B3DA0F9005B147C /* CCMPopupSegue.m */; };
+		677604991B3DA0F9005B147C /* CCMPopupTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = 677604951B3DA0F9005B147C /* CCMPopupTransitioning.m */; };
+		6776049C1B3DA10B005B147C /* UIViewController+CCMPopupAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6776049B1B3DA10B005B147C /* UIViewController+CCMPopupAnimation.m */; };
+		677604A11B3DA245005B147C /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 677604A01B3DA245005B147C /* FXBlurView.m */; };
+		677604A41B3DA250005B147C /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 677604A31B3DA250005B147C /* UIImage+ImageEffects.m */; };
+		677604A71B3DA25B005B147C /* UIImage+screenshot.m in Sources */ = {isa = PBXBuildFile; fileRef = 677604A61B3DA25B005B147C /* UIImage+screenshot.m */; };
+		677604AE1B3DA429005B147C /* CCMBorderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 677604AD1B3DA429005B147C /* CCMBorderView.m */; };
+		677604B11B3DB8C6005B147C /* SemPopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 677604B01B3DB8C6005B147C /* SemPopupViewController.m */; };
 		67AACF631AE38688004B343C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 67AACF621AE38688004B343C /* main.m */; };
 		67AACF691AE38689004B343C /* TimeTable.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 67AACF671AE38689004B343C /* TimeTable.xcdatamodeld */; };
 		67AACF6F1AE38689004B343C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 67AACF6D1AE38689004B343C /* Main.storyboard */; };
@@ -28,10 +38,11 @@
 		67AACF801AE38689004B343C /* TimeTableTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 67AACF7F1AE38689004B343C /* TimeTableTests.m */; };
 		67AF1F8E1AE51494006951E3 /* NewClassTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67AF1F8D1AE51494006951E3 /* NewClassTableViewController.m */; };
 		67AF1F911AE5212A006951E3 /* SelectedDayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67AF1F901AE5212A006951E3 /* SelectedDayCell.m */; };
-		67B21E2F1B387A23000BA086 /* SubjectTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B21E2E1B387A23000BA086 /* SubjectTime.m */; };
-		67B21E321B387A25000BA086 /* Days.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B21E311B387A25000BA086 /* Days.m */; };
-		67B21E351B387A25000BA086 /* Attendance.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B21E341B387A25000BA086 /* Attendance.m */; };
-		67B21E381B387A26000BA086 /* SubjectDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B21E371B387A26000BA086 /* SubjectDetails.m */; };
+		67B3D3961B446B1B009C8B82 /* SemLength.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B3D38D1B446B1B009C8B82 /* SemLength.m */; };
+		67B3D3971B446B1B009C8B82 /* Days.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B3D38F1B446B1B009C8B82 /* Days.m */; };
+		67B3D3981B446B1B009C8B82 /* SubjectDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B3D3911B446B1B009C8B82 /* SubjectDetails.m */; };
+		67B3D3991B446B1B009C8B82 /* Attendance.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B3D3931B446B1B009C8B82 /* Attendance.m */; };
+		67B3D39A1B446B1B009C8B82 /* SubjectTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B3D3951B446B1B009C8B82 /* SubjectTime.m */; };
 		67C085511AE52712009E98EC /* SelectedDayTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67C085501AE52712009E98EC /* SelectedDayTableViewController.m */; };
 		67E59B211B2B28C300B43430 /* DetailOverviewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67E59B201B2B28C300B43430 /* DetailOverviewCell.m */; };
 		67FB564D1B2A2164006BAE2E /* DetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FB564C1B2A2164006BAE2E /* DetailTableViewController.m */; };
@@ -73,6 +84,26 @@
 		671A94D01B38E83E00A5D14C /* UserDashboardViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserDashboardViewController.xib; sourceTree = "<group>"; };
 		671E25ED1B3B54B400E91B43 /* MainDashBoardPageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainDashBoardPageController.h; sourceTree = "<group>"; };
 		671E25EE1B3B54B400E91B43 /* MainDashBoardPageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainDashBoardPageController.m; sourceTree = "<group>"; };
+		6776048E1B3DA0F9005B147C /* CCMCustomAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMCustomAnimation.h; sourceTree = "<group>"; };
+		6776048F1B3DA0F9005B147C /* CCMCustomAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCMCustomAnimation.m; sourceTree = "<group>"; };
+		677604901B3DA0F9005B147C /* CCMPopupAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMPopupAnimation.h; sourceTree = "<group>"; };
+		677604911B3DA0F9005B147C /* CCMPopupAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCMPopupAnimation.m; sourceTree = "<group>"; };
+		677604921B3DA0F9005B147C /* CCMPopupSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMPopupSegue.h; sourceTree = "<group>"; };
+		677604931B3DA0F9005B147C /* CCMPopupSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCMPopupSegue.m; sourceTree = "<group>"; };
+		677604941B3DA0F9005B147C /* CCMPopupTransitioning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMPopupTransitioning.h; sourceTree = "<group>"; };
+		677604951B3DA0F9005B147C /* CCMPopupTransitioning.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCMPopupTransitioning.m; sourceTree = "<group>"; };
+		6776049A1B3DA10B005B147C /* UIViewController+CCMPopupAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+CCMPopupAnimation.h"; sourceTree = "<group>"; };
+		6776049B1B3DA10B005B147C /* UIViewController+CCMPopupAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+CCMPopupAnimation.m"; sourceTree = "<group>"; };
+		6776049F1B3DA245005B147C /* FXBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXBlurView.h; sourceTree = "<group>"; };
+		677604A01B3DA245005B147C /* FXBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXBlurView.m; sourceTree = "<group>"; };
+		677604A21B3DA250005B147C /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
+		677604A31B3DA250005B147C /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
+		677604A51B3DA25B005B147C /* UIImage+screenshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+screenshot.h"; sourceTree = "<group>"; };
+		677604A61B3DA25B005B147C /* UIImage+screenshot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+screenshot.m"; sourceTree = "<group>"; };
+		677604AC1B3DA429005B147C /* CCMBorderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMBorderView.h; sourceTree = "<group>"; };
+		677604AD1B3DA429005B147C /* CCMBorderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCMBorderView.m; sourceTree = "<group>"; };
+		677604AF1B3DB8C6005B147C /* SemPopupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SemPopupViewController.h; sourceTree = "<group>"; };
+		677604B01B3DB8C6005B147C /* SemPopupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SemPopupViewController.m; sourceTree = "<group>"; };
 		67AACF5D1AE38688004B343C /* TimeTable.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeTable.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		67AACF611AE38688004B343C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		67AACF621AE38688004B343C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -88,14 +119,16 @@
 		67AF1F8D1AE51494006951E3 /* NewClassTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewClassTableViewController.m; sourceTree = "<group>"; };
 		67AF1F8F1AE5212A006951E3 /* SelectedDayCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectedDayCell.h; sourceTree = "<group>"; };
 		67AF1F901AE5212A006951E3 /* SelectedDayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectedDayCell.m; sourceTree = "<group>"; };
-		67B21E2D1B387A23000BA086 /* SubjectTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubjectTime.h; sourceTree = "<group>"; };
-		67B21E2E1B387A23000BA086 /* SubjectTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubjectTime.m; sourceTree = "<group>"; };
-		67B21E301B387A25000BA086 /* Days.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Days.h; sourceTree = "<group>"; };
-		67B21E311B387A25000BA086 /* Days.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Days.m; sourceTree = "<group>"; };
-		67B21E331B387A25000BA086 /* Attendance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Attendance.h; sourceTree = "<group>"; };
-		67B21E341B387A25000BA086 /* Attendance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Attendance.m; sourceTree = "<group>"; };
-		67B21E361B387A26000BA086 /* SubjectDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubjectDetails.h; sourceTree = "<group>"; };
-		67B21E371B387A26000BA086 /* SubjectDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubjectDetails.m; sourceTree = "<group>"; };
+		67B3D38D1B446B1B009C8B82 /* SemLength.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SemLength.m; sourceTree = "<group>"; };
+		67B3D38E1B446B1B009C8B82 /* Days.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Days.h; sourceTree = "<group>"; };
+		67B3D38F1B446B1B009C8B82 /* Days.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Days.m; sourceTree = "<group>"; };
+		67B3D3901B446B1B009C8B82 /* SubjectDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubjectDetails.h; sourceTree = "<group>"; };
+		67B3D3911B446B1B009C8B82 /* SubjectDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubjectDetails.m; sourceTree = "<group>"; };
+		67B3D3921B446B1B009C8B82 /* Attendance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Attendance.h; sourceTree = "<group>"; };
+		67B3D3931B446B1B009C8B82 /* Attendance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Attendance.m; sourceTree = "<group>"; };
+		67B3D3941B446B1B009C8B82 /* SubjectTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubjectTime.h; sourceTree = "<group>"; };
+		67B3D3951B446B1B009C8B82 /* SubjectTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubjectTime.m; sourceTree = "<group>"; };
+		67B3D39B1B446B5C009C8B82 /* SemLength.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SemLength.h; sourceTree = "<group>"; };
 		67C0854F1AE52712009E98EC /* SelectedDayTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectedDayTableViewController.h; sourceTree = "<group>"; };
 		67C085501AE52712009E98EC /* SelectedDayTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectedDayTableViewController.m; sourceTree = "<group>"; };
 		67E59B1F1B2B28C300B43430 /* DetailOverviewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailOverviewCell.h; sourceTree = "<group>"; };
@@ -153,22 +186,6 @@
 			name = GraphKit;
 			sourceTree = "<group>";
 		};
-		671E25EC1B3B511400E91B43 /* Core Data & Entities */ = {
-			isa = PBXGroup;
-			children = (
-				67B21E361B387A26000BA086 /* SubjectDetails.h */,
-				67B21E371B387A26000BA086 /* SubjectDetails.m */,
-				67B21E331B387A25000BA086 /* Attendance.h */,
-				67B21E341B387A25000BA086 /* Attendance.m */,
-				67B21E301B387A25000BA086 /* Days.h */,
-				67B21E311B387A25000BA086 /* Days.m */,
-				67B21E2D1B387A23000BA086 /* SubjectTime.h */,
-				67B21E2E1B387A23000BA086 /* SubjectTime.m */,
-				67AACF671AE38689004B343C /* TimeTable.xcdatamodeld */,
-			);
-			name = "Core Data & Entities";
-			sourceTree = "<group>";
-		};
 		673ABDD01B28AA3600227B03 /* ClassListVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -180,11 +197,61 @@
 			name = ClassListVC;
 			sourceTree = "<group>";
 		};
+		677604A81B3DA264005B147C /* FXBlurView */ = {
+			isa = PBXGroup;
+			children = (
+				6776049F1B3DA245005B147C /* FXBlurView.h */,
+				677604A01B3DA245005B147C /* FXBlurView.m */,
+			);
+			name = FXBlurView;
+			sourceTree = "<group>";
+		};
+		677604A91B3DA277005B147C /* UIImage+ImageEffects */ = {
+			isa = PBXGroup;
+			children = (
+				677604A21B3DA250005B147C /* UIImage+ImageEffects.h */,
+				677604A31B3DA250005B147C /* UIImage+ImageEffects.m */,
+			);
+			name = "UIImage+ImageEffects";
+			sourceTree = "<group>";
+		};
+		677604AA1B3DA287005B147C /* UIImage+screenshots */ = {
+			isa = PBXGroup;
+			children = (
+				677604A51B3DA25B005B147C /* UIImage+screenshot.h */,
+				677604A61B3DA25B005B147C /* UIImage+screenshot.m */,
+			);
+			name = "UIImage+screenshots";
+			sourceTree = "<group>";
+		};
+		677604AB1B3DA29B005B147C /* Pop up */ = {
+			isa = PBXGroup;
+			children = (
+				677604AC1B3DA429005B147C /* CCMBorderView.h */,
+				677604AD1B3DA429005B147C /* CCMBorderView.m */,
+				677604AA1B3DA287005B147C /* UIImage+screenshots */,
+				677604A91B3DA277005B147C /* UIImage+ImageEffects */,
+				677604A81B3DA264005B147C /* FXBlurView */,
+				6776048E1B3DA0F9005B147C /* CCMCustomAnimation.h */,
+				6776048F1B3DA0F9005B147C /* CCMCustomAnimation.m */,
+				677604901B3DA0F9005B147C /* CCMPopupAnimation.h */,
+				677604911B3DA0F9005B147C /* CCMPopupAnimation.m */,
+				677604921B3DA0F9005B147C /* CCMPopupSegue.h */,
+				677604931B3DA0F9005B147C /* CCMPopupSegue.m */,
+				677604941B3DA0F9005B147C /* CCMPopupTransitioning.h */,
+				677604951B3DA0F9005B147C /* CCMPopupTransitioning.m */,
+				6776049A1B3DA10B005B147C /* UIViewController+CCMPopupAnimation.h */,
+				6776049B1B3DA10B005B147C /* UIViewController+CCMPopupAnimation.m */,
+			);
+			name = "Pop up";
+			sourceTree = "<group>";
+		};
 		67AACF541AE38688004B343C = {
 			isa = PBXGroup;
 			children = (
+				67F804C31B406F0C007ECA00 /* CoreData Entities */,
+				677604AB1B3DA29B005B147C /* Pop up */,
 				671A94CD1B38DBE000A5D14C /* GraphKit */,
-				671E25EC1B3B511400E91B43 /* Core Data & Entities */,
 				67AACF5F1AE38688004B343C /* TimeTable */,
 				67AACF7C1AE38689004B343C /* TimeTableTests */,
 				67AACF5E1AE38688004B343C /* Products */,
@@ -205,9 +272,12 @@
 		67AACF5F1AE38688004B343C /* TimeTable */ = {
 			isa = PBXGroup;
 			children = (
+				67AACF671AE38689004B343C /* TimeTable.xcdatamodeld */,
 				67AACF641AE38688004B343C /* AppDelegate.h */,
 				671A81BF1AE84C7F00196E12 /* AppDelegate.m */,
 				67AACF6D1AE38689004B343C /* Main.storyboard */,
+				677604AF1B3DB8C6005B147C /* SemPopupViewController.h */,
+				677604B01B3DB8C6005B147C /* SemPopupViewController.m */,
 				67E59B221B2B58FF00B43430 /* NewClassVC */,
 				673ABDD01B28AA3600227B03 /* ClassListVC */,
 				67FB56511B2A21DC006BAE2E /* DetailDayVC */,
@@ -268,6 +338,23 @@
 				67C085501AE52712009E98EC /* SelectedDayTableViewController.m */,
 			);
 			name = NewClassVC;
+			sourceTree = "<group>";
+		};
+		67F804C31B406F0C007ECA00 /* CoreData Entities */ = {
+			isa = PBXGroup;
+			children = (
+				67B3D39B1B446B5C009C8B82 /* SemLength.h */,
+				67B3D38D1B446B1B009C8B82 /* SemLength.m */,
+				67B3D38E1B446B1B009C8B82 /* Days.h */,
+				67B3D38F1B446B1B009C8B82 /* Days.m */,
+				67B3D3901B446B1B009C8B82 /* SubjectDetails.h */,
+				67B3D3911B446B1B009C8B82 /* SubjectDetails.m */,
+				67B3D3921B446B1B009C8B82 /* Attendance.h */,
+				67B3D3931B446B1B009C8B82 /* Attendance.m */,
+				67B3D3941B446B1B009C8B82 /* SubjectTime.h */,
+				67B3D3951B446B1B009C8B82 /* SubjectTime.m */,
+			);
+			name = "CoreData Entities";
 			sourceTree = "<group>";
 		};
 		67FB56511B2A21DC006BAE2E /* DetailDayVC */ = {
@@ -434,25 +521,36 @@
 			files = (
 				671A94C71B38DBC800A5D14C /* GKBar.m in Sources */,
 				6710C4C71B3411AD00439772 /* AttendanceCell.m in Sources */,
-				67B21E2F1B387A23000BA086 /* SubjectTime.m in Sources */,
-				67B21E321B387A25000BA086 /* Days.m in Sources */,
-				67B21E351B387A25000BA086 /* Attendance.m in Sources */,
+				677604A71B3DA25B005B147C /* UIImage+screenshot.m in Sources */,
 				671A81C31AE84FE600196E12 /* ClassListViewController.m in Sources */,
 				671A94CC1B38DBD900A5D14C /* UIColor+GraphKit.m in Sources */,
+				67B3D3981B446B1B009C8B82 /* SubjectDetails.m in Sources */,
+				67B3D3961B446B1B009C8B82 /* SemLength.m in Sources */,
+				67B3D39A1B446B1B009C8B82 /* SubjectTime.m in Sources */,
 				67FB564D1B2A2164006BAE2E /* DetailTableViewController.m in Sources */,
 				67FB56501B2A21D2006BAE2E /* DetailViewModel.m in Sources */,
 				67E59B211B2B28C300B43430 /* DetailOverviewCell.m in Sources */,
+				677604971B3DA0F9005B147C /* CCMPopupAnimation.m in Sources */,
 				671A94D11B38E83E00A5D14C /* UserDashboardViewController.m in Sources */,
+				67B3D3971B446B1B009C8B82 /* Days.m in Sources */,
 				67AF1F8E1AE51494006951E3 /* NewClassTableViewController.m in Sources */,
+				677604B11B3DB8C6005B147C /* SemPopupViewController.m in Sources */,
+				677604AE1B3DA429005B147C /* CCMBorderView.m in Sources */,
 				67C085511AE52712009E98EC /* SelectedDayTableViewController.m in Sources */,
 				671A81C01AE84C7F00196E12 /* AppDelegate.m in Sources */,
-				67B21E381B387A26000BA086 /* SubjectDetails.m in Sources */,
+				677604A41B3DA250005B147C /* UIImage+ImageEffects.m in Sources */,
 				67AACF691AE38689004B343C /* TimeTable.xcdatamodeld in Sources */,
 				671A81C61AE8506A00196E12 /* ListTableViewCell.m in Sources */,
+				6776049C1B3DA10B005B147C /* UIViewController+CCMPopupAnimation.m in Sources */,
+				677604981B3DA0F9005B147C /* CCMPopupSegue.m in Sources */,
+				677604961B3DA0F9005B147C /* CCMCustomAnimation.m in Sources */,
 				671A94C81B38DBC800A5D14C /* GKBarGraph.m in Sources */,
 				671E25EF1B3B54B400E91B43 /* MainDashBoardPageController.m in Sources */,
+				67B3D3991B446B1B009C8B82 /* Attendance.m in Sources */,
+				677604991B3DA0F9005B147C /* CCMPopupTransitioning.m in Sources */,
 				67AF1F911AE5212A006951E3 /* SelectedDayCell.m in Sources */,
 				67AACF631AE38688004B343C /* main.m in Sources */,
+				677604A11B3DA245005B147C /* FXBlurView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -669,8 +767,7 @@
 				67AACF681AE38689004B343C /* TimeTable.xcdatamodel */,
 			);
 			currentVersion = 67AACF681AE38689004B343C /* TimeTable.xcdatamodel */;
-			name = TimeTable.xcdatamodeld;
-			path = TimeTable/TimeTable.xcdatamodeld;
+			path = TimeTable.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

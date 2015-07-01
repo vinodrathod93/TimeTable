@@ -15,6 +15,7 @@
 
 @property (nonatomic, strong) NSMutableArray *data;
 @property (nonatomic, strong) NSMutableArray *labels;
+@property (nonatomic, strong) NSMutableArray *percentLabels;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 
@@ -25,39 +26,28 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.title = @"Dashboard";
+    self.view.backgroundColor = [UIColor gk_cloudsColor];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Ok"] style:UIBarButtonItemStylePlain target:self action:@selector(donePressed:)];
+    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Settings"] style:UIBarButtonItemStylePlain target:self action:@selector(settingsPage:)];
+    
+    
     AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
     self.managedObjectContext = appDelegate.managedObjectContext;
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.view.backgroundColor = [UIColor gk_cloudsColor];
-
+    self.graphView.dataSource = self;
+    
     
     self.labels = [NSMutableArray array];
+    self.percentLabels = [NSMutableArray array];
     self.data = [NSMutableArray array];
     
     [self.fetchedResultsController performFetch:nil];
     
-    
-    
-    switch (self.index) {
-        case 0:
-            self.message.text = @"Lectures Attended.";
-            [self layoutGraphViewForIndex:self.index];
-            break;
-            
-        case 1:
-            self.message.text = @"Lectures Missed.";
-            [self layoutGraphViewForIndex:self.index];
-            break;
-            
-        case 2:
-            self.message.text = @"Lectures Can be Missed.";
-            [self layoutGraphViewForIndex:self.index];
-            break;
-            
-        default:
-            break;
-    }
     
     [self.graphView draw];
 
@@ -82,16 +72,50 @@
         
         [self.labels addObject:shortFormString];
         
-        if (index == 0) {
-            [self.data addObject:attendance.attended];
-        } else if (index == 1) {
-            [self.data addObject:attendance.missed];
-        } else if (index == 2) {
-            [self.data addObject:attendance.canbeMissed];
-        }
         
+        NSNumber *attendedData = [self calculateAttendancePercentWithTotalLectures:attendance.calculatedLectures andAttendance:attendance.attended];
+        
+        [self.data addObject:attendedData];
+        
+        NSString *string = [NSString stringWithFormat:@"%@%%",attendedData];
+        [self.percentLabels addObject:string];
+            
     }
 }
+
+
+-(NSNumber *)calculateAttendancePercentWithTotalLectures:(NSNumber *)totalLectures andAttendance:(NSNumber *)attendance {
+    
+    int percent;
+    int attendedValue = attendance.intValue;
+    int totalLectureValue = totalLectures.intValue;
+    
+    NSLog(@"attended= %d and totalLecture= %d",attendedValue, totalLectureValue);
+    
+    if (attendedValue == 0 && totalLectureValue == 0) {
+        return [NSNumber numberWithInt:0];
+    } else {
+        percent = (attendedValue * 100) / totalLectureValue;
+    }
+    
+    
+    return [NSNumber numberWithInt:percent];
+}
+
+-(NSNumber *) calculateCanBeMissedWithTotalLectures:(NSNumber *)totalLectures withMinAttendance:(NSNumber *)minAttendance {
+    int totalValue = totalLectures.intValue;
+    int minValue = minAttendance.intValue;
+    
+    int compulsoryValue = (minValue * totalValue)/100;
+    
+    int canBeMissedValue = totalValue - compulsoryValue;
+    
+    NSLog(@"Compulsory value %d and missed %d",compulsoryValue, canBeMissedValue);
+    
+    return [NSNumber numberWithInt:canBeMissedValue];
+}
+
+
 #pragma mark - GKBarGraphDataSource
 
 - (NSInteger)numberOfBars {
@@ -128,6 +152,10 @@
     return [self.labels objectAtIndex:index];
 }
 
+-(NSString *)percentTitleForBarAtIndex:(NSInteger)index {
+    return [self.percentLabels objectAtIndex:index];
+}
+
 
 #pragma mark - Fetched Results Controller
 
@@ -160,6 +188,16 @@
     }
     
     return _fetchedResultsController;
+}
+
+
+- (void)donePressed:(id)sender {
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)settingsPage:(id)sender {
+    NSLog(@"Settings");
 }
 
 @end

@@ -95,12 +95,15 @@ static CGFloat kDefaultAnimationDuration = 2.0;
     
     if ([self _hasBars]) [self _removeBars];
     if ([self _hasLabels]) [self _removeLabels];
+    if ([self _hasPercentLabels]) [self _removePercentLabels];
     
     [self _constructBars];
     [self _constructLabels];
+    [self _constructPercentLabels];
     
     [self _positionBars];
     [self _positionLabels];
+    [self _positionPercentLabels];
 }
 
 - (BOOL)_hasBars {
@@ -153,6 +156,9 @@ static CGFloat kDefaultAnimationDuration = 2.0;
     return (self.height - self.barHeight);
 }
 
+
+#pragma mark - Label
+
 - (BOOL)_hasLabels {
     return ![self.labels mk_isEmpty];
 }
@@ -201,6 +207,58 @@ static CGFloat kDefaultAnimationDuration = 2.0;
         idx++;
     }];
 }
+
+
+
+#pragma mark - Percent Label
+
+-(BOOL)_hasPercentLabels {
+    return ![self.percentLabels mk_isEmpty];
+}
+
+-(void)_constructPercentLabels {
+    NSInteger count = [self.dataSource numberOfBars];
+    id items = [NSMutableArray arrayWithCapacity:count];
+    for (NSInteger idx = 0; idx < count; idx++) {
+        
+        CGRect frame = CGRectMake(0, 0, kDefaultLabelWidth, kDefaultLabelHeight);
+        UILabel *item = [[UILabel alloc] initWithFrame:frame];
+        item.textAlignment = NSTextAlignmentCenter;
+        item.font = [UIFont boldSystemFontOfSize:13];
+        item.textColor = [UIColor lightGrayColor];
+        item.text = [self.dataSource percentTitleForBarAtIndex:idx];
+        
+        [items addObject:item];
+    }
+    self.percentLabels = items;
+}
+
+-(void)_removePercentLabels {
+    [self.percentLabels mk_each:^(id item) {
+        [item removeFromSuperview];
+    }];
+}
+
+-(void)_positionPercentLabels {
+    __block NSInteger idx = 0;
+    [self.bars mk_each:^(GKBar *bar) {
+        
+        CGFloat labelWidth = kDefaultLabelWidth;
+        CGFloat labelHeight = kDefaultLabelHeight;
+        CGFloat startX = bar.x - ((labelWidth - self.barWidth) / 2);
+        CGFloat startY = (self.height - 4*labelHeight - kDefaultBarHeight);
+        
+        UILabel *label = [self.percentLabels objectAtIndex:idx];
+        label.x = startX;
+        label.y = startY;
+        
+        [self addSubview:label];
+        
+        bar.y -= labelHeight + 5;
+        idx++;
+    }];
+}
+
 
 - (void)_drawBars {
     __block NSInteger idx = 0;

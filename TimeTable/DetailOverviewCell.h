@@ -13,4 +13,5 @@
 @property (weak, nonatomic) IBOutlet UILabel *subjectLabel;
 @property (weak, nonatomic) IBOutlet UILabel *lecturerLabel;
 @property (weak, nonatomic) IBOutlet UILabel *venueLabel;
+@property (weak, nonatomic) IBOutlet UILabel *minAttendanceLabel;
 @end

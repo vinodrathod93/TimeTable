@@ -19,8 +19,7 @@
 @property (nonatomic, strong) NSString *subjectVenue;
 @property (nonatomic, strong) NSString *subjectStartTime;
 @property (nonatomic, strong) NSString *subjectEndTime;
-
-//@property (nonatomic, assign) NSInteger numberOfDays;
+@property (nonatomic, assign) NSInteger minAttendance;
 
 @end
 
@@ -38,6 +37,7 @@
         self.subjectVenue = model.venue;
         self.numberOfDays = model.days.count;
         NSLog(@"Days %lu",(unsigned long)[model.days count]);
+        self.minAttendance = [model.attendance.minAttendance integerValue];
         
     }
     return self;
@@ -76,6 +76,10 @@
 }
 -(NSString *)nameOfVenue {
     return [self.model venue];
+}
+
+-(NSString *)valueOfMinAttendance {
+    return [NSString stringWithFormat:@"%@%%",[self.model.attendance minAttendance]];
 }
 
 -(NSString *)attendedValueInAttendance {
