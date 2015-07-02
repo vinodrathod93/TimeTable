@@ -15,7 +15,11 @@
 
 @property (nonatomic, strong) NSMutableArray *data;
 @property (nonatomic, strong) NSMutableArray *labels;
+@property (nonatomic, strong) NSMutableArray *limits;
 @property (nonatomic, strong) NSMutableArray *percentLabels;
+
+@property (nonatomic, strong) NSMutableArray *subjectLabels;
+
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 
@@ -45,21 +49,45 @@
     self.labels = [NSMutableArray array];
     self.percentLabels = [NSMutableArray array];
     self.data = [NSMutableArray array];
+    self.limits = [NSMutableArray array];
+    self.subjectLabels = [NSMutableArray array];
     
     [self.fetchedResultsController performFetch:nil];
     
-    
+    [self layoutGraphViewData];
     [self.graphView draw];
+    
+    [self.subjectLabels enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        NSLog(@"Value %@ at Index %lu",obj,(unsigned long)idx);
+        CGRect rect;
+        
+        if (idx == 0) {
+            rect = CGRectMake(20, 280, 300, 30);
+        } else {
+            rect.origin.y += 30;
+        }
+        
+        NSString *string = [NSString stringWithFormat:@"You need to attend another %@ lectures",obj];
+        
+        [self addSubjectLabelWithRect:rect andText:string];
+    }];
 
 }
 
+-(void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    
+    self.scrollView.contentSize = CGSizeMake(420, 568);
+}
 
--(void)layoutGraphViewForIndex:(NSUInteger)index {
+
+-(void)layoutGraphViewData {
     for (SubjectDetails *details in self.fetchedResultsController.fetchedObjects) {
         NSLog(@"%@",details.subject);
         Attendance *attendance = details.attendance;
         NSLog(@"Attended %@",attendance.attended);
         
+        // To make a short form of the subject label, this logic is used
         NSMutableString *shortFormString = [NSMutableString string];
         NSArray *words = [details.subject componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
         for (NSString *word in words) {
@@ -70,21 +98,36 @@
             
         }
         
+        
         [self.labels addObject:shortFormString];
         
-        
+        // Attendance data i.e., attended
         NSNumber *attendedData = [self calculateAttendancePercentWithTotalLectures:attendance.calculatedLectures andAttendance:attendance.attended];
-        
         [self.data addObject:attendedData];
         
+        
+        // Percent Data
         NSString *string = [NSString stringWithFormat:@"%@%%",attendedData];
         [self.percentLabels addObject:string];
-            
+        
+        
+        // Limits i.e., min. attendance
+        NSNumber *limit = [self getAllMinLimitWithAttendance:attendance];
+        [self.limits addObject:limit];
+        
+        
+        // calculated and adding remaining no. of lectures
+        NSNumber *remainingLectures = [self calculateRemainingOfRequiredLectures:attendance.calculatedLectures withMinAttendance:attendance.minAttendance andAttendedValue:attendance.attended];
+        [self.subjectLabels addObject:remainingLectures];
     }
 }
 
+-(NSNumber *)getAllMinLimitWithAttendance:(Attendance *)attendance {
+    return attendance.minAttendance;
+}
 
--(NSNumber *)calculateAttendancePercentWithTotalLectures:(NSNumber *)totalLectures andAttendance:(NSNumber *)attendance {
+-(NSNumber *)calculateAttendancePercentWithTotalLectures:(NSNumber *)totalLectures andAttendance:(NSNumber *)attendance
+{
     
     int percent;
     int attendedValue = attendance.intValue;
@@ -102,17 +145,19 @@
     return [NSNumber numberWithInt:percent];
 }
 
--(NSNumber *) calculateCanBeMissedWithTotalLectures:(NSNumber *)totalLectures withMinAttendance:(NSNumber *)minAttendance {
-    int totalValue = totalLectures.intValue;
-    int minValue = minAttendance.intValue;
+-(NSNumber *) calculateRemainingOfRequiredLectures:(NSNumber *)totalLectures withMinAttendance:(NSNumber *)minAttendance andAttendedValue:(NSNumber *)attended
+{
+    NSLog(@"Total is %@ and minAtt is %@",totalLectures,minAttendance);
+    int totalLecturesValue = totalLectures.intValue;
+    int minAttendanceValue = minAttendance.intValue;
     
-    int compulsoryValue = (minValue * totalValue)/100;
+    float compulsoryAttendingValue = ceilf((minAttendanceValue * totalLecturesValue)/100.0f);
     
-    int canBeMissedValue = totalValue - compulsoryValue;
+    int remainingValue = compulsoryAttendingValue - attended.intValue;
     
-    NSLog(@"Compulsory value %d and missed %d",compulsoryValue, canBeMissedValue);
+    NSLog(@"Compulsory value %f and remaining %d",compulsoryAttendingValue, remainingValue);
     
-    return [NSNumber numberWithInt:canBeMissedValue];
+    return [NSNumber numberWithInt:remainingValue];
 }
 
 
@@ -136,7 +181,7 @@
                   [UIColor gk_asbestosColor]
                   ];
     
-    if (index > [colors count]) {
+    if (index >= [colors count]) {
         index = index - [colors count];
     }
     return [colors objectAtIndex:index];
@@ -156,6 +201,9 @@
     return [self.percentLabels objectAtIndex:index];
 }
 
+- (NSNumber *)limitForBarAtIndex:(NSInteger)index {
+    return [self.limits objectAtIndex:index];
+}
 
 #pragma mark - Fetched Results Controller
 
@@ -198,6 +246,15 @@
 
 -(void)settingsPage:(id)sender {
     NSLog(@"Settings");
+}
+
+
+-(void)addSubjectLabelWithRect:(CGRect)rect andText:(NSString *)string {
+    UILabel *label = [[UILabel alloc]initWithFrame:rect];
+    label.text = string;
+    label.font = [UIFont fontWithName:@"AvenirNext-Medium" size:15];
+    
+    [self.scrollView addSubview:label];
 }
 
 @end

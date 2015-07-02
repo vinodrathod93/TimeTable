@@ -147,9 +147,12 @@ static CFTimeInterval kDefaultAnimationDuration = 1.0;
 
 -(UIBezierPath *)_bezierPathForLimitLine {
     UIBezierPath *path = [UIBezierPath bezierPath];
+    CGFloat minStartValue = (self.minimumAttendance - 1) / 100;
+    CGFloat minEndValue = self.minimumAttendance/100;
+    
     CGFloat startX = (self.frame.size.width / 2);
-    CGFloat startY = (self.frame.size.height * (1 - 0.74));
-    CGFloat endY = (self.frame.size.height * (1- 0.75));
+    CGFloat startY = (self.frame.size.height * (1 - minStartValue));
+    CGFloat endY = (self.frame.size.height * (1- minEndValue));
     
     [path moveToPoint:CGPointMake(startX, startY)];
     [path addLineToPoint:CGPointMake(startX, endY)];
@@ -195,7 +198,7 @@ static CFTimeInterval kDefaultAnimationDuration = 1.0;
     [self setPercentage:temp animated:NO];
 }
 
--(void)setMinimumAttendance:(NSInteger)minimumAttendance {
+-(void)setMinimumAttendance:(CGFloat)minimumAttendance {
     _minimumAttendance = minimumAttendance;
     
     NSLog(@"%ld",(long)_minimumAttendance);

@@ -36,7 +36,7 @@ static CGFloat kDefaultBarMargin = 20;
 static CGFloat kDefaultLabelWidth = 40;
 static CGFloat kDefaultLabelHeight = 15;
 
-static CGFloat kDefaultAnimationDuration = 2.0;
+static CGFloat kDefaultAnimationDuration = 9.0;
 
 @implementation GKBarGraph
 
@@ -239,6 +239,7 @@ static CGFloat kDefaultAnimationDuration = 2.0;
     }];
 }
 
+
 -(void)_positionPercentLabels {
     __block NSInteger idx = 0;
     [self.bars mk_each:^(GKBar *bar) {
@@ -259,7 +260,6 @@ static CGFloat kDefaultAnimationDuration = 2.0;
     }];
 }
 
-
 - (void)_drawBars {
     __block NSInteger idx = 0;
     id source = self.dataSource;
@@ -275,6 +275,11 @@ static CGFloat kDefaultAnimationDuration = 2.0;
         
         if ([source respondsToSelector:@selector(colorForBarBackgroundAtIndex:)]) {
             item.backgroundColor = [source colorForBarBackgroundAtIndex:idx];
+        }
+        
+        if ([source respondsToSelector:@selector(limitForBarAtIndex:)]) {
+            
+            item.minimumAttendance = [[source limitForBarAtIndex:idx] doubleValue];
         }
         
         item.percentage = [[source valueForBarAtIndex:idx] doubleValue];

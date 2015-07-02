@@ -38,7 +38,7 @@
 @property (nonatomic, assign) CGFloat cornerRadius;
 @property (nonatomic, strong) UIColor *foregroundColor;
 
-@property (nonatomic, assign) NSInteger minimumAttendance;
+@property (nonatomic, assign) CGFloat minimumAttendance;
 
 - (void)setPercentage:(CGFloat)percentage animated:(BOOL)animated;
 

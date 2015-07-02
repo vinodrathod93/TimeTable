@@ -79,8 +79,10 @@ NS_ENUM(int16_t, TTClassEntryDay) {
         self.subjectTextField.text = self.subjectDetailsModel.subject;
         self.lecturerTextField.text = self.subjectDetailsModel.teacher;
         self.classRoomTextField.text = self.subjectDetailsModel.venue;
+        self.minAttendTextField.text = [NSString stringWithFormat:@"%@",self.subjectDetailsModel.attendance.minAttendance];
         
-        
+    
+        // Inorder to load all the value of textfield while editing this boolean flag is used.
         self.loadForEditing = YES;
         
         [self.subjectDetailsModel.days enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -149,7 +151,6 @@ NS_ENUM(int16_t, TTClassEntryDay) {
     dayModel.day = self.weekdays[value];
     dayModel.dayID = [NSString stringWithFormat:@"%ld",(long)value];
     
-//    NSLog(@"%@",self.subjectDetailsModel.days);
     
     NSMutableOrderedSet *pickedDays = [self.subjectDetailsModel.days mutableCopy];
     [pickedDays addObject:dayModel];

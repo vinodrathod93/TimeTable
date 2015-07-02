@@ -37,6 +37,8 @@
 @property (nonatomic, strong) NSArray *bars;
 @property (nonatomic, strong) NSArray *labels;
 @property (nonatomic, strong) NSArray *percentLabels;
+
+@property (nonatomic, strong) NSArray *limitLines;
 @property (nonatomic, strong) UIColor *barColor;
 
 @property (nonatomic, assign) CGFloat barHeight;
@@ -59,6 +61,8 @@
 - (CFTimeInterval)animationDurationForBarAtIndex:(NSInteger)index;
 
 - (NSString *)titleForBarAtIndex:(NSInteger)index;
-- (NSString *)percentTitleForBarAtIndex:(NSInteger)index;
 
+// custom
+- (NSString *)percentTitleForBarAtIndex:(NSInteger)index;
+- (NSNumber *)limitForBarAtIndex:(NSInteger)index;
 @end

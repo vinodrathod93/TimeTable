@@ -6,8 +6,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UserDashboardViewController">
             <connections>
-                <outlet property="graphView" destination="UHD-Fz-7W3" id="Bgt-Mn-uTm"/>
-                <outlet property="scrollView" destination="klg-E9-Goa" id="s8j-Rt-b3V"/>
+                <outlet property="graphView" destination="Y3p-eH-5wX" id="W2p-ds-ubd"/>
+                <outlet property="scrollView" destination="34X-xF-KCQ" id="Xks-GJ-XKO"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -16,34 +16,37 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="klg-E9-Goa">
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="34X-xF-KCQ">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UHD-Fz-7W3" customClass="GKBarGraph">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="300"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y3p-eH-5wX" customClass="GKBarGraph">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="250"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="300" id="oGV-MB-cQK"/>
+                                <constraint firstAttribute="width" constant="320" id="0Gq-Vd-Lez"/>
+                                <constraint firstAttribute="height" constant="250" id="w2M-pi-br1"/>
                             </constraints>
                         </view>
                     </subviews>
                     <constraints>
-                        <constraint firstItem="UHD-Fz-7W3" firstAttribute="leading" secondItem="klg-E9-Goa" secondAttribute="leading" id="GgI-XP-TTe"/>
-                        <constraint firstItem="UHD-Fz-7W3" firstAttribute="top" secondItem="klg-E9-Goa" secondAttribute="top" id="K77-cd-4j1"/>
-                        <constraint firstAttribute="centerX" secondItem="UHD-Fz-7W3" secondAttribute="centerX" id="lhj-8m-bug"/>
-                        <constraint firstAttribute="trailing" secondItem="UHD-Fz-7W3" secondAttribute="trailing" id="mof-9N-rOo"/>
-                        <constraint firstAttribute="bottom" secondItem="UHD-Fz-7W3" secondAttribute="bottom" constant="268" id="nmx-4U-Aic"/>
+                        <constraint firstAttribute="centerX" secondItem="Y3p-eH-5wX" secondAttribute="centerX" id="6Xo-LA-49R"/>
+                        <constraint firstItem="Y3p-eH-5wX" firstAttribute="top" secondItem="34X-xF-KCQ" secondAttribute="top" id="NPW-6O-3N1"/>
+                        <constraint firstAttribute="bottom" secondItem="Y3p-eH-5wX" secondAttribute="bottom" constant="318" id="hgo-no-KVQ"/>
                     </constraints>
                 </scrollView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="klg-E9-Goa" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="63T-qc-B5d"/>
-                <constraint firstAttribute="bottom" secondItem="klg-E9-Goa" secondAttribute="bottom" id="E3J-t9-2sA"/>
-                <constraint firstItem="klg-E9-Goa" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Lgy-z5-PcX"/>
-                <constraint firstAttribute="trailing" secondItem="klg-E9-Goa" secondAttribute="trailing" id="mhK-x5-jm6"/>
+                <constraint firstItem="34X-xF-KCQ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Frt-NN-oT4"/>
+                <constraint firstAttribute="bottom" secondItem="34X-xF-KCQ" secondAttribute="bottom" id="NVX-In-drU"/>
+                <constraint firstItem="34X-xF-KCQ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="TL7-Q3-XJ7"/>
+                <constraint firstAttribute="trailing" secondItem="34X-xF-KCQ" secondAttribute="trailing" id="zY2-wB-tKn"/>
             </constraints>
-            <point key="canvasLocation" x="279" y="302"/>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
+            <point key="canvasLocation" x="285" y="227"/>
         </view>
     </objects>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
