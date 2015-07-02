@@ -43,6 +43,10 @@
 //        }
 //    }
     
+    [[[UIApplication sharedApplication]scheduledLocalNotifications]enumerateObjectsUsingBlock:^(UILocalNotification *obj, NSUInteger idx, BOOL *stop) {
+        NSLog(@"Notification %lu: %@",(unsigned long)idx,obj);
+    }];
+    
     
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@""
                                                                              style:UIBarButtonItemStylePlain

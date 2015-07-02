@@ -602,6 +602,10 @@ NS_ENUM(int16_t, TTClassEntryDay) {
     localNotification.category = @"CATEGORY";
     localNotification.userInfo = infoDict;
     
+    if (localNotification) {
+        [self cancelLocalNotification:[self fixNotificationDate:tenMinEarlierTime ofDay:day] andNotificationID:subjectDetail.subject];
+    }
+    
     [[UIApplication sharedApplication]scheduleLocalNotification:localNotification];
     
 }
@@ -627,6 +631,34 @@ NS_ENUM(int16_t, TTClassEntryDay) {
 
 }
 
+- (void)cancelLocalNotification:(NSDate *)fireDate andNotificationID:(NSString *)notificationID {
+    //loop through all scheduled notifications and cancel the one we're looking for
+    UILocalNotification *cancelThisNotification = nil;
+    BOOL hasNotification = NO;
+    
+    for (UILocalNotification *someNotification in [[UIApplication sharedApplication] scheduledLocalNotifications]) {
+        
+        
+        if ([[someNotification.userInfo objectForKey:@"uid"] isEqualToString:notificationID])
+        {
+            NSCalendar *calendar = [NSCalendar currentCalendar];
+            NSDateComponents *componentsForFirstDate = [calendar components:NSCalendarUnitDay|NSCalendarUnitMonth|NSCalendarUnitYear fromDate:someNotification.fireDate];
+            
+            NSDateComponents *componentsForSecondDate = [calendar components:NSCalendarUnitDay|NSCalendarUnitMonth|NSCalendarUnitYear fromDate:fireDate];
+            
+            if ([componentsForFirstDate year] == [componentsForSecondDate year]) {
+                cancelThisNotification = someNotification;
+                hasNotification = YES;
+                break;
+            }
+        }
+        
+    }
+    if (hasNotification == YES) {
+        NSLog(@"%@ ",cancelThisNotification);
+        [[UIApplication sharedApplication] cancelLocalNotification:cancelThisNotification];
+    }
+}
 
 -(NSInteger)countDays:(int)dayCode startDate:(NSDate *)stDate endDate:(NSDate *)endDate
 {
