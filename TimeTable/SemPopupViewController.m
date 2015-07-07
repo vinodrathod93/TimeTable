@@ -14,6 +14,7 @@
 @property (nonatomic, assign) BOOL isStartDate;
 @property (nonatomic, strong) NSDate *startDate;
 @property (nonatomic, strong) NSDate *endDate;
+
 @end
 
 @implementation SemPopupViewController

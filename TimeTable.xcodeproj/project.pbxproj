@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6706AC901B486350000D5A84 /* CalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706AC8F1B486350000D5A84 /* CalendarViewController.m */; };
+		6706AC991B486B9C000D5A84 /* MSCurrentTimeGridline.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706AC921B486B9C000D5A84 /* MSCurrentTimeGridline.m */; };
+		6706AC9A1B486B9C000D5A84 /* MSCurrentTimeIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706AC941B486B9C000D5A84 /* MSCurrentTimeIndicator.m */; };
+		6706AC9B1B486B9C000D5A84 /* MSDayColumnHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706AC961B486B9C000D5A84 /* MSDayColumnHeader.m */; };
+		6706AC9C1B486B9C000D5A84 /* MSDayColumnHeaderBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706AC981B486B9C000D5A84 /* MSDayColumnHeaderBackground.m */; };
+		6706ACA51B486BDA000D5A84 /* MSEventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706AC9E1B486BDA000D5A84 /* MSEventCell.m */; };
+		6706ACA61B486BDA000D5A84 /* MSGridline.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706ACA01B486BDA000D5A84 /* MSGridline.m */; };
+		6706ACA71B486BDA000D5A84 /* MSTimeRowHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706ACA21B486BDA000D5A84 /* MSTimeRowHeader.m */; };
+		6706ACA81B486BDA000D5A84 /* MSTimeRowHeaderBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706ACA41B486BDA000D5A84 /* MSTimeRowHeaderBackground.m */; };
 		6710C4C71B3411AD00439772 /* AttendanceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6710C4C61B3411AD00439772 /* AttendanceCell.m */; };
 		671A81C01AE84C7F00196E12 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 671A81BF1AE84C7F00196E12 /* AppDelegate.m */; };
 		671A81C31AE84FE600196E12 /* ClassListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 671A81C21AE84FE600196E12 /* ClassListViewController.m */; };
@@ -30,6 +39,12 @@
 		677604A71B3DA25B005B147C /* UIImage+screenshot.m in Sources */ = {isa = PBXBuildFile; fileRef = 677604A61B3DA25B005B147C /* UIImage+screenshot.m */; };
 		677604AE1B3DA429005B147C /* CCMBorderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 677604AD1B3DA429005B147C /* CCMBorderView.m */; };
 		677604B11B3DB8C6005B147C /* SemPopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 677604B01B3DB8C6005B147C /* SemPopupViewController.m */; };
+		6779B9151B4AE928004E0F00 /* Days.m in Sources */ = {isa = PBXBuildFile; fileRef = 6779B90A1B4AE928004E0F00 /* Days.m */; };
+		6779B9161B4AE928004E0F00 /* SubjectTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 6779B90C1B4AE928004E0F00 /* SubjectTime.m */; };
+		6779B9171B4AE928004E0F00 /* CalendarEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 6779B90E1B4AE928004E0F00 /* CalendarEntity.m */; };
+		6779B9181B4AE928004E0F00 /* Attendance.m in Sources */ = {isa = PBXBuildFile; fileRef = 6779B9101B4AE928004E0F00 /* Attendance.m */; };
+		6779B9191B4AE928004E0F00 /* SubjectDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 6779B9121B4AE928004E0F00 /* SubjectDetails.m */; };
+		6779B91A1B4AE928004E0F00 /* SemLength.m in Sources */ = {isa = PBXBuildFile; fileRef = 6779B9141B4AE928004E0F00 /* SemLength.m */; };
 		67AACF631AE38688004B343C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 67AACF621AE38688004B343C /* main.m */; };
 		67AACF691AE38689004B343C /* TimeTable.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 67AACF671AE38689004B343C /* TimeTable.xcdatamodeld */; };
 		67AACF6F1AE38689004B343C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 67AACF6D1AE38689004B343C /* Main.storyboard */; };
@@ -38,11 +53,6 @@
 		67AACF801AE38689004B343C /* TimeTableTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 67AACF7F1AE38689004B343C /* TimeTableTests.m */; };
 		67AF1F8E1AE51494006951E3 /* NewClassTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67AF1F8D1AE51494006951E3 /* NewClassTableViewController.m */; };
 		67AF1F911AE5212A006951E3 /* SelectedDayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67AF1F901AE5212A006951E3 /* SelectedDayCell.m */; };
-		67B3D3961B446B1B009C8B82 /* SemLength.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B3D38D1B446B1B009C8B82 /* SemLength.m */; };
-		67B3D3971B446B1B009C8B82 /* Days.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B3D38F1B446B1B009C8B82 /* Days.m */; };
-		67B3D3981B446B1B009C8B82 /* SubjectDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B3D3911B446B1B009C8B82 /* SubjectDetails.m */; };
-		67B3D3991B446B1B009C8B82 /* Attendance.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B3D3931B446B1B009C8B82 /* Attendance.m */; };
-		67B3D39A1B446B1B009C8B82 /* SubjectTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B3D3951B446B1B009C8B82 /* SubjectTime.m */; };
 		67C085511AE52712009E98EC /* SelectedDayTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67C085501AE52712009E98EC /* SelectedDayTableViewController.m */; };
 		67E59B211B2B28C300B43430 /* DetailOverviewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67E59B201B2B28C300B43430 /* DetailOverviewCell.m */; };
 		67FB564D1B2A2164006BAE2E /* DetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FB564C1B2A2164006BAE2E /* DetailTableViewController.m */; };
@@ -62,6 +72,25 @@
 
 /* Begin PBXFileReference section */
 		2CF0869D0369752218EE962E /* libPods-TimeTable.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TimeTable.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6706AC8E1B486350000D5A84 /* CalendarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarViewController.h; sourceTree = "<group>"; };
+		6706AC8F1B486350000D5A84 /* CalendarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarViewController.m; sourceTree = "<group>"; };
+		6706AC911B486B9C000D5A84 /* MSCurrentTimeGridline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSCurrentTimeGridline.h; sourceTree = "<group>"; };
+		6706AC921B486B9C000D5A84 /* MSCurrentTimeGridline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSCurrentTimeGridline.m; sourceTree = "<group>"; };
+		6706AC931B486B9C000D5A84 /* MSCurrentTimeIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSCurrentTimeIndicator.h; sourceTree = "<group>"; };
+		6706AC941B486B9C000D5A84 /* MSCurrentTimeIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSCurrentTimeIndicator.m; sourceTree = "<group>"; };
+		6706AC951B486B9C000D5A84 /* MSDayColumnHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSDayColumnHeader.h; sourceTree = "<group>"; };
+		6706AC961B486B9C000D5A84 /* MSDayColumnHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSDayColumnHeader.m; sourceTree = "<group>"; };
+		6706AC971B486B9C000D5A84 /* MSDayColumnHeaderBackground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSDayColumnHeaderBackground.h; sourceTree = "<group>"; };
+		6706AC981B486B9C000D5A84 /* MSDayColumnHeaderBackground.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSDayColumnHeaderBackground.m; sourceTree = "<group>"; };
+		6706AC9D1B486BDA000D5A84 /* MSEventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSEventCell.h; sourceTree = "<group>"; };
+		6706AC9E1B486BDA000D5A84 /* MSEventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSEventCell.m; sourceTree = "<group>"; };
+		6706AC9F1B486BDA000D5A84 /* MSGridline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSGridline.h; sourceTree = "<group>"; };
+		6706ACA01B486BDA000D5A84 /* MSGridline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSGridline.m; sourceTree = "<group>"; };
+		6706ACA11B486BDA000D5A84 /* MSTimeRowHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSTimeRowHeader.h; sourceTree = "<group>"; };
+		6706ACA21B486BDA000D5A84 /* MSTimeRowHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSTimeRowHeader.m; sourceTree = "<group>"; };
+		6706ACA31B486BDA000D5A84 /* MSTimeRowHeaderBackground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSTimeRowHeaderBackground.h; sourceTree = "<group>"; };
+		6706ACA41B486BDA000D5A84 /* MSTimeRowHeaderBackground.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSTimeRowHeaderBackground.m; sourceTree = "<group>"; };
+		6706ACAC1B487D81000D5A84 /* TimeTable.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TimeTable.pch; sourceTree = "<group>"; };
 		6710C4C51B3411AD00439772 /* AttendanceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttendanceCell.h; sourceTree = "<group>"; };
 		6710C4C61B3411AD00439772 /* AttendanceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttendanceCell.m; sourceTree = "<group>"; };
 		671A81BF1AE84C7F00196E12 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -104,6 +133,18 @@
 		677604AD1B3DA429005B147C /* CCMBorderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCMBorderView.m; sourceTree = "<group>"; };
 		677604AF1B3DB8C6005B147C /* SemPopupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SemPopupViewController.h; sourceTree = "<group>"; };
 		677604B01B3DB8C6005B147C /* SemPopupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SemPopupViewController.m; sourceTree = "<group>"; };
+		6779B9091B4AE928004E0F00 /* Days.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Days.h; sourceTree = "<group>"; };
+		6779B90A1B4AE928004E0F00 /* Days.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Days.m; sourceTree = "<group>"; };
+		6779B90B1B4AE928004E0F00 /* SubjectTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubjectTime.h; sourceTree = "<group>"; };
+		6779B90C1B4AE928004E0F00 /* SubjectTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubjectTime.m; sourceTree = "<group>"; };
+		6779B90D1B4AE928004E0F00 /* CalendarEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarEntity.h; sourceTree = "<group>"; };
+		6779B90E1B4AE928004E0F00 /* CalendarEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarEntity.m; sourceTree = "<group>"; };
+		6779B90F1B4AE928004E0F00 /* Attendance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Attendance.h; sourceTree = "<group>"; };
+		6779B9101B4AE928004E0F00 /* Attendance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Attendance.m; sourceTree = "<group>"; };
+		6779B9111B4AE928004E0F00 /* SubjectDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubjectDetails.h; sourceTree = "<group>"; };
+		6779B9121B4AE928004E0F00 /* SubjectDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubjectDetails.m; sourceTree = "<group>"; };
+		6779B9131B4AE928004E0F00 /* SemLength.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SemLength.h; sourceTree = "<group>"; };
+		6779B9141B4AE928004E0F00 /* SemLength.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SemLength.m; sourceTree = "<group>"; };
 		67AACF5D1AE38688004B343C /* TimeTable.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeTable.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		67AACF611AE38688004B343C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		67AACF621AE38688004B343C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -119,16 +160,6 @@
 		67AF1F8D1AE51494006951E3 /* NewClassTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewClassTableViewController.m; sourceTree = "<group>"; };
 		67AF1F8F1AE5212A006951E3 /* SelectedDayCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectedDayCell.h; sourceTree = "<group>"; };
 		67AF1F901AE5212A006951E3 /* SelectedDayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectedDayCell.m; sourceTree = "<group>"; };
-		67B3D38D1B446B1B009C8B82 /* SemLength.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SemLength.m; sourceTree = "<group>"; };
-		67B3D38E1B446B1B009C8B82 /* Days.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Days.h; sourceTree = "<group>"; };
-		67B3D38F1B446B1B009C8B82 /* Days.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Days.m; sourceTree = "<group>"; };
-		67B3D3901B446B1B009C8B82 /* SubjectDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubjectDetails.h; sourceTree = "<group>"; };
-		67B3D3911B446B1B009C8B82 /* SubjectDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubjectDetails.m; sourceTree = "<group>"; };
-		67B3D3921B446B1B009C8B82 /* Attendance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Attendance.h; sourceTree = "<group>"; };
-		67B3D3931B446B1B009C8B82 /* Attendance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Attendance.m; sourceTree = "<group>"; };
-		67B3D3941B446B1B009C8B82 /* SubjectTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubjectTime.h; sourceTree = "<group>"; };
-		67B3D3951B446B1B009C8B82 /* SubjectTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubjectTime.m; sourceTree = "<group>"; };
-		67B3D39B1B446B5C009C8B82 /* SemLength.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SemLength.h; sourceTree = "<group>"; };
 		67C0854F1AE52712009E98EC /* SelectedDayTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectedDayTableViewController.h; sourceTree = "<group>"; };
 		67C085501AE52712009E98EC /* SelectedDayTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectedDayTableViewController.m; sourceTree = "<group>"; };
 		67E59B1F1B2B28C300B43430 /* DetailOverviewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailOverviewCell.h; sourceTree = "<group>"; };
@@ -172,6 +203,47 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		6706ACA91B486BF6000D5A84 /* CollectionView Cell */ = {
+			isa = PBXGroup;
+			children = (
+				6706AC9D1B486BDA000D5A84 /* MSEventCell.h */,
+				6706AC9E1B486BDA000D5A84 /* MSEventCell.m */,
+			);
+			name = "CollectionView Cell";
+			sourceTree = "<group>";
+		};
+		6706ACAA1B486C07000D5A84 /* CollectionView Resuable View */ = {
+			isa = PBXGroup;
+			children = (
+				6706AC9F1B486BDA000D5A84 /* MSGridline.h */,
+				6706ACA01B486BDA000D5A84 /* MSGridline.m */,
+				6706ACA11B486BDA000D5A84 /* MSTimeRowHeader.h */,
+				6706ACA21B486BDA000D5A84 /* MSTimeRowHeader.m */,
+				6706ACA31B486BDA000D5A84 /* MSTimeRowHeaderBackground.h */,
+				6706ACA41B486BDA000D5A84 /* MSTimeRowHeaderBackground.m */,
+				6706AC911B486B9C000D5A84 /* MSCurrentTimeGridline.h */,
+				6706AC921B486B9C000D5A84 /* MSCurrentTimeGridline.m */,
+				6706AC931B486B9C000D5A84 /* MSCurrentTimeIndicator.h */,
+				6706AC941B486B9C000D5A84 /* MSCurrentTimeIndicator.m */,
+				6706AC951B486B9C000D5A84 /* MSDayColumnHeader.h */,
+				6706AC961B486B9C000D5A84 /* MSDayColumnHeader.m */,
+				6706AC971B486B9C000D5A84 /* MSDayColumnHeaderBackground.h */,
+				6706AC981B486B9C000D5A84 /* MSDayColumnHeaderBackground.m */,
+			);
+			name = "CollectionView Resuable View";
+			sourceTree = "<group>";
+		};
+		6706ACAB1B486C28000D5A84 /* CollectionView VC */ = {
+			isa = PBXGroup;
+			children = (
+				6706AC8E1B486350000D5A84 /* CalendarViewController.h */,
+				6706AC8F1B486350000D5A84 /* CalendarViewController.m */,
+				6706ACA91B486BF6000D5A84 /* CollectionView Cell */,
+				6706ACAA1B486C07000D5A84 /* CollectionView Resuable View */,
+			);
+			name = "CollectionView VC";
+			sourceTree = "<group>";
+		};
 		671A94CD1B38DBE000A5D14C /* GraphKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -184,6 +256,7 @@
 				671A94C61B38DBC800A5D14C /* GKBarGraph.m */,
 			);
 			name = GraphKit;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		673ABDD01B28AA3600227B03 /* ClassListVC */ = {
@@ -244,14 +317,12 @@
 				6776049B1B3DA10B005B147C /* UIViewController+CCMPopupAnimation.m */,
 			);
 			name = "Pop up";
+			path = ..;
 			sourceTree = "<group>";
 		};
 		67AACF541AE38688004B343C = {
 			isa = PBXGroup;
 			children = (
-				67F804C31B406F0C007ECA00 /* CoreData Entities */,
-				677604AB1B3DA29B005B147C /* Pop up */,
-				671A94CD1B38DBE000A5D14C /* GraphKit */,
 				67AACF5F1AE38688004B343C /* TimeTable */,
 				67AACF7C1AE38689004B343C /* TimeTableTests */,
 				67AACF5E1AE38688004B343C /* Products */,
@@ -276,8 +347,12 @@
 				67AACF641AE38688004B343C /* AppDelegate.h */,
 				671A81BF1AE84C7F00196E12 /* AppDelegate.m */,
 				67AACF6D1AE38689004B343C /* Main.storyboard */,
+				67F804C31B406F0C007ECA00 /* CoreData Entities */,
+				6706ACAB1B486C28000D5A84 /* CollectionView VC */,
 				677604AF1B3DB8C6005B147C /* SemPopupViewController.h */,
 				677604B01B3DB8C6005B147C /* SemPopupViewController.m */,
+				677604AB1B3DA29B005B147C /* Pop up */,
+				671A94CD1B38DBE000A5D14C /* GraphKit */,
 				67E59B221B2B58FF00B43430 /* NewClassVC */,
 				673ABDD01B28AA3600227B03 /* ClassListVC */,
 				67FB56511B2A21DC006BAE2E /* DetailDayVC */,
@@ -293,6 +368,7 @@
 			isa = PBXGroup;
 			children = (
 				67AACF611AE38688004B343C /* Info.plist */,
+				6706ACAC1B487D81000D5A84 /* TimeTable.pch */,
 				67AACF621AE38688004B343C /* main.m */,
 			);
 			name = "Supporting Files";
@@ -343,18 +419,21 @@
 		67F804C31B406F0C007ECA00 /* CoreData Entities */ = {
 			isa = PBXGroup;
 			children = (
-				67B3D39B1B446B5C009C8B82 /* SemLength.h */,
-				67B3D38D1B446B1B009C8B82 /* SemLength.m */,
-				67B3D38E1B446B1B009C8B82 /* Days.h */,
-				67B3D38F1B446B1B009C8B82 /* Days.m */,
-				67B3D3901B446B1B009C8B82 /* SubjectDetails.h */,
-				67B3D3911B446B1B009C8B82 /* SubjectDetails.m */,
-				67B3D3921B446B1B009C8B82 /* Attendance.h */,
-				67B3D3931B446B1B009C8B82 /* Attendance.m */,
-				67B3D3941B446B1B009C8B82 /* SubjectTime.h */,
-				67B3D3951B446B1B009C8B82 /* SubjectTime.m */,
+				6779B9091B4AE928004E0F00 /* Days.h */,
+				6779B90A1B4AE928004E0F00 /* Days.m */,
+				6779B90B1B4AE928004E0F00 /* SubjectTime.h */,
+				6779B90C1B4AE928004E0F00 /* SubjectTime.m */,
+				6779B90D1B4AE928004E0F00 /* CalendarEntity.h */,
+				6779B90E1B4AE928004E0F00 /* CalendarEntity.m */,
+				6779B90F1B4AE928004E0F00 /* Attendance.h */,
+				6779B9101B4AE928004E0F00 /* Attendance.m */,
+				6779B9111B4AE928004E0F00 /* SubjectDetails.h */,
+				6779B9121B4AE928004E0F00 /* SubjectDetails.m */,
+				6779B9131B4AE928004E0F00 /* SemLength.h */,
+				6779B9141B4AE928004E0F00 /* SemLength.m */,
 			);
 			name = "CoreData Entities";
+			path = ..;
 			sourceTree = "<group>";
 		};
 		67FB56511B2A21DC006BAE2E /* DetailDayVC */ = {
@@ -522,35 +601,45 @@
 				671A94C71B38DBC800A5D14C /* GKBar.m in Sources */,
 				6710C4C71B3411AD00439772 /* AttendanceCell.m in Sources */,
 				677604A71B3DA25B005B147C /* UIImage+screenshot.m in Sources */,
+				6706AC9C1B486B9C000D5A84 /* MSDayColumnHeaderBackground.m in Sources */,
 				671A81C31AE84FE600196E12 /* ClassListViewController.m in Sources */,
+				6779B91A1B4AE928004E0F00 /* SemLength.m in Sources */,
+				6706ACA51B486BDA000D5A84 /* MSEventCell.m in Sources */,
+				6779B9181B4AE928004E0F00 /* Attendance.m in Sources */,
 				671A94CC1B38DBD900A5D14C /* UIColor+GraphKit.m in Sources */,
-				67B3D3981B446B1B009C8B82 /* SubjectDetails.m in Sources */,
-				67B3D3961B446B1B009C8B82 /* SemLength.m in Sources */,
-				67B3D39A1B446B1B009C8B82 /* SubjectTime.m in Sources */,
 				67FB564D1B2A2164006BAE2E /* DetailTableViewController.m in Sources */,
 				67FB56501B2A21D2006BAE2E /* DetailViewModel.m in Sources */,
+				6706AC9A1B486B9C000D5A84 /* MSCurrentTimeIndicator.m in Sources */,
 				67E59B211B2B28C300B43430 /* DetailOverviewCell.m in Sources */,
 				677604971B3DA0F9005B147C /* CCMPopupAnimation.m in Sources */,
 				671A94D11B38E83E00A5D14C /* UserDashboardViewController.m in Sources */,
-				67B3D3971B446B1B009C8B82 /* Days.m in Sources */,
 				67AF1F8E1AE51494006951E3 /* NewClassTableViewController.m in Sources */,
 				677604B11B3DB8C6005B147C /* SemPopupViewController.m in Sources */,
+				6706AC991B486B9C000D5A84 /* MSCurrentTimeGridline.m in Sources */,
 				677604AE1B3DA429005B147C /* CCMBorderView.m in Sources */,
 				67C085511AE52712009E98EC /* SelectedDayTableViewController.m in Sources */,
+				6779B9191B4AE928004E0F00 /* SubjectDetails.m in Sources */,
 				671A81C01AE84C7F00196E12 /* AppDelegate.m in Sources */,
 				677604A41B3DA250005B147C /* UIImage+ImageEffects.m in Sources */,
+				6779B9171B4AE928004E0F00 /* CalendarEntity.m in Sources */,
 				67AACF691AE38689004B343C /* TimeTable.xcdatamodeld in Sources */,
+				6706ACA81B486BDA000D5A84 /* MSTimeRowHeaderBackground.m in Sources */,
+				6706ACA71B486BDA000D5A84 /* MSTimeRowHeader.m in Sources */,
+				6706AC901B486350000D5A84 /* CalendarViewController.m in Sources */,
 				671A81C61AE8506A00196E12 /* ListTableViewCell.m in Sources */,
+				6779B9151B4AE928004E0F00 /* Days.m in Sources */,
 				6776049C1B3DA10B005B147C /* UIViewController+CCMPopupAnimation.m in Sources */,
 				677604981B3DA0F9005B147C /* CCMPopupSegue.m in Sources */,
 				677604961B3DA0F9005B147C /* CCMCustomAnimation.m in Sources */,
 				671A94C81B38DBC800A5D14C /* GKBarGraph.m in Sources */,
+				6706AC9B1B486B9C000D5A84 /* MSDayColumnHeader.m in Sources */,
 				671E25EF1B3B54B400E91B43 /* MainDashBoardPageController.m in Sources */,
-				67B3D3991B446B1B009C8B82 /* Attendance.m in Sources */,
 				677604991B3DA0F9005B147C /* CCMPopupTransitioning.m in Sources */,
 				67AF1F911AE5212A006951E3 /* SelectedDayCell.m in Sources */,
+				6706ACA61B486BDA000D5A84 /* MSGridline.m in Sources */,
 				67AACF631AE38688004B343C /* main.m in Sources */,
 				677604A11B3DA245005B147C /* FXBlurView.m in Sources */,
+				6779B9161B4AE928004E0F00 /* SubjectTime.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -677,6 +766,8 @@
 			baseConfigurationReference = BC897741656B319F2E5BF79A /* Pods-TimeTable.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = TimeTable/TimeTable.pch;
 				INFOPLIST_FILE = TimeTable/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -688,6 +779,8 @@
 			baseConfigurationReference = 781D2A93277C322098E46862 /* Pods-TimeTable.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = TimeTable/TimeTable.pch;
 				INFOPLIST_FILE = TimeTable/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";

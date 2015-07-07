@@ -36,7 +36,7 @@ static CGFloat kDefaultBarMargin = 20;
 static CGFloat kDefaultLabelWidth = 40;
 static CGFloat kDefaultLabelHeight = 15;
 
-static CGFloat kDefaultAnimationDuration = 9.0;
+static CGFloat kDefaultAnimationDuration = 7.0;
 
 @implementation GKBarGraph
 

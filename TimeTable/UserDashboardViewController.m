@@ -7,6 +7,7 @@
 //
 
 #import "UserDashboardViewController.h"
+#import "CalendarViewController.h"
 #import "AppDelegate.h"
 #import "SubjectDetails.h"
 #import "Attendance.h"
@@ -245,6 +246,9 @@
 }
 
 -(void)settingsPage:(id)sender {
+    
+    CalendarViewController *calendarVC = [[CalendarViewController alloc]init];
+    [self.navigationController pushViewController:calendarVC animated:YES];
     NSLog(@"Settings");
 }
 

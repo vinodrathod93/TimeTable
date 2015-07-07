@@ -2,7 +2,7 @@
 //  Attendance.m
 //  
 //
-//  Created by Vinod Rathod on 02/07/15.
+//  Created by Vinod Rathod on 06/07/15.
 //
 //
 
@@ -16,9 +16,9 @@
 @dynamic attended;
 @dynamic calculatedLectures;
 @dynamic canbeMissed;
+@dynamic minAttendance;
 @dynamic missed;
 @dynamic totalLecture;
-@dynamic minAttendance;
 @dynamic dayInAttendance;
 @dynamic subjectAttendance;
 

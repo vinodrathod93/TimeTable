@@ -481,13 +481,6 @@ NS_ENUM(int16_t, TTClassEntryDay) {
 
 
 - (IBAction)savePressed:(id)sender {
-
-//    if (self.subjectTextField.text == nil) {
-//        NSLog(@"Subject Fields remaining");
-//    } else {
-//        UIAlertView *errorMessage = [[UIAlertView alloc]initWithTitle:@"Error" message:@"You have missed something to enter" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-//        [errorMessage show];
-//    }
     
     self.subjectDetailsModel.subject = [self.subjectTextField.text capitalizedString];
     self.subjectDetailsModel.teacher = [self.lecturerTextField.text capitalizedString];
