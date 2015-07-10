@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "SubjectDetails.h"
 #import "Days.h"
+#import "CalendarViewController.h"
 
 @interface AppDelegate ()
 
@@ -22,6 +23,24 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+//    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+//    CalendarViewController *calendarVC = [[CalendarViewController alloc]init];
+//    self.window.rootViewController = calendarVC;
+//    self.window.backgroundColor = [UIColor whiteColor];
+//    [self.window makeKeyAndVisible];
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"SubjectDetails" inManagedObjectContext:self.managedObjectContext];
+    [request setEntity:entity];
+    [request setFetchLimit:1];
+    NSError *error = nil;
+    NSArray *results = [self.managedObjectContext executeFetchRequest:request error:&error];
+    if (!results) {
+            }
+    if ([results count] == 0) {
+        
+    }
+    
     
     
     [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:22/255.0f green:160/255.0f blue:133/255.0f alpha:1.0f]];

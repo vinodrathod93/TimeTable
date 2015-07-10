@@ -31,11 +31,11 @@
         self.title.backgroundColor = [UIColor clearColor];
         [self addSubview:self.title];
         
-        [self.titleBackground makeConstraints:^(MASConstraintMaker *make) {
+        [self.titleBackground mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(self.title).with.insets(UIEdgeInsetsMake(-6.0, -12.0, -4.0, -12.0));
         }];
         
-        [self.title makeConstraints:^(MASConstraintMaker *make) {
+        [self.title mas_makeConstraints:^(MASConstraintMaker *make) {
             make.center.equalTo(self);
         }];
     }
@@ -61,10 +61,10 @@
     
     if (currentDay) {
         self.title.textColor = [UIColor whiteColor];
-        self.title.font = [UIFont boldSystemFontOfSize:16.0];
+        self.title.font = [UIFont fontWithName:@"AvenirNext-Regular" size:17.0f];
         self.titleBackground.backgroundColor = [UIColor colorWithHexString:@"fd3935"];
     } else {
-        self.title.font = [UIFont systemFontOfSize:16.0];
+        self.title.font = [UIFont fontWithName:@"AvenirNext-Regular" size:17.0f];
         self.title.textColor = [UIColor blackColor];
         self.titleBackground.backgroundColor = [UIColor clearColor];
     }

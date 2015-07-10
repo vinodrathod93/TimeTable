@@ -11,6 +11,7 @@
 #import "SelectedDayCell.h"
 #import "AppDelegate.h"
 #import "SubjectTime.h"
+#import "POP.h"
 
 #define DEFAULT_TAG 10
 #define DAY_SECTION 2
@@ -130,8 +131,6 @@ NS_ENUM(int16_t, TTClassEntryDay) {
         self.loadForEditing = NO;
         [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
     }
-    
-    
     
 }
 
@@ -481,7 +480,40 @@ NS_ENUM(int16_t, TTClassEntryDay) {
 
 
 - (IBAction)savePressed:(id)sender {
+    POPSpringAnimation *shake = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerPositionX];
     
+    shake.springBounciness = 20;
+    shake.velocity = @(3000);
+    
+    BOOL error;
+    
+    if ([self.subjectTextField.text length] == 0) {
+        [self.subjectTextField.layer pop_addAnimation:shake forKey:@"shakePassword"];
+        error = YES;
+        
+    } else if ([self.lecturerTextField.text length] == 0) {
+        [self.lecturerTextField.layer pop_addAnimation:shake forKey:@"shakePassword"];
+        error = YES;
+        
+    } else if ([self.classRoomTextField.text length] == 0) {
+        [self.classRoomTextField.layer pop_addAnimation:shake forKey:@"shakePassword"];
+        error = YES;
+        
+    } else if ([self.minAttendTextField.text length] == 0) {
+        [self.minAttendTextField.layer pop_addAnimation:shake forKey:@"shakePassword"];
+        error = YES;
+        
+    }
+    
+    if (!error) {
+        NSLog(@"No Error");
+        [self saveAllData];
+    }
+    
+    
+}
+
+-(void)saveAllData {
     self.subjectDetailsModel.subject = [self.subjectTextField.text capitalizedString];
     self.subjectDetailsModel.teacher = [self.lecturerTextField.text capitalizedString];
     self.subjectDetailsModel.venue = [self.classRoomTextField.text capitalizedString];
@@ -494,8 +526,6 @@ NS_ENUM(int16_t, TTClassEntryDay) {
         
         self.subjectDetailsModel.attendance = self.attendance;
     }
-    
-    
     
     // Sorted all the selected day according to the weekdays and copied back to the managedObjectContext.
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc]
@@ -543,13 +573,11 @@ NS_ENUM(int16_t, TTClassEntryDay) {
         self.subjectDetailsModel.attendance.minAttendance = @75;
     }
     
-    
     // Save all the edit's or new changes
     NSError *error = nil;
     [self.subjectDetailsModel.managedObjectContext save:&error];
     
     [self dismissViewControllerAnimated:YES completion:nil];
-    
 }
 
 - (IBAction)cancelPressed:(id)sender {

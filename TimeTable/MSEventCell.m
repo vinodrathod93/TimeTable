@@ -34,46 +34,50 @@
         self.layer.shadowOpacity = 0.0;
         
         self.borderView = [UIView new];
-        [self addSubview:self.borderView];
+        [self.contentView addSubview:self.borderView];
         
-        self.title = [UILabel new];
-        self.title.numberOfLines = 0;
-        self.title.backgroundColor = [UIColor clearColor];
-        [self addSubview:self.title];
+        self.timble_title = [UILabel new];
+        self.timble_title.numberOfLines = 0;
+        self.timble_title.backgroundColor = [UIColor clearColor];
+        [self.contentView addSubview:self.timble_title];
         
-        self.location = [UILabel new];
-        self.location.numberOfLines = 0;
-        self.location.backgroundColor = [UIColor clearColor];
-        [self addSubview:self.location];
+        self.timble_location = [UILabel new];
+        self.timble_location.numberOfLines = 0;
+        self.timble_location.backgroundColor = [UIColor clearColor];
+        [self.contentView addSubview:self.timble_location];
         
         [self updateColors];
-        
-        UIView *superview = self;
         
         CGFloat borderWidth = 2.0;
         CGFloat contentMargin = 2.0;
         UIEdgeInsets contentPadding = UIEdgeInsetsMake(1.0, (borderWidth + 4.0), 1.0, 4.0);
         
-        [self.borderView makeConstraints:^(MASConstraintMaker *make) {
-            make.height.equalTo(superview.height);
+        
+        [self.borderView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.height.equalTo(self.mas_height);
             make.width.equalTo(@(borderWidth));
-            make.left.equalTo(superview.left);
-            make.top.equalTo(superview.top);
+            make.left.equalTo(self.mas_left);
+            make.top.equalTo(self.mas_top);
         }];
         
-        [self.title makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(superview.top).offset(contentPadding.top);
-            make.left.equalTo(superview.left).offset(contentPadding.left);
-            make.right.equalTo(superview.right).offset(-contentPadding.right);
+        [self.timble_title mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.mas_top).offset(contentPadding.top);
+            make.left.equalTo(self.mas_left).offset(contentPadding.left);
+            make.right.equalTo(self.mas_right).offset(-contentPadding.right);
         }];
         
         
-        [self.location makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.title.bottom).offset(contentMargin);
-            make.left.equalTo(superview.left).offset(contentPadding.left);
-            make.right.equalTo(superview.right).offset(-contentPadding.right);
-            make.bottom.lessThanOrEqualTo(superview.bottom).offset(-contentPadding.bottom);
+        [self.timble_location mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.timble_title.mas_bottom).offset(contentMargin);
+            make.left.equalTo(self.mas_left).offset(contentPadding.left);
+            make.right.equalTo(self.mas_right).offset(-contentPadding.right);
+            make.bottom.lessThanOrEqualTo(self.mas_bottom).offset(-contentPadding.bottom);
+            
         }];
+        
+        
+        
+         
     }
     return self;
 }
@@ -103,18 +107,21 @@
 
 #pragma mark -  CalendarEntityCell
 
--(void)setEntity:(CalendarEntity *)entity {
-    _entity = entity;
-    self.title.attributedText = [[NSAttributedString alloc] initWithString:entity.subject attributes:[self titleAttributesHighlighted:self.selected]];
-    self.location.attributedText = [[NSAttributedString alloc] initWithString:entity.venue attributes:[self subtitleAttributesHighlighted:self.selected]];
+
+-(void)setTimble_entity:(CalendarEntity *)timble_entity {
+    _timble_entity = timble_entity;
+    self.timble_title.attributedText = [[NSAttributedString alloc] initWithString:timble_entity.subject attributes:[self titleAttributesHighlighted:self.selected]];
+    self.timble_location.attributedText = [[NSAttributedString alloc] initWithString:timble_entity.venue attributes:[self subtitleAttributesHighlighted:self.selected]];
+    
+    NSLog(@"%@",timble_entity.subject);
 }
 
 - (void)updateColors
 {
     self.contentView.backgroundColor = [self backgroundColorHighlighted:self.selected];
     self.borderView.backgroundColor = [self borderColor];
-    self.title.textColor = [self textColorHighlighted:self.selected];
-    self.location.textColor = [self textColorHighlighted:self.selected];
+    self.timble_title.textColor = [self textColorHighlighted:self.selected];
+    self.timble_location.textColor = [self textColorHighlighted:self.selected];
 }
 
 - (NSDictionary *)titleAttributesHighlighted:(BOOL)highlighted
@@ -124,7 +131,7 @@
     paragraphStyle.hyphenationFactor = 1.0;
     paragraphStyle.lineBreakMode = NSLineBreakByTruncatingTail;
     return @{
-        NSFontAttributeName : [UIFont boldSystemFontOfSize:12.0],
+        NSFontAttributeName : [UIFont fontWithName:@"AvenirNext-Regular" size:15.0f],
         NSForegroundColorAttributeName : [self textColorHighlighted:highlighted],
         NSParagraphStyleAttributeName : paragraphStyle
     };
@@ -137,7 +144,7 @@
     paragraphStyle.hyphenationFactor = 1.0;
     paragraphStyle.lineBreakMode = NSLineBreakByTruncatingTail;
     return @{
-        NSFontAttributeName : [UIFont systemFontOfSize:12.0],
+        NSFontAttributeName : [UIFont fontWithName:@"AvenirNext-Regular" size:15.0f],
         NSForegroundColorAttributeName : [self textColorHighlighted:highlighted],
         NSParagraphStyleAttributeName : paragraphStyle
     };
@@ -156,6 +163,12 @@
 - (UIColor *)borderColor
 {
     return [[self backgroundColorHighlighted:NO] colorWithAlphaComponent:1.0];
+}
+
+-(void)updateConstraints {
+    
+    
+    [super updateConstraints];
 }
 
 @end

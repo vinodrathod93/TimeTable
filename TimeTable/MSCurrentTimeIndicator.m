@@ -25,18 +25,18 @@
         self.backgroundColor = [UIColor whiteColor];
         
         self.time = [UILabel new];
-        self.time.font = [UIFont boldSystemFontOfSize:10.0];
+        self.time.font = [UIFont fontWithName:@"AvenirNext-Regular" size:12.0f];
         self.time.textColor = [UIColor colorWithHexString:@"fd3935"];
         [self addSubview:self.time];
         
-        [self.time makeConstraints:^(MASConstraintMaker *make) {
-            make.centerY.equalTo(self.centerY);
-            make.right.equalTo(self.right).offset(-5.0);
+        [self.time mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(self.mas_centerY);
+            make.right.equalTo(self.mas_right).offset(-5.0);
         }];
         
         NSCalendar *calendar = [NSCalendar currentCalendar];
         NSDate *oneMinuteInFuture = [[NSDate date] dateByAddingTimeInterval:60];
-        NSDateComponents *components = [calendar components:(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:oneMinuteInFuture];
+        NSDateComponents *components = [calendar components:(NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute) fromDate:oneMinuteInFuture];
         NSDate *nextMinuteBoundary = [calendar dateFromComponents:components];
         
         self.minuteTimer = [[NSTimer alloc] initWithFireDate:nextMinuteBoundary interval:60 target:self selector:@selector(minuteTick:) userInfo:nil repeats:YES];
@@ -46,6 +46,7 @@
     }
     return self;
 }
+
 
 #pragma mark - MSCurrentTimeIndicator
 

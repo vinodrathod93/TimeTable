@@ -17,18 +17,17 @@
         self.backgroundColor = [UIColor clearColor];
         self.title = [UILabel new];
         self.title.backgroundColor = [UIColor clearColor];
-        self.title.font = [UIFont systemFontOfSize:12.0];
+        self.title.font = [UIFont fontWithName:@"AvenirNext-Regular" size:15.0f];;
         [self addSubview:self.title];
         
-        UIView *superview;
-        
-        [self.title makeConstraints:^(MASConstraintMaker *make) {
-            make.centerY.equalTo(superview.centerY);
-            make.right.equalTo(superview.right).offset(-5.0);
+        [self.title mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(self.mas_centerY);
+            make.right.equalTo(self.mas_right).offset(-5.0);
         }];
     }
     return self;
 }
+
 
 #pragma mark - MSTimeRowHeader
 

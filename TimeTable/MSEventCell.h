@@ -12,9 +12,9 @@
 
 @interface MSEventCell : UICollectionViewCell
 
-@property (nonatomic, weak) CalendarEntity *entity;
+@property (nonatomic, weak) CalendarEntity *timble_entity;
 
-@property (nonatomic, strong) UILabel *title;
-@property (nonatomic, strong) UILabel *location;
+@property (nonatomic, strong) UILabel *timble_title;
+@property (nonatomic, strong) UILabel *timble_location;
 
 @end

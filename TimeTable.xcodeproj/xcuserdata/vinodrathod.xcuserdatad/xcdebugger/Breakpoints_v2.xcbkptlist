@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TimeTable/ListTableViewCell.m"
-            timestampString = "456255634.824585"
+            timestampString = "457981567.617071"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "43"
-            endingLineNumber = "43"
+            startingLineNumber = "44"
+            endingLineNumber = "44"
             landmarkName = "-configureCellForEntry:"
             landmarkType = "5">
          </BreakpointContent>

@@ -9,6 +9,7 @@
 #import "ListTableViewCell.h"
 #import "Days.h"
 #import "SubjectTime.h"
+#import "POP.h"
 
 @implementation ListTableViewCell
 
@@ -42,5 +43,31 @@
 
     
 }
+
+- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated
+{
+    [super setHighlighted:highlighted animated:animated];
+    if (self.highlighted) {
+        POPBasicAnimation *scaleAnimation = [POPBasicAnimation animationWithPropertyNamed:kPOPViewScaleXY];
+        scaleAnimation.duration = 0.1;
+        scaleAnimation.toValue = [NSValue valueWithCGPoint:CGPointMake(1, 1)];
+        [self.imageView pop_addAnimation:scaleAnimation forKey:@"scalingUp"];
+        [self.subjectLabel pop_addAnimation:scaleAnimation forKey:@"scalingUp"];
+        [self.teacherLabel pop_addAnimation:scaleAnimation forKey:@"scalingUp"];
+        [self.daysOfClass pop_addAnimation:scaleAnimation forKey:@"scalingUp"];
+        
+        
+    } else {
+        POPSpringAnimation *sprintAnimation = [POPSpringAnimation animationWithPropertyNamed:kPOPViewScaleXY];
+        sprintAnimation.toValue = [NSValue valueWithCGPoint:CGPointMake(0.9, 0.9)];
+        sprintAnimation.velocity = [NSValue valueWithCGPoint:CGPointMake(2, 2)];
+        sprintAnimation.springBounciness = 20.f;
+        [self.imageView pop_addAnimation:sprintAnimation forKey:@"springAnimation"];
+        [self.subjectLabel pop_addAnimation:sprintAnimation forKey:@"springAnimation"];
+        [self.teacherLabel pop_addAnimation:sprintAnimation forKey:@"springAnimation"];
+        [self.daysOfClass pop_addAnimation:sprintAnimation forKey:@"springAnimation"];
+    }
+}
+
 
 @end

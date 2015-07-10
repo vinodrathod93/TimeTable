@@ -18,6 +18,17 @@
 
 
 -(NSDate *)day {
+    NSUInteger dateComponents = NSCalendarUnitDay;
+    NSInteger previousDay = -1;
+    
+    NSCalendar* calendar = [NSCalendar currentCalendar];
+    NSDateComponents* components = [calendar components:dateComponents fromDate:self.startTime];
+    NSInteger day = [components day];
+    
+    if (day != previousDay) {
+        return [self.startTime beginningOfDay];
+    }
+    
     return [self.startTime beginningOfDay];
 }
 @end

@@ -46,6 +46,11 @@ NSString * const TimeRowHeaderReuseIdentifier = @"TimeRowHeaderReuseIdentifier";
     self.collectionViewCalendarLayout = [[MSCollectionViewCalendarLayout alloc] init];
     self.collectionViewCalendarLayout.delegate = self;
     self = [super initWithCollectionViewLayout:self.collectionViewCalendarLayout];
+    
+    if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad) {
+        self.collectionViewCalendarLayout.sectionWidth = self.view.frame.size.width - 2 * 33.0f;
+    }
+    
     return self;
 }
 
@@ -54,10 +59,9 @@ NSString * const TimeRowHeaderReuseIdentifier = @"TimeRowHeaderReuseIdentifier";
     [super viewDidLoad];
     
     self.collectionView.backgroundColor = [UIColor whiteColor];
+    
     [self.collectionView registerClass:MSEventCell.class forCellWithReuseIdentifier:EventCellReuseIdentifier];
-    
     [self.collectionView registerClass:MSDayColumnHeader.class forSupplementaryViewOfKind:MSCollectionElementKindDayColumnHeader withReuseIdentifier:DayColumnHeaderReuseIdentifier];
-    
     [self.collectionView registerClass:MSTimeRowHeader.class forSupplementaryViewOfKind:MSCollectionElementKindTimeRowHeader withReuseIdentifier:TimeRowHeaderReuseIdentifier];
     
     // Decoration View
@@ -78,10 +82,30 @@ NSString * const TimeRowHeaderReuseIdentifier = @"TimeRowHeaderReuseIdentifier";
     [self setCalendarEntityForMainView];
 }
 
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    // On iPhone, adjust width of sections on interface rotation. No necessary in horizontal layout (iPad)
+    if (self.collectionViewCalendarLayout.sectionLayoutType == MSSectionLayoutTypeVerticalTile) {
+        [self.collectionViewCalendarLayout invalidateLayoutCache];
+        // These are the only widths that are defined by default. There are more that factor into the overall width.
+        self.collectionViewCalendarLayout.sectionWidth = (CGRectGetWidth(self.collectionView.frame) - self.collectionViewCalendarLayout.timeRowHeaderWidth - self.collectionViewCalendarLayout.contentMargin.right);
+        [self.collectionView reloadData];
+    }
+}
+
+- (BOOL)prefersStatusBarHidden
+{
+    return YES;
+}
+
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+//    [self.collectionViewCalendarLayout invalidateLayoutCache];
+//    
+//    [self.collectionView reloadData];
+//    
     [self.collectionViewCalendarLayout scrollCollectionViewToClosetSectionToCurrentTimeAnimated:NO];
 }
 
@@ -202,7 +226,7 @@ NSString * const TimeRowHeaderReuseIdentifier = @"TimeRowHeaderReuseIdentifier";
 #pragma mark UICollectionViewDataSource
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-
+    NSLog(@"%lu",(unsigned long)self.calendarFetchedResultsController.sections.count);
     return self.calendarFetchedResultsController.sections.count;
 }
 
@@ -216,7 +240,7 @@ NSString * const TimeRowHeaderReuseIdentifier = @"TimeRowHeaderReuseIdentifier";
     MSEventCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:EventCellReuseIdentifier forIndexPath:indexPath];
     
     NSLog(@"%@",[self.calendarFetchedResultsController objectAtIndexPath:indexPath]);
-    cell.entity = [self.calendarFetchedResultsController objectAtIndexPath:indexPath];
+    cell.timble_entity = [self.calendarFetchedResultsController objectAtIndexPath:indexPath];
     
     return cell;
 }
@@ -247,6 +271,8 @@ NSString * const TimeRowHeaderReuseIdentifier = @"TimeRowHeaderReuseIdentifier";
 {
     id <NSFetchedResultsSectionInfo> sectionInfo = [self.calendarFetchedResultsController.sections objectAtIndex:section];
     CalendarEntity *event = [sectionInfo.objects firstObject];
+    
+    NSLog(@"%@",event.day);
     return event.day;
     
 }
